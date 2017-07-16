@@ -4,7 +4,7 @@ Ahora vamos a proceder a explicar cómo se ha solucionado los problemas
 propuestos, siendo estos explicados a través del programa que se ha 
 realizado, quedando así más clara la explicación.
 \intro
-\begin{lstlisting}[language=Consola]
+\begin{verbatim}
 ## funcion para la comparacion de los flujos, c1 el flujo que esta en el set conex y c2 para el flujo que es candidato a guardarse en empa
 function emparejamiento(c1: connection, c2: connection ):double {
 
@@ -70,7 +70,7 @@ function emparejamiento(c1: connection, c2: connection ):double {
  return resultado;
 
 }
-\end{lstlisting}
+\end{verbatim}
 En este trozo de código se muestra la función que se usa para devolver 
 el resultado de la función de comparación. El resultado será comparado 
 con el umbral que nosotros definimos, haciendo que si dicho resultado 
@@ -79,15 +79,15 @@ en un table[connection] of connection, lo que sería comparable en C++
 con un map. Decidimos guardarlos dentro de cada uno de los eventos que 
 lanzamos cuando Bro reconoce un determinado protocolo, dichos eventos son:
 \intro
-\begin{itemsize}
-\item connection_established, el cual se lanza cuando Bro localiza un SYN-ACK que corresponda a un handshake de TCP.
-\item connection_finished, el cual lanza Bro cuando una conexión TCP finaliza de forma normal. 
-\item udp_request, el cual se lanza cuando Bro localiza un flujo que corresponde con UDP lanzado desde el origen.
-\item udp_reply, que es lanzado por Bro cuando localiza una respuesta a un flujo del anterior evento.
-\item icmp_echo_request, lanzado por Bro cuando localiza un flujo de tipo ICMP de echo.
-\item icmp_echo_reply, el cual es lanzado por Bro cuando localiza una respuesta a los flujos del evento anterior.
-\end{itemsize}
-\intro
+\begin{itemize}
+\item connection\_established, el cual se lanza cuando Bro localiza un SYN-ACK que corresponda a un handshake de TCP.
+\item connection\_finished, el cual lanza Bro cuando una conexión TCP finaliza de forma normal. 
+\item udp\_request, el cual se lanza cuando Bro localiza un flujo que corresponde con UDP lanzado desde el origen.
+\item udp\_reply, que es lanzado por Bro cuando localiza una respuesta a un flujo del anterior evento.
+\item icmp\_echo\_request, lanzado por Bro cuando localiza un flujo de tipo ICMP de echo.
+\item icmp\_echo\_reply, el cual es lanzado por Bro cuando localiza una respuesta a los flujos del evento anterior.
+\end{itemize}
+
 Dentro de estos eventos descritos se realiza la comprobación de que dos 
 flujos se pueden comparar, ya que tienen los mismos IP’s y puertos de 
 origen y destino. Una vez en la función de comparación se almacenarán 
@@ -100,7 +100,7 @@ decir si los flujos son emparejables.
 Para mostrar la información de los flujos tenemos dos opciones, de las 
 cuales mostramos el código a continuación:
 \intro
-\begin{lstlisting}[language=Consola]
+\begin{verbatim}
 ## Creo funcion auxiliar para ver la informacion del flujo nuevo que se añade, no de todos los flujos todo el rato
 function informacion_flujo(c: connection){
     print fmt("Informacion del flujo nuevo IPo: %s , Po: %s , IPd: %s , Pd: %s ", c$id$orig_h, c$id$orig_p, c$id$resp_h, c$id$resp_p);
@@ -163,8 +163,8 @@ event connection_state_remove(c: connection){
     ##  informacion_flujo(c);
 
 }
-\end{lstlisting}
-\intro
+\end{verbatim}
+
 En nuestro caso antes de eliminarlo del set de comparaciones 
 lo que hacemos es ver si en la tabla de emparejados existe un 
 flujo con los mismos datos, en caso de que exista borramos el 
@@ -184,11 +184,11 @@ que mostramos al finalizar el programa.
 Para añadir flujos al set de conexiones, tenemos un evento 
 dedicado a ello:
 \intro
-\begin{itemsize}
-\item new_connection, Bro lanza este evento cada vez que detecta un flujo que era desconocido.
-\end{itemsize}
-\intro
-\begin{lstlisting}[language=Consola]
+\begin{itemize}
+\item new\_connection, Bro lanza este evento cada vez que detecta un flujo que era desconocido.
+\end{itemize}
+
+\begin{verbatim}
 ## Cada vez que entra un nuevo flujo lo comparo con lo que ya tengo en el set
 ## Este evento se lanza con cada nueva conexion de un flujo que no sea conocido
 ## Generated for every new connection. This event is raised with the first packet of a previously unknown connection. Bro uses a flow-based definition of “connection” here that includes not only TCP sessions but also UDP and ICMP flows.
@@ -225,8 +225,8 @@ event new_connection(c: connection){
     ## informacion_flujo(c);
 
 }
-\end{lstlisting}
-\intro
+\end{verbatim}
+
 Lo primero que debemos de hacer es ver si el tamaño del set de 
 conexiones es 0, en caso de serlo añadimos el flujo directamente, 
 en caso de que no sea 0 tenemos que ver primero si tenemos un flujo 
@@ -237,12 +237,12 @@ datos de comparación lo guardaremos.
 Por último usamos dos eventos en el programa para ver cuando se 
 lanza y cuando finaliza el programa:
 \intro
-\begin{itemsize}
-\item bro_init, evento que se lanza cuando iniciamos Bro.
-\item bro_done, evento que se lanza cuando Bro va a terminar.
-\end{itemsize}
+\begin{itemize}
+\item bro\_init, evento que se lanza cuando iniciamos Bro.
+\item bro\_done, evento que se lanza cuando Bro va a terminar.
+\end{itemize}
 \intro
-\begin{lstlisting}[language=Consola]
+\begin{verbatim}
 ## Evento que se lanza cuando se inicia BRO.
 event bro_init(){
 
@@ -269,8 +269,8 @@ event bro_done(){
   print fmt("Total de flujos: %d", tam);
   print fmt("Hora de finalizacion: %s", current_time());
 }
-\end{lstlisting}
-\intro
+\end{verbatim}
+
 En el primer evento solamente mostramos la hora a la que se 
 inicia el programa mediante la función current_time. En el 
 evento del final mostramos los flujos que han sido emparejados 

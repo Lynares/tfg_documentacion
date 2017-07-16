@@ -10,16 +10,17 @@ emparejamiento, pues si dos flujos comparten las IP’s de origen y
 destino y los puertos de origen y destino ya serían candidatos a 
 la comparación. Para comparar los flujos lo que haremos será 
 aplicar la siguiente fórmula:
-
-			  { G(x,y), NIP(x,y) ≥ 1   
-	F(x,y) = {
-    		  { -∞, en otro caso
-
-
+\intro
+%			  { G(x,y), NIP(x,y) ≥ 1   
+%	F(x,y) = {
+%    		  { -∞, en otro caso
+%Primera formula
+\intro
 Donde tenemos que G(x,y) es:
-
-G(x,y) = |NIP(x,y) – 1| + 1 / (dp1(x,y) + k1) + 1 / (dp2(x,y) + k1) + 1 / (dt(x,y) + k2)
-
+\intro
+%G(x,y) = |NIP(x,y) – 1| + 1 / (dp1(x,y) + k1) + 1 / (dp2(x,y) + k1) + 1 / (dt(x,y) + k2)
+% Segunda formula
+\intro
 Tenemos que x e y son los flujos a comparar, NIP(x,y) es el número 
 de veces que tenemos almacenado flujos similares, por lo cual siempre 
 será uno, como mínimo, dp1(x,y) son los puertos de origen de los dos 
@@ -139,25 +140,26 @@ la podremos tener casi directamente a nuestra disposición.
 \intro
 Para la instalación con los archivos de GitHub, tendremos que hacer lo siguiente:
 \intro
-\begin{lstlisting}[language=Consola]
+\begin{verbatim}
 sudo apt-get install cmake make gcc g++ flex bison libpcap-dev libssl-dev python-dev swig zlib1g-dev
-\end{lstlisting}
-\intro
+\end{verbatim}
+
+
 Estos son los prerrquisitos para la instalación de Bro, ahora clonamos el 
 repositorio de GitHub en nuestro ordenador:
 \intro
-\begin{lstlisting}[language=Consola]
+\begin{verbatim}
 git clone --recursive git://git.bro.org/bro
-\end{lstlisting}
-\intro
+\end{verbatim}
+
 Y cuando termine de descargarlo nos metemos en la carpeta y ejecutamos lo siguiente:
 \intro
-\begin{lstlisting}[language=Consola]
+\begin{verbatim}
 ./configure
 make
 make install
-\end{lstlisting}
-\intro
+\end{verbatim}
+
 De esta forma ya tendremos instalado Bro en nuestro ordenador y podremos empezar 
 a usarlo.
 \intro
@@ -165,10 +167,10 @@ Ahora para usarlo tendremos que hacer lo siguiente, lo primero será ajustar el
 PATH de nuestro terminal, para ello, tendremos que ejecutar en nuestro terminal 
 lo siguiente:
 \intro
-\begin{lstlisting}[language=Consola]
+\begin{verbatim}
 export PATH=/usr/local/bro/bin:$PATH
-\end{lstlisting}
-\intro
+\end{verbatim}
+
 Es importante hacerlo, pues sino nos saltará un error diciendo que Bro no se 
 encuentra instalado. Una vez hecho esto, podemos empezar realizando un script 
 sencillo y probar a ejecutarlo, un ejemplo de script sencillo es el que se ve 
@@ -176,10 +178,10 @@ en el apartado “Ejemplo evento que se lanza cuando se crea un nuevo flujo”,
 supongamos que el script se llama prueba.bro, pues para lanzarlo tendremos 
 que hacer lo siguiente:
 \intro
-\begin{lstlisting}[language=Consola]
+\begin{verbatim}
 ~$ bro -b -r pcap/nitroba.pcap scripts/bro-flows/prueba.bro
-\end{lstlisting}
-\intro
+\end{verbatim}
+
 En este caso dentro de la carpeta Bro que se genera cuando clonamos el 
 repositorio he creado una carpeta llamada scripts, para tener todos los 
 scripts allí guardados, por lo tanto al encontrarnos en la carpeta raíz 
@@ -227,8 +229,8 @@ dato propio para la gestión de estos datos, en este caso el tipo es time [5],
 cuyo nombre es de por si muy indicativo de lo que va a contener. La peculiaridad 
 de este tipo de dato es que el tiempo viene dado en valor absoluto, por lo cual 
 tendremos que formatearlo para representarlo, aunque no será necesario si 
-queremos operar con él. Bro dispone de funciones para pasar de double a time, double_to_time, 
-obtener el tiempo actual, current_time, y por último también disponemos una 
+queremos operar con él. Bro dispone de funciones para pasar de double a time, double\_to\_time, 
+obtener el tiempo actual, current\_time, y por último también disponemos una 
 función para obtener el tiempo del último paquete procesado, network time, 
 obteniendo así su timestamp, aunque parezca que necesita estar procesando de 
 manera online para usar esta función no es así, pues también sirve para los 
@@ -239,7 +241,7 @@ acorde a lo que le digamos en la cabecera de la función. También contamos con 
 caso contrario, es decir, pasar de string a time, para ello tendremos que usar la 
 función strptime.
 \intro
-Ahora una de las funciones más importantes es time_to_double, que sirve para pasar 
+Ahora una de las funciones más importantes es time\_to\_double, que sirve para pasar 
 un tipo time a double, haciendo más fácil operar con él.
 
 \subsubsection{Listado de flujos activos}
@@ -289,7 +291,7 @@ mostrando la información del puerto mediante el tipo port, el string que
 nos muestra lleva el número del puerto y el protocolo al que pertenece, 
 pudiendo así extraer si es TCP, UDP o ICMP. Aunque si lo que queremos es 
 obtener solamente el protocolo de transporte al que pertenece el flujo 
-podemos hacer uso de la función get_port_transport_proto [8].
+podemos hacer uso de la función get\_port\_transport\_proto [8].
 \intro
 Es destacable que el tipo de dato port soporta la comparación, lo cual 
 será usado en el programa.  
@@ -305,7 +307,7 @@ programa en el cual se lanza un evento cada vez que aparece un flujo nuevo.
 \intro
 \pagebreak
 
-\begin{lstlisting}[language=Consola, title=ejemploEvento.bro]
+\begin{verbatim}
 ## Para todo tipo de conexiones, ya sean TCP, UDP o ICMP. Este evento salta con cada nueva
 ## conexion, con el primer paquete de una conexion desconocida, por lo que mirando el
 ## documento generado vemos que esto es un nuevo flujo.
@@ -337,23 +339,24 @@ event connection_state_remove(c: connection)
   print fmt("Conexion de %s a %s a punto de ser eliminada de la memoria", c$id$orig_h, c$id$resp_h);
 
 }
-\end{lstlisting}
+\end{verbatim}
+
 Algunos comentarios sobre este código. Como habrá podido notar en el 
-lenguaje de Bro los comentarios se realizan con dos almohadillas, ##, 
+lenguaje de Bro los comentarios se realizan con dos almohadillas, \#\#, 
 los print son como en la gran mayoría de lenguajes, con la particularidad 
 de que si vamos a mostrar un string debemos de indicar que va formateado 
-mediante fmt, %s es para mostrar el string, tal y como se hace en C con 
-los datos de tipo int mostrándolo con %i, por ejemplo. Por último para 
+mediante fmt, \%s es para mostrar el string, tal y como se hace en C con 
+los datos de tipo int mostrándolo con \%i, por ejemplo. Por último para 
 acceder a la distinta información que contiene el tipo de dato debemos 
-de usar $, esto es parecido a como accedemos en Java a los datos de las clases.
-
+de usar \$, esto es parecido a como accedemos en Java a los datos de las clases.
+\intro
 Aunque el código está comentado merece la pena hacer algunas valoraciones 
-sobre los eventos usados, el evento new_connection es muy útil, pues se 
+sobre los eventos usados, el evento new\_connection es muy útil, pues se 
 ejecuta cada vez que llega un flujo que no ha sido usado antes y además 
-reconoce TCP, UDP e ICMP. El evento connection_timeout aunque sólo sirva 
+reconoce TCP, UDP e ICMP. El evento connection\_timeout aunque sólo sirva 
 para flujos del protocolo TCP es bastante útil para empezar a trabajar 
 sobre Bro, pues sirve para empezar a comprender como funcionan los eventos. 
-Por último el evento connection_state_removed se lanza para TCP, UDP e ICMP 
+Por último el evento connection\_state\_removed se lanza para TCP, UDP e ICMP 
 cuando los flujos están a punto de morir, por lo tanto tiene un gran valor 
 para eliminar de memoria los flujos que ya no nos interesan porque no están 
 activos, y si este evento no se lanza no serán eliminados, en caso de que 

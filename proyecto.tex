@@ -16,7 +16,7 @@
 \makeatother
 
 
-%\usepackage[chapter]{algorithm}
+\usepackage[chapter]{algorithm}
 \RequirePackage{verbatim}
 %\RequirePackage[Glenn]{fncychap}
 \usepackage{fancyhdr}
@@ -30,14 +30,13 @@
 % ********************************************************************
 % Re-usable information
 % ********************************************************************
-\newcommand{\myTitle}{Implementación en tiempo real de sistemas de identificación de tráfico de red\xspace}
-\newcommand{\myDegree}{Grado en Ingeniería Informática\xspace}
-\newcommand{\myName}{Álvaro Maximino Linares Herrera (alumno)\xspace}
-\newcommand{\myProf}{Jesús Esteban Díaz Verdejo (tutor1)\xspace}
-% \newcommand{\myOtherProf}{Nombre Apllido1 Apellido2 (tutor2)\xspace}
+\newcommand{\myTitle}{Implementación en tiempo real de sistemas de identificación de tráfico de red}
+\newcommand{\myDegree}{Grado en Ingeniería Informática}
+\newcommand{\myName}{Álvaro Maximino Linares Herrera}
+\newcommand{\myProf}{Jesús Esteban Díaz Verdejo}
+\newcommand{\myOtherProf}{Nombre Apllido1 Apellido2 (tutor2)\xspace}
 %\newcommand{\mySupervisor}{Put name here\xspace}
-\newcommand{\myFaculty}{Escuela Técnica Superior de Ingenierías Informática y de
-Telecomunicación\xspace}
+\newcommand{\myFaculty}{Escuela Técnica Superior de Ingenierías Informática y de Telecomunicación\xspace}
 \newcommand{\myFacultyShort}{E.T.S. de Ingenierías Informática y de
 Telecomunicación\xspace}
 \newcommand{\myDepartment}{Departamento de ...\xspace}
@@ -81,6 +80,8 @@ pdfproducer = {pdflatex}
 \fancyhead[RO,LE]{\textbf{\thepage}}
 \renewcommand{\chaptermark}[1]{\markboth{\textbf{#1}}{}}
 \renewcommand{\sectionmark}[1]{\markright{\textbf{\thesection. #1}}}
+
+\newcommand{\intro}{\\ \\ \noindent}
 
 \setlength{\headheight}{1.5\headheight}
 
@@ -209,7 +210,7 @@ pdfproducer = {pdflatex}
 %\input{apendices/manual_usuario/manual_usuario}
 %%\input{apendices/paper/paper}
 %\input{glosario/entradas_glosario}
- \addcontentsline{toc}{chapter}{Glosario}
+% \addcontentsline{toc}{chapter}{Glosario}
 % \printglossary
 \chapter*{}
 \thispagestyle{empty}
