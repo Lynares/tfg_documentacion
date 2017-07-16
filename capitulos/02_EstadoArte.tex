@@ -1,0 +1,361 @@
+\chapter{Estado del arte}
+
+La idea de la que partimos es la siguiente: 
+Los flujos son un conjunto de paquetes que comparten la misma 
+información, IP de origen, IP de destino y los puertos de origen 
+y destino, aparte de esta información también tienen un tiempo de 
+inicio, relativo al timestamp del primer paquete del flujo y una 
+duración. Con estos datos ya podemos empezar a trabajar en el 
+emparejamiento, pues si dos flujos comparten las IP’s de origen y 
+destino y los puertos de origen y destino ya serían candidatos a 
+la comparación. Para comparar los flujos lo que haremos será 
+aplicar la siguiente fórmula:
+
+			  { G(x,y), NIP(x,y) ≥ 1   
+	F(x,y) = {
+    		  { -∞, en otro caso
+
+
+Donde tenemos que G(x,y) es:
+
+G(x,y) = |NIP(x,y) – 1| + 1 / (dp1(x,y) + k1) + 1 / (dp2(x,y) + k1) + 1 / (dt(x,y) + k2)
+
+Tenemos que x e y son los flujos a comparar, NIP(x,y) es el número 
+de veces que tenemos almacenado flujos similares, por lo cual siempre 
+será uno, como mínimo, dp1(x,y) son los puertos de origen de los dos 
+flujos, que en este caso serán los mismos dp2(x,y) son los puertos de 
+destino, k1 y k2 son constantes predefinidas antes de ejecutar el programa, 
+estando estas normalmente en los trabajos anteriores definidas entre 
+1 y 10000 y, por último, dt es la diferencia de tiempo entre los timestamps 
+de los dos flujos.  
+\intro
+Con esta fórmula obtendremos un número que podremos comparar con un 
+umbral que estará predefinido, si el umbral definido es pequeño 
+tendremos más flujos almacenados, si el umbral es más grande serán 
+menos los flujos que serán emparejables y por tanto almacenados. [1]
+
+
+\section{Capas de Red}
+
+En nuestro caso nos quedaremos solamente en la capa de transporte, 
+despreciando pues la información de los flujos en cuanto a la capa 
+de aplicación, HTTP, SMTP, aplicaciones P2P y demás... y usaremos 
+un poco de la capa de red, como ICMP, pero solo para añadir más 
+información a los distintos flujos que podemos llegar a analizar, 
+pero despreciaremos la información relativa al resto de esta capa, 
+como puede ser el enrutamiento interno de un sistema autónomo de 
+Internet: RIP, de un AS en INternet: OSPF, entre sistemas autónomos 
+BGP. Más que nada porque Bro no nos permite acceder a esta información, 
+por lo tanto es imposible en este trabajo hablar sobre ella, aunque si 
+nos permite analizar cosas de la capa de aplicación, aunque no siempre, 
+pues es información opcional y por lo tanto puede estar o no. En el 
+caso del archivo pcap que utilizamos para la prueba, nitroba.pcap, 
+no está disponible esta información. Esta información se puede consultar 
+al mostrar toda la información del flujo.
+
+\section{DPI}
+
+La Inspección Profunda de Paquetes o DPI por sus siglas en inglés, Deep 
+Packet Inspection, consiste en analizar un paquete entero, no solo la 
+cabecera del paquete. Gracias a esta técnica podemos detectar intrusiones, 
+ataques de denegación de servicio y demás [3], lo cual es bastante 
+interesante, ya que podremos saber qué medidas tomar respecto a los 
+paquetes maliciosos. Este análisis también sirve para realizar estadísticas 
+sobre el tráfico de una red, que en nuestro caso nos interesa bastante, 
+pues nosotros vamos a realizar emparejamiento de flujos, mediante la 
+información de sus paquetes, siendo el tiempo del primer paquete una de las 
+medidas que usamos como variable para la comparación de los flujos. Esta 
+técnica es más costosa que la inspección de paquetes poco profunda, la 
+cual consiste en analizar solamente las cabeceras de los paquetes, por 
+lo cual es más rápida y menos costosa, y las dos tratan de asegurar 
+la neutralidad de la red.
+
+\section{NMS y BRO}
+
+Bro [2] es un NMS, Network Monitoring System, cuya principal actividad 
+es analizar el tráfico de una red para la búsqueda de amenazas. Una de 
+las muchas peculiaridades de Bro es que usa un lenguaje propio, llamado 
+también Bro, el cual tiene similitudes con Python y Java, y se gestiona 
+mediante eventos. En el caso de este trabajo se utilizará dicho lenguaje, 
+el cual en un principio puede parecer dificil, pero que acaba siendo 
+bastante útil para la tarea que queremos, pues tiene un tipo de dato 
+llamado connection, el cual está relacionado con los flujos, siendo al 
+final este tipo el propio flujo. En este tipo se establecen bastantes 
+datos que nos serán útiles, como la IP de origen, la de destino, así 
+como los puertos y sus protocolos, también guarda la información de la 
+duración así como el timestamp y más información que en este caso no 
+será relevante, como la historia del flujo, donde se nos informa del 
+tipo de paquetes que contiene e incluso el número de paquetes.
+\intro
+En el caso de los eventos, también nos facilitan el trabajo, pues tenemos 
+eventos que gestionan todo lo que tiene que ver con los flujos, desde 
+cuando aparece un nuevo flujo el cual no tenemos identificado previamente, 
+lo cual para nuestro trabajo es fundamental, pues nos hace el programa más 
+eficiente, ya que cada vez que se lanza ese evento significa que tenemos 
+que añadir ese flujo a la lista de flujos comparables, sin tener que 
+compararlo con los que tengamos previamente almacenados. También tenemos 
+flujos que nos indicarán cuando un flujo esté a punto de morir, siendo el 
+momento de eliminarlo de la lista de comparables y, en caso de tener 
+flujos con los que éste ha sido comparado, pasará el primero de estos a 
+reemplazar el flujo que va a morir en la lista de comparables, de ésta 
+forma nos evitamos tener que estar comprobando la duración del flujo 
+para eliminarlo manualmente. Con todo ésto conseguimos un programa eficiente 
+en cuanto a tiempo y que, gracias a estos eventos, va a identificar tres 
+protocolos distintos, siendo estos TCP, UDP e ICMP. Cabe destacar que los 
+eventos de UDP empleados en nuestro programa son muy costoso, por lo tanto 
+en caso de tener mucho tráfico UDP, siendo de dos tipos distinto “reply” y 
+“request”, puede hacer que el análisis tarde más tiempo del deseado, pero 
+el programa suele funcionar en una horquilla de tiempo bastante aceptable 
+en términos de rendimiento para el análisis del tráfico. En el apartado de 
+“resolución del trabajo” se hablará sobre los eventos usados con más detalle.
+\intro
+Bro también nos otorga una gran cantidad de logs en los cuales él mismo puede 
+llegar a clasificar el tráfico dependiendo del protocolo que se use, siendo 
+algunos ejemplos, HTTP, DNS, SSL, etc., aunque como en nuestro caso usamos 
+un archivo pcap esta información dependerá de si han sido cargados los scripts 
+correspondientes cuando se realizó la captura del tráfico, pues en los flujos 
+de Bro la información relativa a HTTP, DNS y demás es opcional, siendo únicamente 
+obligatorio, en lo relativo a puertos que se informe de si pertenece a TCP, UDP o ICMP.
+\intro
+Bro trabaja sobre Linux y sobre la terminal por lo tanto será necesario leer 
+la documentación para saber que opciones nos interesa tener activadas cuando 
+vayamos a analizar el tráfico, pues al no tener interfaz gráfica nos puede 
+ocurrir que no tengamos activado lo que queramos y otras cosas que no 
+precisamos si estén activas.
+\intro
+También es digno de mención que la información que hay en la red sobre Bro 
+es bastante escasa, quedando casi exclusivamente la información que se puede 
+encontrar en la web de Bro[4].
+
+\subsection{Requisitos de Bro}
+
+Podemos descargar los binarios y el código fuente desde la web de Bro [5], 
+pero en mi caso después de experimentar ciertos fallos con ésta instalación, 
+recomiendo seguir la instalación de Bro de su web en el apartado de instalación [6], 
+pues allí nos guía a una instalación que es más fácil de mantener actualizada, 
+ya que descargamos el código fuente directamente del repositorio de GitHub, 
+por lo cual si hay algún cambio importante, con alguna mejora interesante 
+la podremos tener casi directamente a nuestra disposición.
+\intro
+Para la instalación con los archivos de GitHub, tendremos que hacer lo siguiente:
+\intro
+\begin{lstlisting}[language=Consola]
+sudo apt-get install cmake make gcc g++ flex bison libpcap-dev libssl-dev python-dev swig zlib1g-dev
+\end{lstlisting}
+\intro
+Estos son los prerrquisitos para la instalación de Bro, ahora clonamos el 
+repositorio de GitHub en nuestro ordenador:
+\intro
+\begin{lstlisting}[language=Consola]
+git clone --recursive git://git.bro.org/bro
+\end{lstlisting}
+\intro
+Y cuando termine de descargarlo nos metemos en la carpeta y ejecutamos lo siguiente:
+\intro
+\begin{lstlisting}[language=Consola]
+./configure
+make
+make install
+\end{lstlisting}
+\intro
+De esta forma ya tendremos instalado Bro en nuestro ordenador y podremos empezar 
+a usarlo.
+\intro
+Ahora para usarlo tendremos que hacer lo siguiente, lo primero será ajustar el 
+PATH de nuestro terminal, para ello, tendremos que ejecutar en nuestro terminal 
+lo siguiente:
+\intro
+\begin{lstlisting}[language=Consola]
+export PATH=/usr/local/bro/bin:$PATH
+\end{lstlisting}
+\intro
+Es importante hacerlo, pues sino nos saltará un error diciendo que Bro no se 
+encuentra instalado. Una vez hecho esto, podemos empezar realizando un script 
+sencillo y probar a ejecutarlo, un ejemplo de script sencillo es el que se ve 
+en el apartado “Ejemplo evento que se lanza cuando se crea un nuevo flujo”, 
+supongamos que el script se llama prueba.bro, pues para lanzarlo tendremos 
+que hacer lo siguiente:
+\intro
+\begin{lstlisting}[language=Consola]
+~$ bro -b -r pcap/nitroba.pcap scripts/bro-flows/prueba.bro
+\end{lstlisting}
+\intro
+En este caso dentro de la carpeta Bro que se genera cuando clonamos el 
+repositorio he creado una carpeta llamada scripts, para tener todos los 
+scripts allí guardados, por lo tanto al encontrarnos en la carpeta raíz 
+de Bro, tendremos que ponerlo en la ruta, la opción -b que pongo en la 
+orden es solo para este ejemplo, lo que hace es no cargar los scripts 
+que se encuentran en el directorio base/. Como necesitamos leer de un 
+archivo pcap, tenemos que poner la opción -r, que indica a Bro que tiene 
+un archivo de datos que leer, al igual que con los scripts, también hemos 
+creado una carpeta pcap en la cual guardamos los archivos pcap que queramos 
+leer. Una vez que lo ejecutemos se nos mostrará en el terminal un mensaje 
+cada vez que se genere un flujo nuevo, cuando se exceda el timeout también 
+y cuando un flujo vaya a ser eliminado de la memoria.
+
+\subsection{Gestión de tráfico en Bro}
+
+\subsubsection{Nacimiento y muerte de flujos}
+
+En Bro el nacimiento de un flujo es controlado por un evento, dicho de otro 
+modo, cuando aparece un nuevo flujo se lanza un evento, de ésta forma podremos 
+controlar cuando un flujo nuevo aparece y podremos analizar toda su información 
+en este evento o en los siguientes antes de que el flujo muera, o en el caso de 
+tenerlo almacenado, antes de eliminarlo, pues una vez que lo eliminemos no 
+podremos recuperarlo, por lo tanto para el análisis detallado del tráfico es 
+interesante guardarlo.
+\intro
+La muerte funciona también por eventos, siendo activado el evento cuando el 
+flujo está a punto de morir, por lo tanto todavía podremos operar sobre él, 
+por ejemplo, podremos decidir si queremos que el flujo sea eliminado o seguir 
+guardándolo para análisis estadísticos.
+\intro
+Por lo tanto como se comentó en apartados anteriores en Bro la mayor parte de 
+la información se gestiona con eventos, lo cual facilita enormemente el trabajo 
+que tenemos por delante.
+
+\subsubsection{Marcas temporales}
+
+Es interesante remarcar el uso de los timestamps, pues como ya se sabe son una 
+variable importante que usaremos para la comparación necesaria para emparejar 
+los flujos, cierto es que los datos más importantes son las IP’s y los puertos, 
+pues si no son iguales no procederemos a aplicar la fórmula necesaria para el 
+emparejamiento.
+\intro
+En Bro, como lenguaje de programación, volvemos a encontrarnos con un tipo de 
+dato propio para la gestión de estos datos, en este caso el tipo es time [5], 
+cuyo nombre es de por si muy indicativo de lo que va a contener. La peculiaridad 
+de este tipo de dato es que el tiempo viene dado en valor absoluto, por lo cual 
+tendremos que formatearlo para representarlo, aunque no será necesario si 
+queremos operar con él. Bro dispone de funciones para pasar de double a time, double_to_time, 
+obtener el tiempo actual, current_time, y por último también disponemos una 
+función para obtener el tiempo del último paquete procesado, network time, 
+obteniendo así su timestamp, aunque parezca que necesita estar procesando de 
+manera online para usar esta función no es así, pues también sirve para los 
+archivos de datos de tráfico de red guardados, como los archivos pcap que 
+usaremos nosotros para el emparejamiento. Para mostrar correctamente el valor 
+del tiempo podemos usar strftime, lo cual nos formateará el tiempo y lo mostrará 
+acorde a lo que le digamos en la cabecera de la función. También contamos con el 
+caso contrario, es decir, pasar de string a time, para ello tendremos que usar la 
+función strptime.
+\intro
+Ahora una de las funciones más importantes es time_to_double, que sirve para pasar 
+un tipo time a double, haciendo más fácil operar con él.
+
+\subsubsection{Listado de flujos activos}
+
+Para mantener un listado de flujos activos haremos uso de un contenedor para 
+almacenarlos y usaremos de los eventos de Bro para gestionarlos, primero cuando 
+se generen flujos que previamente no habíamos visto los guardaremos para compararlos, 
+si aparecen flujos que ya tenemos habíamos visto, los compararemos con los almacenados 
+y si nos interesa los guardaremos, y por último cuando Bro nos indique que algún flujo 
+va a ser eliminado de la memoria y por lo tanto ese flujo ya no está activo, veremos 
+si hay algún candidato a ocupar su puesto en el listado de flujos emparejados y lo 
+eliminamos del listado de flujos comparables.
+\intro
+Para mantener un listado de flujos activos Bro nos proporciona varias formas. La 
+primera es usar un vector, el cual es fácil de usar si venimos de lenguajes como C++, 
+podremos incluir archivos usando los corchetes, [ ], indicando el índice dentro 
+de ellos, para borrar un elemento usaremos delete y para consultar el tamaño del 
+vector usaremos |v|, pero sin embargo por si sólo es muy ineficiente para almacenar 
+datos del tipo connection, pues solo dispone de índices numéricos.
+\intro
+Otro tipo para almacenar datos es set, el cual para borrar y consultar el tamaño 
+es igual que para los vectores, sin embargo, para agregar datos tendremos que usar add se[s], 
+estando entre los corchetes lo que queremos almacenar, aunque también podemos 
+almacenar datos redifiniendo el set, por ejemplo, s1 = set(1,2,3). El set también 
+es ineficiente, aunque menos, pues en un índice, aunque podemos guardar varios 
+elementos estos tienen que ser únicos y corremos el riesgo de eliminar los datos almacenados.
+\intro
+Por último podemos usar un tipo table, que es básicamente un map, de los que se 
+usan en C++, pudiendo hacerlos bastante interesantes, pues podemos hacer un table 
+de connection de vector o de set de connection, por lo tanto esta será la forma 
+que usaremos para almacenar el listado de flujos activos, pues nos da bastante 
+versatilidad a la hora de manejar el listado de los flujos, porque podemos 
+acceder por índice a la lista de todos los flujos que comparten datos, haciendo 
+que sea una tarea bastante asequible, en términos de eficiencia.
+
+\subsection{Identificación de flujos en Bro (Tipo de flujo/Protocolo)}
+
+Como ya se explicó en otro apartado, Bro consta del tipo connection [6] 
+para referirse y tratar los flujos, por lo tanto como en el flujo hay 
+información sobre el protocolo que usa podemos consultarlo haciendo 
+referencia al flujo que estamos tratando. Hay que destacar que dentro 
+de connection, en history, existe otro tipo llamado Conn::Info [7] que 
+extiende aún más los datos de connection, y siendo capaz sus datos de 
+crear los logs de lo que estemos analizando, por lo que podremos generar 
+un log con los protocolos que son usados en la sesión. Cabe destacar que 
+mostrando la información del puerto mediante el tipo port, el string que 
+nos muestra lleva el número del puerto y el protocolo al que pertenece, 
+pudiendo así extraer si es TCP, UDP o ICMP. Aunque si lo que queremos es 
+obtener solamente el protocolo de transporte al que pertenece el flujo 
+podemos hacer uso de la función get_port_transport_proto [8].
+\intro
+Es destacable que el tipo de dato port soporta la comparación, lo cual 
+será usado en el programa.  
+\intro
+También en las múltiples extensiones de Bro encontramos un analizador 
+de protocolos, protocol analizer [9], el cual dispone de varias funciones 
+interesantes para el análisis de protocolos.
+
+\subsection{Ejemplo de uso de eventos}
+
+Ahora que tenemos algunos conceptos claros pondremos el ejemplo de un 
+programa en el cual se lanza un evento cada vez que aparece un flujo nuevo.
+\intro
+\pagebreak
+
+\begin{lstlisting}[language=Consola, title=ejemploEvento.bro]
+## Para todo tipo de conexiones, ya sean TCP, UDP o ICMP. Este evento salta con cada nueva
+## conexion, con el primer paquete de una conexion desconocida, por lo que mirando el
+## documento generado vemos que esto es un nuevo flujo.
+event new_connection(c: connection)
+  {
+
+   if ( connection_exists( c$id ) ) {
+      print fmt("Nueva conexion establecida Timestamp: %s desde %s a %s", strftime("%Y/%M/%d %H:%m:%S", network_time()), c$id$orig_h, c$id$resp_h);
+      print fmt("Protocolo del puerto: %s", get_port_transport_proto(c$id$orig_p));
+      print fmt("Informacion de las 4 tuplas del paquete: %s", c$id);
+   } else {
+     print fmt("La conexion ya existe");
+     print fmt("_______________________________________________________________");
+   }
+
+ }
+
+## Solo disponible para conexiones TCP, se genera cuando no hay actividad en un
+## periodo de tiempo determinado.
+event connection_timeout(c: connection)
+  {
+    print fmt("Conexion TCP ha excedido el timeout: %s",c$id);
+  }
+## Este evento salta para todo tipo de conexion, se da cuando el estado interno
+## esta a punto de eliminarse de memoria
+event connection_state_remove(c: connection)
+{
+
+  print fmt("Conexion de %s a %s a punto de ser eliminada de la memoria", c$id$orig_h, c$id$resp_h);
+
+}
+\end{lstlisting}
+Algunos comentarios sobre este código. Como habrá podido notar en el 
+lenguaje de Bro los comentarios se realizan con dos almohadillas, ##, 
+los print son como en la gran mayoría de lenguajes, con la particularidad 
+de que si vamos a mostrar un string debemos de indicar que va formateado 
+mediante fmt, %s es para mostrar el string, tal y como se hace en C con 
+los datos de tipo int mostrándolo con %i, por ejemplo. Por último para 
+acceder a la distinta información que contiene el tipo de dato debemos 
+de usar $, esto es parecido a como accedemos en Java a los datos de las clases.
+
+Aunque el código está comentado merece la pena hacer algunas valoraciones 
+sobre los eventos usados, el evento new_connection es muy útil, pues se 
+ejecuta cada vez que llega un flujo que no ha sido usado antes y además 
+reconoce TCP, UDP e ICMP. El evento connection_timeout aunque sólo sirva 
+para flujos del protocolo TCP es bastante útil para empezar a trabajar 
+sobre Bro, pues sirve para empezar a comprender como funcionan los eventos. 
+Por último el evento connection_state_removed se lanza para TCP, UDP e ICMP 
+cuando los flujos están a punto de morir, por lo tanto tiene un gran valor 
+para eliminar de memoria los flujos que ya no nos interesan porque no están 
+activos, y si este evento no se lanza no serán eliminados, en caso de que 
+los flujos estén guardados.
+

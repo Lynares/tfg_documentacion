@@ -1,4 +1,54 @@
 \chapter{Introducción}
 
+La clasificación de tráfico en red es una tarea importante 
+en lo relativo a las comunicaciones, en un mundo cada vez 
+más digitalizado e intercomunicado, lo que más importa es 
+la seguridad y para ello es esencial la clasificación del 
+tráfico, permitiendo detectar de forma temprana intrusiones 
+y comportamientos anormales, para los cuales podremos 
+prepararnos, de esta forma, por ejemplo, el encargado de un 
+servidor podrá mantener la calidad de servicio, pues mediante 
+ISP (Internet Service Provider) se puede establecer diferentes 
+niveles de prioridad en el tráfico de red.
+\intro
+En este trabajo haremos uso de BRO, un NMS (Network Monitoring System), 
+al cual mediante la implementación de técnicas de emparejamiento de 
+flujos, lo dotaremos de la capacidad analítica de discernir que flujos 
+son emparejables, y por lo tanto pertenecen a lo mismo.
 
 \section{Conceptos básicos}
+
+En este apartado vamos a aclarar los conceptos básicos que son necesarios 
+para entender este trabajo.
+\intro
+Lo primero que tenemos que tener claro es lo que es un paquete. Un paquete 
+es cada un fragmento de la información que queremos enviar a través de una red. 
+Este paquete contiene datos sobre quiénes somos, digitalmente, y hacia donde 
+enviamos la información, así que incluso un sólo paquete da mucha información 
+sobre quienes somos en la red.
+\intro
+Lo siguiente que debemos de saber es que es un flujo, para ello tenemos que 
+volver hacia la definición anterior, pues consiste en la historia de un grupo 
+de paquetes, esto quiere decir cómo se mueven los paquetes a través de las capas 
+de red, de datos y la física. Para quien no sepa sobre redes se estará 
+preguntando que son estas capas, pues bien, estas capas son del modelo OSI, que 
+es el modelo de referencia para los protocolos de red, siendo las distintas 
+capas las siguientes:
+\intro
+1. Aplicación
+2. Presentación
+3. Sesión
+4. Transporte
+5. Red
+6. Enlace de datos
+7. Física
+\intro
+Lo siguiente que explicaremos será que es un NMS o Network Monitoring System, 
+como el nombre nos indica consiste en un programa que se dedica a monitorizar 
+el tráfico del sistema y en caso de encontrar algún problema avisará al 
+administrador del sistema. En nuestro caso el NMS que usaremos será Bro, 
+aunque existen otros.
+
+\section{TCP y UDP}
+
+Describir que es TCP y que UDP, poner imágenes del libro sobre la comunicación.

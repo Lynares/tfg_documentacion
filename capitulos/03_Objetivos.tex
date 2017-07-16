@@ -1,0 +1,36 @@
+\chapter{Objetivos}
+En este trabajo lo que se trata de hacer es:
+\begin{itemsize}
+\item Demostrar que es posible analizar el tráfico mediante emparejamiento de flujo.
+\item Realizar un programa que sea capaz, a partir de un archivo pcap, analizar los flujos.
+\item Que dicho programa muestre la información de los flujos emparejado.
+\item Implementación de la función de la comparación que se halla en el ensayo [1].
+\end{itemsize}
+\intro
+Para demostrar que es posible analizar el tráfico mediante emparejamiento 
+de flujo, y por tanto con DPI, se usará Bro para gestionar el tráfico de 
+la red, aunque al ser una implementación offline lo que se pretende realizar 
+tendrá que leer datos de un archivo pcap.
+\intro
+Al realizar una extensión para Bro tendremos que adaptarnos y aprender a 
+programar en el lenguaje que utilizan para ello, Bro, el cual tiene ciertas 
+peculiaridades, aunque como ya sabemos programar en distintos lenguajes, el 
+aprendizaje de este lenguaje es muy rápido, pues la gran mayoría de las cosas 
+ya sabemos hacerlo, sólo falta adaptarse a las peculiaridades que tiene, como 
+cualquier lenguaje. Alguna de estas peculiaridades es por ejemplo el acceso a 
+los datos dentro de un tipo, que se realiza mediante $, cuando en otros 
+lenguajes accedemos a ellos mediante . ó ->.
+\intro
+Para mostrar la información de los flujos será necesario crear una función 
+que nos muestre por pantalla que contienen dichos flujos. Realizar la función 
+es para no repetir código, lo cual entra dentro de las buenas prácticas de 
+programación. En dicha función se accederemos a los datos de IP origen y 
+destino y los puertos origen y destino de los flujos que estamos comparando, 
+esta función no realiza comparaciones, simplemente muestra la información, 
+pues esta función es llamada después de encontrar dos flujos que son emparejables.
+\intro
+Para ver si dos flujos son emparejables, primero tendremos que ver si las IP’s 
+y los puertos de origen y destino son iguales. En caso de serlo pasaremos a 
+aplicar la función, que se encuentra en el primer apartado, la cual nos devolverá 
+un número que compararemos con un umbral que nosotros definamos, haciendo que 
+si es mayor no sean emparejables y si es menor que dicho umbral si sean emparejables.
