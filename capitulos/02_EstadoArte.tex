@@ -11,16 +11,21 @@ destino y los puertos de origen y destino ya serían candidatos a
 la comparación. Para comparar los flujos lo que haremos será 
 aplicar la siguiente fórmula:
 \intro
-%			  { G(x,y), NIP(x,y) ≥ 1   
-%	F(x,y) = {
-%    		  { -∞, en otro caso
-%Primera formula
-\intro
+
+\begin{equation*}
+	F(x,y)=
+ 	\begin{cases}
+	  G(x,y), & NIP(x,y) \geq 1 \\
+	  -\infty, & \text{en otro caso}
+	 \end{cases}
+\end{equation*}
+
 Donde tenemos que G(x,y) es:
 \intro
-%G(x,y) = |NIP(x,y) – 1| + 1 / (dp1(x,y) + k1) + 1 / (dp2(x,y) + k1) + 1 / (dt(x,y) + k2)
-% Segunda formula
-\intro
+\begin{displaymath}
+G(x,y) = |NIP(x,y) – 1| + 1 / (dp1(x,y) + k1) + 1 / (dp2(x,y) + k1) + 1 / (dt(x,y) + k2)
+\end{displaymath}
+
 Tenemos que x e y son los flujos a comparar, NIP(x,y) es el número 
 de veces que tenemos almacenado flujos similares, por lo cual siempre 
 será uno, como mínimo, dp1(x,y) son los puertos de origen de los dos 
@@ -305,9 +310,9 @@ interesantes para el análisis de protocolos.
 Ahora que tenemos algunos conceptos claros pondremos el ejemplo de un 
 programa en el cual se lanza un evento cada vez que aparece un flujo nuevo.
 \intro
-\pagebreak
+%\pagebreak
 
-\begin{verbatim}
+\begin{lstlisting}[style=CodigoC]
 ## Para todo tipo de conexiones, ya sean TCP, UDP o ICMP. Este evento salta con cada nueva
 ## conexion, con el primer paquete de una conexion desconocida, por lo que mirando el
 ## documento generado vemos que esto es un nuevo flujo.
@@ -339,7 +344,7 @@ event connection_state_remove(c: connection)
   print fmt("Conexion de %s a %s a punto de ser eliminada de la memoria", c$id$orig_h, c$id$resp_h);
 
 }
-\end{verbatim}
+\end{lstlisting}
 
 Algunos comentarios sobre este código. Como habrá podido notar en el 
 lenguaje de Bro los comentarios se realizan con dos almohadillas, \#\#, 

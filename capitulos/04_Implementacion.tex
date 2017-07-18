@@ -4,7 +4,7 @@ Ahora vamos a proceder a explicar cómo se ha solucionado los problemas
 propuestos, siendo estos explicados a través del programa que se ha 
 realizado, quedando así más clara la explicación.
 \intro
-\begin{verbatim}
+\begin{lstlisting}[style=CodigoC]
 ## funcion para la comparacion de los flujos, c1 el flujo que esta en el set conex y c2 para el flujo que es candidato a guardarse en empa
 function emparejamiento(c1: connection, c2: connection ):double {
 
@@ -70,7 +70,7 @@ function emparejamiento(c1: connection, c2: connection ):double {
  return resultado;
 
 }
-\end{verbatim}
+\end{lstlisting}
 En este trozo de código se muestra la función que se usa para devolver 
 el resultado de la función de comparación. El resultado será comparado 
 con el umbral que nosotros definimos, haciendo que si dicho resultado 
@@ -100,7 +100,7 @@ decir si los flujos son emparejables.
 Para mostrar la información de los flujos tenemos dos opciones, de las 
 cuales mostramos el código a continuación:
 \intro
-\begin{verbatim}
+\begin{lstlisting}[style=CodigoC]
 ## Creo funcion auxiliar para ver la informacion del flujo nuevo que se añade, no de todos los flujos todo el rato
 function informacion_flujo(c: connection){
     print fmt("Informacion del flujo nuevo IPo: %s , Po: %s , IPd: %s , Pd: %s ", c$id$orig_h, c$id$orig_p, c$id$resp_h, c$id$resp_p);
@@ -163,7 +163,7 @@ event connection_state_remove(c: connection){
     ##  informacion_flujo(c);
 
 }
-\end{verbatim}
+\end{lstlisting}
 
 En nuestro caso antes de eliminarlo del set de comparaciones 
 lo que hacemos es ver si en la tabla de emparejados existe un 
@@ -188,7 +188,7 @@ dedicado a ello:
 \item new\_connection, Bro lanza este evento cada vez que detecta un flujo que era desconocido.
 \end{itemize}
 
-\begin{verbatim}
+\begin{lstlisting}[style=CodigoC]
 ## Cada vez que entra un nuevo flujo lo comparo con lo que ya tengo en el set
 ## Este evento se lanza con cada nueva conexion de un flujo que no sea conocido
 ## Generated for every new connection. This event is raised with the first packet of a previously unknown connection. Bro uses a flow-based definition of “connection” here that includes not only TCP sessions but also UDP and ICMP flows.
@@ -225,7 +225,7 @@ event new_connection(c: connection){
     ## informacion_flujo(c);
 
 }
-\end{verbatim}
+\end{lstlisting}
 
 Lo primero que debemos de hacer es ver si el tamaño del set de 
 conexiones es 0, en caso de serlo añadimos el flujo directamente, 
@@ -242,7 +242,7 @@ lanza y cuando finaliza el programa:
 \item bro\_done, evento que se lanza cuando Bro va a terminar.
 \end{itemize}
 \intro
-\begin{verbatim}
+\begin{lstlisting}[style=CodigoC]
 ## Evento que se lanza cuando se inicia BRO.
 event bro_init(){
 
@@ -269,7 +269,7 @@ event bro_done(){
   print fmt("Total de flujos: %d", tam);
   print fmt("Hora de finalizacion: %s", current_time());
 }
-\end{verbatim}
+\end{lstlisting}
 
 En el primer evento solamente mostramos la hora a la que se 
 inicia el programa mediante la función current_time. En el 

@@ -3,6 +3,12 @@
 \usepackage{listings}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish]{babel}
+% Para las formulas
+\usepackage{amsmath}
+\usepackage{amssymb}
+% Para la bibliografia
+\usepackage[square,numbers]{natbib}
+
 
 % \usepackage[style=list, number=none]{glossary} %
 %\usepackage{titlesec}
@@ -203,8 +209,9 @@ pdfproducer = {pdflatex}
 %
 %
 \nocite{*}
+\bibliographystyle{unsrtnat}
 \bibliography{bibliografia/bibliografia}\addcontentsline{toc}{chapter}{Bibliografía}
-%\bibliographystyle{miunsrturl}
+
 %
 %\appendix
 %\input{apendices/manual_usuario/manual_usuario}
