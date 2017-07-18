@@ -5,13 +5,13 @@
 \contentsline {chapter}{\numberline {2}Estado del arte}{17}{chapter.2}
 \contentsline {section}{\numberline {2.1}Capas de Red}{18}{section.2.1}
 \contentsline {section}{\numberline {2.2}DPI}{18}{section.2.2}
-\contentsline {section}{\numberline {2.3}NMS y BRO}{18}{section.2.3}
+\contentsline {section}{\numberline {2.3}NMS y BRO}{19}{section.2.3}
 \contentsline {subsection}{\numberline {2.3.1}Requisitos de Bro}{20}{subsection.2.3.1}
-\contentsline {subsection}{\numberline {2.3.2}Gesti\IeC {\'o}n de tr\IeC {\'a}fico en Bro}{21}{subsection.2.3.2}
-\contentsline {subsubsection}{Nacimiento y muerte de flujos}{21}{section*.6}
+\contentsline {subsection}{\numberline {2.3.2}Gesti\IeC {\'o}n de tr\IeC {\'a}fico en Bro}{22}{subsection.2.3.2}
+\contentsline {subsubsection}{Nacimiento y muerte de flujos}{22}{section*.6}
 \contentsline {subsubsection}{Marcas temporales}{22}{section*.7}
-\contentsline {subsubsection}{Listado de flujos activos}{22}{section*.8}
-\contentsline {subsection}{\numberline {2.3.3}Identificaci\IeC {\'o}n de flujos en Bro (Tipo de flujo/Protocolo)}{23}{subsection.2.3.3}
+\contentsline {subsubsection}{Listado de flujos activos}{23}{section*.8}
+\contentsline {subsection}{\numberline {2.3.3}Identificaci\IeC {\'o}n de flujos en Bro (Tipo de flujo/Protocolo)}{24}{subsection.2.3.3}
 \contentsline {subsection}{\numberline {2.3.4}Ejemplo de uso de eventos}{24}{subsection.2.3.4}
 \contentsline {chapter}{\numberline {3}Objetivos}{27}{chapter.3}
 \contentsline {chapter}{\numberline {4}Implementaci\IeC {\'o}n}{29}{chapter.4}
