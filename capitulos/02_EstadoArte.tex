@@ -73,7 +73,7 @@ el tiempo de vida del paquete y las direcciones IP's de origen y destino. Como
 podrá observar a nosotros también nos interesan los puertos de origen y destino para poder 
 realizar nuestra comprobación mediante la fórmula expuesta anteriormente.
 Gracias a esta técnica podemos detectar intrusiones, ataques de denegación de servicio 
-y demás [3], lo cual es bastante 
+y demás \cite{dpiaproximacion}, lo cual es bastante 
 interesante, ya que el administrador podrá saber qué medidas tomar respecto a las 
 intrusiones. Este análisis también sirve para realizar estadísticas 
 sobre el tráfico de una red, que en nuestro caso nos interesa bastante, 
@@ -242,59 +242,63 @@ que tenemos por delante.
 \subsubsection{Marcas temporales}
 
 Es interesante remarcar el uso de los \textbf{timestamps}, pues como ya se sabe son una 
-variable importante que usaremos para la comparación necesaria para emparejar 
+variable importante que usaremos en la comparación, esta variable es necesaria para emparejar 
 los flujos, cierto es que los datos más importantes son las IP’s y los puertos, 
 pues si no son iguales no procederemos a aplicar la fórmula necesaria para el 
-emparejamiento.
+emparejamiento, pero llegado el momento también podríamos comparar los \textit{timestamps} 
+para comprobar si son distintos, pues en caso de que sean iguales podríamos desechar la 
+comparación, pues básicamente sería comparar el mismo flujo, por algún error de programación 
+y esto nos haría el programa más eficiente.
 \intro
 En Bro, como lenguaje de programación, volvemos a encontrarnos con un tipo de 
-dato propio para la gestión de estos datos, en este caso el tipo es time [5], 
+dato propio para la gestión de estos datos, en este caso el tipo es time \cite{timetype}, 
 cuyo nombre es de por si muy indicativo de lo que va a contener. La peculiaridad 
 de este tipo de dato es que el tiempo viene dado en valor absoluto, por lo cual 
-tendremos que formatearlo para representarlo, aunque no será necesario si 
-queremos operar con él. Bro dispone de funciones para pasar de double a time, double\_to\_time, 
-obtener el tiempo actual, current\_time, y por último también disponemos una 
-función para obtener el tiempo del último paquete procesado, network time, 
-obteniendo así su timestamp, aunque parezca que necesita estar procesando de 
+tendremos que formatearlo para representarlo, aunque no será necesario si solamente 
+queremos operar con él. Bro dispone de funciones para pasar de \textit{double} a 
+\textit{time}, \textbf{double\_to\_time}, 
+obtener el tiempo actual, \textbf{current\_time}, y por último también disponemos de una 
+función para obtener el tiempo del último paquete procesado, \textbf{network time}, 
+obteniendo así su \textit{timestamp}, aunque parezca que necesita estar procesando de 
 manera online para usar esta función no es así, pues también sirve para los 
-archivos de datos de tráfico de red guardados, como los archivos pcap que 
+archivos de datos de tráfico de red guardados, como los archivos \textit{pcap} que 
 usaremos nosotros para el emparejamiento. Para mostrar correctamente el valor 
-del tiempo podemos usar strftime, lo cual nos formateará el tiempo y lo mostrará 
-acorde a lo que le digamos en la cabecera de la función. También contamos con el 
-caso contrario, es decir, pasar de string a time, para ello tendremos que usar la 
-función strptime.
+del tiempo podemos usar \textbf{strftime}, lo cual nos formateará el tiempo y lo mostrará 
+acorde a lo que le indiquemos en la cabecera de la función. También contamos con el 
+caso contrario, es decir, pasar de \textit{string} a \textit{time}, para ello tendremos que usar la 
+función \textbf{strptime}.
 \intro
-Ahora una de las funciones más importantes es time\_to\_double, que sirve para pasar 
-un tipo time a double, haciendo más fácil operar con él.
+Para acabar tenemos una de las funciones más importantes que es \textbf{time\_to\_double}, que sirve para pasar 
+un tipo \textit{time} a \textit{double}, haciendo más fácil operar con él.
 
 \subsubsection{Listado de flujos activos}
 
-Para mantener un listado de flujos activos haremos uso de un contenedor para 
-almacenarlos y usaremos de los eventos de Bro para gestionarlos, primero cuando 
+Para mantener un \textbf{listado de flujos activos} haremos uso de un contenedor para 
+almacenarlos y haremos uso de los eventos de Bro para gestionarlos. Primero, cuando 
 se generen flujos que previamente no habíamos visto los guardaremos para compararlos, 
-si aparecen flujos que ya tenemos habíamos visto, los compararemos con los almacenados 
+si aparecen flujos que ya tenemos reconocidos, los compararemos con los almacenados 
 y si nos interesa los guardaremos, y por último cuando Bro nos indique que algún flujo 
-va a ser eliminado de la memoria y por lo tanto ese flujo ya no está activo, veremos 
+va a ser eliminado de la memoria y por lo tanto ese flujo ya no estará activo una vez que el evento termine, por lo tanto tendremos que operar con el flujo antes de que el evento termine, para ello veremos 
 si hay algún candidato a ocupar su puesto en el listado de flujos emparejados y lo 
 eliminamos del listado de flujos comparables.
 \intro
 Para mantener un listado de flujos activos Bro nos proporciona varias formas. La 
-primera es usar un vector, el cual es fácil de usar si venimos de lenguajes como C++, 
-podremos incluir archivos usando los corchetes, [ ], indicando el índice dentro 
-de ellos, para borrar un elemento usaremos delete y para consultar el tamaño del 
-vector usaremos |v|, pero sin embargo por si sólo es muy ineficiente para almacenar 
+primera es usar un \textbf{vector}, el cual es fácil de usar si venimos de lenguajes como \textit{C++}, 
+podremos incluir datos usando los corchetes, \textit{[ ]}, indicando el índice dentro 
+de ellos, para borrar un elemento usaremos \textit{delete} y para consultar el tamaño del 
+vector usaremos \textit{|v|}, pero sin embargo por si sólo es muy \textbf{ineficiente} para almacenar 
 datos del tipo connection, pues solo dispone de índices numéricos.
 \intro
-Otro tipo para almacenar datos es set, el cual para borrar y consultar el tamaño 
-es igual que para los vectores, sin embargo, para agregar datos tendremos que usar add se[s], 
+Otro tipo para almacenar datos es \textbf{set}, el cual para borrar y consultar el tamaño 
+es igual que para los vectores, sin embargo, para agregar datos tendremos que usar \textit{add se[s]}, 
 estando entre los corchetes lo que queremos almacenar, aunque también podemos 
-almacenar datos redifiniendo el set, por ejemplo, s1 = set(1,2,3). El set también 
-es ineficiente, aunque menos, pues en un índice, aunque podemos guardar varios 
-elementos estos tienen que ser únicos y corremos el riesgo de eliminar los datos almacenados.
+almacenar datos redifiniendo el set, por ejemplo, \textit{s1 = set(1,2,3)}. El set también 
+es \textbf{ineficiente}, aunque menos, pues en un índice, aunque podemos guardar varios 
+elementos estos tienen que ser únicos y corremos el riesgo de eliminar los datos almacenados al insertar nuevos datos.
 \intro
-Por último podemos usar un tipo table, que es básicamente un map, de los que se 
-usan en C++, pudiendo hacerlos bastante interesantes, pues podemos hacer un table 
-de connection de vector o de set de connection, por lo tanto esta será la forma 
+Por último podemos usar un tipo \textit{table}, que es básicamente un \textit{map}, de los que se 
+usan en \textit{C++}, pudiendo hacerlos bastante interesantes, pues podemos hacer un \textbf{table 
+de connection de vector} o de set de connection, por lo tanto esta será la forma 
 que usaremos para almacenar el listado de flujos activos, pues nos da bastante 
 versatilidad a la hora de manejar el listado de los flujos, porque podemos 
 acceder por índice a la lista de todos los flujos que comparten datos, haciendo 
@@ -302,26 +306,30 @@ que sea una tarea bastante asequible, en términos de eficiencia.
 
 \subsection{Identificación de flujos en Bro (Tipo de flujo/Protocolo)}
 
-Como ya se explicó en otro apartado, Bro consta del tipo connection [6] 
-para referirse y tratar los flujos, por lo tanto como en el flujo hay 
-información sobre el protocolo que usa podemos consultarlo haciendo 
+Como ya se explicó en otro apartado, Bro consta del tipo \textit{connection} \cite{connectiontype} 
+para referirse y tratar los flujos, por lo tanto cómo en el flujo hay 
+información sobre el protocolo que usa, podemos consultarlo haciendo 
 referencia al flujo que estamos tratando. Hay que destacar que dentro 
-de connection, en history, existe otro tipo llamado Conn::Info [7] que 
-extiende aún más los datos de connection, y siendo capaz sus datos de 
-crear los logs de lo que estemos analizando, por lo que podremos generar 
+de \textit{connection}, en \textit{history}, existe otro tipo llamado \textit{Conn::Info} \cite{conntype} que 
+extiende aún más los datos de \textit{connection}, y siendo capaz sus datos de 
+crear los \textit{logs} de lo que estemos analizando, por lo que podremos generar 
 un log con los protocolos que son usados en la sesión. Cabe destacar que 
-mostrando la información del puerto mediante el tipo port, el string que 
+mostrando la información del puerto mediante el tipo \textit{port}, el \textit{string} que 
 nos muestra lleva el número del puerto y el protocolo al que pertenece, 
-pudiendo así extraer si es TCP, UDP o ICMP. Aunque si lo que queremos es 
+pudiendo así extraer si es \textit{TCP o UDP}. Aunque si lo que queremos es 
 obtener solamente el protocolo de transporte al que pertenece el flujo 
-podemos hacer uso de la función get\_port\_transport\_proto [8].
+podemos hacer uso de la función \textit{get\_port\_transport\_proto} \cite{getproto}.
 \intro
-Es destacable que el tipo de dato port soporta la comparación, lo cual 
+Es destacable que el tipo de dato  \textit{port} soporta la comparación, lo cual 
 será usado en el programa.  
 \intro
 También en las múltiples extensiones de Bro encontramos un analizador 
-de protocolos, protocol analizer [9], el cual dispone de varias funciones 
-interesantes para el análisis de protocolos.
+de protocolos, protocol analyzer \cite{protoanalyzer}, el cual dispone de varias funciones 
+interesantes para el análisis de protocolos, pero que nosotros no usaremos.
+\intro
+Después de lo expuesto en esta sección podemos decir que a partir del protocolo al que 
+nos indique el flujo que pertenece, podremos clasificar mejor el tipo de flujo que estamos 
+tratando.
 
 \subsection{Ejemplo de uso de eventos}
 
