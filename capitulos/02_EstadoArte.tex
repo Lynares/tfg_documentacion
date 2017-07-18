@@ -373,21 +373,21 @@ event connection_state_remove(c: connection)
 \end{lstlisting}
 
 Algunos comentarios sobre este código. Como habrá podido notar en el 
-lenguaje de Bro los comentarios se realizan con dos almohadillas, \#\#, 
-los print son como en la gran mayoría de lenguajes, con la particularidad 
-de que si vamos a mostrar un string debemos de indicar que va formateado 
-mediante fmt, \%s es para mostrar el string, tal y como se hace en C con 
-los datos de tipo int mostrándolo con \%i, por ejemplo. Por último para 
+lenguaje \textit{Bro} los comentarios se realizan con dos almohadillas, \textit{\#\#}, 
+los \textit{print} son como en la gran mayoría de lenguajes, con la particularidad 
+de que si vamos a mostrar un \textit{string} debemos de indicar que va formateado 
+mediante \textit{fmt}, \textit{\%s} es para mostrar el \textit{string}, tal y como se hace en \textit{C} con 
+los datos de tipo \textit{int} mostrándolo con \textit{\%i}, por ejemplo. Por último para 
 acceder a la distinta información que contiene el tipo de dato debemos 
-de usar \$, esto es parecido a como accedemos en Java a los datos de las clases.
+de usar \textit{\$}, esto es parecido a como accedemos en \textit{Java} a los datos de las clases.
 \intro
 Aunque el código está comentado merece la pena hacer algunas valoraciones 
-sobre los eventos usados, el evento new\_connection es muy útil, pues se 
+sobre los eventos usados, el evento \textbf{new\_connection} es muy útil, pues se 
 ejecuta cada vez que llega un flujo que no ha sido usado antes y además 
-reconoce TCP, UDP e ICMP. El evento connection\_timeout aunque sólo sirva 
-para flujos del protocolo TCP es bastante útil para empezar a trabajar 
+reconoce \textit{TCP, UDP e ICMP}. El evento \textbf{connection\_timeout} aunque sólo sirva 
+para flujos del protocolo \textit{TCP} es bastante útil para empezar a trabajar 
 sobre Bro, pues sirve para empezar a comprender como funcionan los eventos. 
-Por último el evento connection\_state\_removed se lanza para TCP, UDP e ICMP 
+Por último el evento \textbf{connection\_state\_removed} se lanza para \textit{TCP, UDP e ICMP} 
 cuando los flujos están a punto de morir, por lo tanto tiene un gran valor 
 para eliminar de memoria los flujos que ya no nos interesan porque no están 
 activos, y si este evento no se lanza no serán eliminados, en caso de que 
