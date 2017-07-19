@@ -1,26 +1,28 @@
 \chapter{Conclusiones y trabajo futuro}
 
+\section{Conclusiones}
+
 Después de lo visto anteriormente se puede llegar a 
 la conclusión de que mediante un NMS, al cual mediante 
 la agregación de funcionalidades, se le proporciona la 
 capacidad de clasificar el tráfico de una red mediante 
 emparejamiento de flujos. En nuestro caso los protocolos 
-analizados son solamente TCP, UDP e ICMP, es decir, 
-los protocolos de transporte.
+analizados son solamente \textbf{TCP y UDP}, es decir, 
+los protocolos de la capa de transporte y en algunos casos 
+también el protocolo ICMP.
 \intro
 Trabajar con Bro al principio fue algo tedioso, pues 
-había que aprender su lenguaje de programación propio 
+había que aprender un lenguaje de programación propio de la empresa 
 y no había mucha documentación disponible, a parte de 
 la que hay en su página web, pero una vez realizadas 
 las primeras tomas de contacto y resueltos los problemas 
-derivados de no conocer bien el lenguaje, como acceder a 
-los datos de las tablas mediante \$ en lugar de un punto, 
-como suelo estar acostumbrado, todo fue bastante sencillo.
+derivados de no conocer bien el lenguaje, problemas ya expuestos 
+en anteriores apartados todo fue bastante sencillo.
 \intro
 Fue muy sencillo poder mostrar los datos de los flujos, 
 pues que se disponga de un tipo de dato que almacene todos 
 los datos correspondientes al flujo hace que trabajar con 
-ello sea muy sencillo, incluso mostrar el de todos los 
+ello sea muy fácil, incluso mostrar el de todos los 
 flujos que pasan por el programa, y que el rendimiento 
 no se vea afectado. Puede considerarse un inconveniente 
 que no disponga de interfaz, pues en el terminal se puede 
@@ -32,7 +34,9 @@ mostrando la información de dos flujos que estamos comparando
 de tipo UDP por ejemplo, y que salte un evento de TCP y 
 se muestre mientras todavía se está mostrando la información 
 del evento de UDP.
-\intro
+
+\section{Trabajo futuro}
+
 Obviamente este programa al solo poder emparejar flujos 
 mediante el protocolo de transporte se puede quedar corto 
 a la hora de querer obtener un análisis más exhaustivo, de 
@@ -41,12 +45,7 @@ de modo que a este programa se le puede agregar más funcionalidades
 haciendo que sea más completo, y clasifiquen además los flujos 
 por el tipo de protocolo en la capa de aplicación pertenecen, 
 con esto nos referimos a HTTP, SMTP, FTP, DNS y demás. Esto 
-podría llegar a realizarse analizando más detenidamente los puertos.
-\intro
-A nivel personal me ha gustado poder aprender más sobre redes y 
-cómo analizarlas, pues no es un tema en el cual no tengo unos 
-conocimientos demasiados amplios, aparte de los básicos.
-
-\section{Conclusiones}
-
-\section{Trabajo futuro}
+podría llegar a realizarse analizando más detenidamente los puertos. 
+Esta extensión se podría realizar con algunos clasificadores de puertos 
+que ya están realizados y se pueden encontrar con cierta facilidad en 
+GitHub.
