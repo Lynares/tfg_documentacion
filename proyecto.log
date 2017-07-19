@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.7.7)  18 JUL 2017 18:14
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.7.7)  19 JUL 2017 12:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2189,6 +2189,10 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 1.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 1.
+
+Package natbib Warning: Citation `comparacion' on page 27 undefined on input li
+ne 7.
+
 ) (./capitulos/04_Implementacion.tex
 Underfull \hbox (badness 10000) in paragraph at lines 10--1
 
@@ -2279,396 +2283,303 @@ Underfull \hbox (badness 10000) in paragraph at lines 3--7
 
  []
 
+
+! Package inputenc Error: Unicode char �\expandafter (U+4F1)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.11   ## Añadimos 
+                    variables para comprobar en la tabla, sin hacer bucle
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `utf8'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.11   ## Añadimos 
+                    variables para comprobar en la tabla, sin hacer bucle
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
+
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 38.
+(babel)             in language  on input line 37.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 38.
+(babel)             in language  on input line 37.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 38.
+(babel)             in language  on input line 37.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 38.
+(babel)             in language  on input line 37.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 38.
+(babel)             in language  on input line 37.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 38.
+(babel)             in language  on input line 37.
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 38.
+(babel)             in language  on input line 37.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 38.
+(babel)             in language  on input line 37.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 38.
+(babel)             in language  on input line 37.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 38.
+(babel)             in language  on input line 37.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 38.
+(babel)             in language  on input line 37.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 38.
+(babel)             in language  on input line 37.
 [29
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 74--82
 
- []
+! Package Listings Error: Couldn't load requested style.
+
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.72 \begin{lstlisting}[style=CodidoC]
+                                      
+The following styles weren't loadable:
+    ,codidoc$
+This may cause errors in the sequel.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 74--82
+! Package Listings Error: style codidoc undefined.
 
- []
+See the Listings package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.72 \begin{lstlisting}[style=CodidoC]
+                                      
+The style is not loadable. Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+! Package inputenc Error: Unicode char �\expandafter (U+4F1)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.78 ... que el umbral de comparacion lo añadimos
+                                                  
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `utf8'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.78 ... que el umbral de comparacion lo añadimos
+                                                  
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
+
+
+! Package inputenc Error: Unicode char �\expandafter (U+4F1)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85         print fmt("Añadimos 
+                                  una nueva conexion al vector de coincidenc...
+
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `utf8'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.85         print fmt("Añadimos 
+                                  una nueva conexion al vector de coincidenc...
+
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
 
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 84.
+(babel)             in language  on input line 88.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 84.
+(babel)             in language  on input line 88.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 84.
+(babel)             in language  on input line 88.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 84.
+(babel)             in language  on input line 88.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 84.
+(babel)             in language  on input line 88.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 84.
+(babel)             in language  on input line 88.
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 84.
+(babel)             in language  on input line 88.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 84.
+(babel)             in language  on input line 88.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 84.
+(babel)             in language  on input line 88.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 84.
+(babel)             in language  on input line 88.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 84.
+(babel)             in language  on input line 88.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 84.
+(babel)             in language  on input line 88.
 [30]
-Underfull \hbox (badness 10000) in paragraph at lines 91--103
+
+! Package inputenc Error: Unicode char �\expandafter (U+4F1)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.88         ## Si ya esta, lo añadimos
+                                        
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `utf8'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.88         ## Si ya esta, lo añadimos
+                                        
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
+
+
+! Package inputenc Error: Unicode char �\expandafter (U+4F1)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.90 ...en vector de coincidencias y la añadimos"
+                                                  );
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `utf8'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.90 ...en vector de coincidencias y la añadimos"
+                                                  );
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
+
+
+! Package inputenc Error: Unicode char �\expandafter (U+4F1)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.94 ...e el umbral de comparacion no lo añadimos
+                                                  
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `utf8'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.94 ...e el umbral de comparacion no lo añadimos
+                                                  
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 102--109
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 91--103
+Underfull \hbox (badness 10000) in paragraph at lines 102--109
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 91--103
+Underfull \hbox (badness 10000) in paragraph at lines 102--109
 
  []
 
 
-! Package inputenc Error: Unicode char �\expandafter (U+4F1)
-(inputenc)                not set up for use with LaTeX.
+Underfull \hbox (badness 10000) in paragraph at lines 118--130
 
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.104 ...nformacion del flujo nuevo que se añade,
-                                                   no de todos los flujos to...
+ []
 
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
 
+Underfull \hbox (badness 10000) in paragraph at lines 118--130
 
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
+ []
 
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.104 ...nformacion del flujo nuevo que se añade,
-                                                   no de todos los flujos to...
 
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
+Underfull \hbox (badness 10000) in paragraph at lines 118--130
 
+ []
 
-! Package inputenc Error: Unicode char �\expandafter (U+4F1)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 La función 
-                  informacion_flujo sirve para mostrar la información del f...
-
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 La función 
-                  informacion_flujo sirve para mostrar la información del f...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Unicode char �\expandafter (U+4F1)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 ...flujo sirve para mostrar la información 
-                                                  del flujo relativa a las I...
-
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 ...flujo sirve para mostrar la información 
-                                                  del flujo relativa a las I...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Unicode char �\expandafter\lst@FillFixed@ (U+A96)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 ...rmación del flujo relativa a las IP’s 
-                                                  y a los puertos que contie...
-
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 ...rmación del flujo relativa a las IP’s 
-                                                  y a los puertos que contie...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 ...rmación del flujo relativa a las IP’s 
-                                                  y a los puertos que contie...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Unicode char �\expandafter (U+4F1)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 ...s que contiene. Por su parte la función 
-                                                  informacion_coincidencia s...
-
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 ...s que contiene. Por su parte la función 
-                                                  informacion_coincidencia s...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Unicode char �\expandafter (U+4F1)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 ...encia sirve para mostrar la información 
-                                                  de dos flujos a la vez, mo...
-
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 ...encia sirve para mostrar la información 
-                                                  de dos flujos a la vez, mo...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Unicode char �\expandafter\lst@FillFixed@ (U+A96)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 ...os flujos a la vez, mostrando sus IP’s 
-                                                  y sus puertos, la cual ser...
-
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 ...os flujos a la vez, mostrando sus IP’s 
-                                                  y sus puertos, la cual ser...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 ...os flujos a la vez, mostrando sus IP’s 
-                                                  y sus puertos, la cual ser...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Unicode char �\expandafter (U+4F1)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 ... sus IP’s y sus puertos, la cual será 
-                                                  usada para mostrar al fina...
-
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 ... sus IP’s y sus puertos, la cual será 
-                                                  usada para mostrar al fina...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Unicode char �\expandafter (U+4F1)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 ...da para mostrar al final la información 
-                                                  que tenemos en la tabla y ...
-
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.116 ...da para mostrar al final la información 
-                                                  que tenemos en la tabla y ...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-LaTeX Info: Redefining \. on input line 118.
-LaTeX Info: Redefining \% on input line 118.
+LaTeX Info: Redefining \. on input line 130.
+LaTeX Info: Redefining \% on input line 130.
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 118.
+(babel)             in language  on input line 130.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 118.
+(babel)             in language  on input line 130.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 118.
+(babel)             in language  on input line 130.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 118.
+(babel)             in language  on input line 130.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 118.
+(babel)             in language  on input line 130.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 118.
+(babel)             in language  on input line 130.
 Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 118.
+(babel)             in language  on input line 130.
 Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 118.
+(babel)             in language  on input line 130.
 Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 118.
+(babel)             in language  on input line 130.
 Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 118.
+(babel)             in language  on input line 130.
 Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 118.
+(babel)             in language  on input line 130.
 Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 118.
+(babel)             in language  on input line 130.
 [31]
 
 ! Package inputenc Error: Unicode char �\expandafter (U+4F1)
@@ -2678,8 +2589,8 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.118 En el programa se hace uso también 
-                                          de un evento para eliminar los flu...
+l.142 ...rint fmt("Informacion del flujo añadido 
+                                                  IPo: %s , Po: %s , IPd: %s...
 
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -2693,124 +2604,78 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.118 En el programa se hace uso también 
-                                          de un evento para eliminar los flu...
+l.142 ...rint fmt("Informacion del flujo añadido 
+                                                  IPo: %s , Po: %s , IPd: %s...
 
 You need to provide a definition with \DeclareInputText 
 or \DeclareInputMath before using this key.
 
 
-! Package inputenc Error: Unicode char �\expandafter (U+4F1)
-(inputenc)                not set up for use with LaTeX.
+Underfull \hbox (badness 10000) in paragraph at lines 147--159
 
-See the inputenc package documentation for explanation.
+ []
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.118 ...ento para eliminar los flujos que estén 
-                                                  a punto de morir, este eve...
-
+l.160 \intro
+            
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
+! LaTeX Error: There's no line here to end.
 
-See the inputenc package documentation for explanation.
+See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.118 ...ento para eliminar los flujos que estén 
-                                                  a punto de morir, este eve...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Unicode char �\expandafter (U+4F1)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.122 ...ner otra conexion en el empa la añadimos
-                                                  
+l.160 \intro
+            
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
+Underfull \hbox (badness 10000) in paragraph at lines 170--173
 
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.122 ...ner otra conexion en el empa la añadimos
-                                                  
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
+ []
 
 
-! Package inputenc Error: Unicode char �\expandafter (U+4F1)
-(inputenc)                not set up for use with LaTeX.
+Underfull \hbox (badness 10000) in paragraph at lines 170--173
 
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.123 ## se obtienen los mismos flujos añadidos 
-                                                 que eliminados, por lo tant...
+ []
 
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.123 ## se obtienen los mismos flujos añadidos 
-                                                 que eliminados, por lo tant...
-
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
-
-! Package inputenc Error: Unicode char �\expandafter (U+4F1)
-(inputenc)                not set up for use with LaTeX.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.123 ...to hay que controlar cuando lo añadimos 
-                                                  y cuando lo eliminamos
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! Package inputenc Error: Keyboard character used is undefined
-(inputenc)                in inputencoding `utf8'.
-
-See the inputenc package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.123 ...to hay que controlar cuando lo añadimos 
-                                                  y cuando lo eliminamos
-You need to provide a definition with \DeclareInputText 
-or \DeclareInputMath before using this key.
-
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 174.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 174.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 174.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 174.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 174.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 174.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 174.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 174.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 174.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 174.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 174.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 174.
+[32]
 
 ! Package inputenc Error: Unicode char �\expandafter\lst@FillFixed@ (U+A96)
 (inputenc)                not set up for use with LaTeX.
@@ -2819,7 +2684,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.125 ## Generated when a connection’s 
+l.174 ## Generated when a connection’s 
                                          internal state is about to be remov...
 
 Your command was ignored.
@@ -2834,7 +2699,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.125 ## Generated when a connection’s 
+l.174 ## Generated when a connection’s 
                                          internal state is about to be remov...
 
 You need to provide a definition with \DeclareInputText 
@@ -2848,12 +2713,61 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.125 ## Generated when a connection’s 
+l.174 ## Generated when a connection’s 
                                          internal state is about to be remov...
 
 You need to provide a definition with \DeclareInputText 
 or \DeclareInputMath before using this key.
 
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 190.
+
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/omlcmr.fd
+File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <8> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 190.
+
+Underfull \hbox (badness 10000) in paragraph at lines 209--223
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 209--223
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 209--223
+
+ []
+
+LaTeX Info: Redefining \. on input line 225.
+LaTeX Info: Redefining \% on input line 225.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 225.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 225.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 225.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 225.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 225.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 225.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 225.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 225.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 225.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 225.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 225.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 225.
+[33]
 
 ! Package inputenc Error: Unicode char �\expandafter (U+4F1)
 (inputenc)                not set up for use with LaTeX.
@@ -2862,8 +2776,9 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.159     ## Quitamos uno al tamaño 
-                                     del set
+l.229 ...ocido, pero al borrarlo de memoria será 
+                                                  desconocido aunque ya lo t...
+
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
@@ -2876,52 +2791,11 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.159     ## Quitamos uno al tamaño 
-                                     del set
+l.229 ...ocido, pero al borrarlo de memoria será 
+                                                  desconocido aunque ya lo t...
+
 You need to provide a definition with \DeclareInputText 
 or \DeclareInputMath before using this key.
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 160.
-Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 160.
-Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 160.
-Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 160.
-Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 160.
-Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 160.
-Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 160.
-Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 160.
-Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 160.
-Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 160.
-Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 160.
-Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 160.
- [32]
-Underfull \hbox (badness 10000) in paragraph at lines 168--187
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 168--187
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 168--187
-
- []
 
 
 ! Package inputenc Error: Unicode char �\lst@FillFixed@\lst@EC� (U+207C0)
@@ -2931,7 +2805,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.194 ...low-based definition of “connection” 
+l.230 ...low-based definition of “connection” 
                                                   here that includes not onl...
 
 Your command was ignored.
@@ -2946,7 +2820,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.194 ...low-based definition of “connection” 
+l.230 ...low-based definition of “connection” 
                                                   here that includes not onl...
 
 You need to provide a definition with \DeclareInputText 
@@ -2960,7 +2834,7 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.194 ...low-based definition of “connection” 
+l.230 ...low-based definition of “connection” 
                                                   here that includes not onl...
 
 Your command was ignored.
@@ -2975,8 +2849,8 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.201 ## Sumamos uno al tamaño 
-                                del set
+l.242     print fmt("Añadimos 
+                               una nueva conexion");
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
@@ -2989,77 +2863,10 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.201 ## Sumamos uno al tamaño 
-                                del set
+l.242     print fmt("Añadimos 
+                               una nueva conexion");
 You need to provide a definition with \DeclareInputText 
 or \DeclareInputMath before using this key.
-
-LaTeX Info: Redefining \. on input line 211.
-LaTeX Info: Redefining \% on input line 211.
-Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 211.
-Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 211.
-Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 211.
-Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 211.
-Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 211.
-Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 211.
-Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 211.
-Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 211.
-Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 211.
-Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 211.
-Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 211.
-Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 211.
-[33]
-Underfull \hbox (badness 10000) in paragraph at lines 230--240
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 230--240
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 230--240
-
- []
-
-
-! LaTeX Error: There's no line here to end.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.244 \intro
-            
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-
-! LaTeX Error: There's no line here to end.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.244 \intro
-            
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
 
 
 ! Package inputenc Error: Unicode char �\expandafter (U+4F1)
@@ -3069,7 +2876,127 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.258     ## print fmt("Tamaño 
+l.245     ## Si ya esta, lo añadimos
+                                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `utf8'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.245     ## Si ya esta, lo añadimos
+                                     
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
+
+
+! Package inputenc Error: Unicode char �\expandafter (U+4F1)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.248     print fmt("Ya esta y la añadimos"
+                                            );
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `utf8'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.248     print fmt("Ya esta y la añadimos"
+                                            );
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 254--264
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 254--264
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 254--264
+
+ []
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.268 \intro
+            
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: There's no line here to end.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.268 \intro
+            
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 278.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 278.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 278.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 278.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 278.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 278.
+Package babel Info: Redefining spanish shorthand <<
+(babel)             in language  on input line 278.
+Package babel Info: Redefining spanish shorthand >>
+(babel)             in language  on input line 278.
+Package babel Info: Redefining spanish shorthand "=
+(babel)             in language  on input line 278.
+Package babel Info: Redefining spanish shorthand "~
+(babel)             in language  on input line 278.
+Package babel Info: Redefining spanish shorthand "!
+(babel)             in language  on input line 278.
+Package babel Info: Redefining spanish shorthand "?
+(babel)             in language  on input line 278.
+[34]
+
+! Package inputenc Error: Unicode char �\expandafter (U+4F1)
+(inputenc)                not set up for use with LaTeX.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.282     ## print fmt("Tamaño 
                                 de la fila de la tabla: %d", |empa[s]|);
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -3083,51 +3010,26 @@ See the inputenc package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.258     ## print fmt("Tamaño 
+l.282     ## print fmt("Tamaño 
                                 de la fila de la tabla: %d", |empa[s]|);
 You need to provide a definition with \DeclareInputText 
 or \DeclareInputMath before using this key.
 
-Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 262.
-Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 262.
-Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 262.
-Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 262.
-Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 262.
-Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 262.
-Package babel Info: Redefining spanish shorthand <<
-(babel)             in language  on input line 262.
-Package babel Info: Redefining spanish shorthand >>
-(babel)             in language  on input line 262.
-Package babel Info: Redefining spanish shorthand "=
-(babel)             in language  on input line 262.
-Package babel Info: Redefining spanish shorthand "~
-(babel)             in language  on input line 262.
-Package babel Info: Redefining spanish shorthand "!
-(babel)             in language  on input line 262.
-Package babel Info: Redefining spanish shorthand "?
-(babel)             in language  on input line 262.
-[34]
 ! Missing $ inserted.
 <inserted text> 
                 $
-l.275 ...el programa mediante la función current_
+l.299 ...el programa mediante la función current_
                                                   time. En el
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-LaTeX Warning: Command \' invalid in math mode on input line 277.
+LaTeX Warning: Command \' invalid in math mode on input line 301.
 
 ! Please use \mathaccent for accents in math mode.
 \add@accent ...@spacefactor \spacefactor }\accent 
                                                   #1 #2\egroup \spacefactor ...
-l.277 y mostramos la hora de finalizació
+l.301 y mostramos la hora de finalizació
                                          n del programa.
 I'm changing \accent to \mathaccent here; wish me luck.
 (Accents are not the same in formulas as they are in text.)
@@ -3135,7 +3037,7 @@ I'm changing \accent to \mathaccent here; wish me luck.
 ! You can't use `\spacefactor' in math mode.
 \add@accent ...}\accent #1 #2\egroup \spacefactor 
                                                   \accent@spacefactor 
-l.277 y mostramos la hora de finalizació
+l.301 y mostramos la hora de finalizació
                                          n del programa.
 Sorry, but I'm not programmed to handle this case;
 I'll just pretend that you didn't ask for it.
@@ -3153,7 +3055,7 @@ you left one out. Proceed, with fingers crossed.
 
 Missing character: There is no � in font cmex10!
 
-Overfull \hbox (372.35252pt too wide) in paragraph at lines 274--1
+Overfull \hbox (372.35252pt too wide) in paragraph at lines 298--1
 \OT1/cmr/m/n/10.95 gra-ma me-dian-te la fun-ci^^Son current$[]\OML/cmm/m/it/10.
 95 ime:Eneleventodelfinalmostramoslosflujosquehansidoemparejadosymostramoslahor
 adefinalizaci[]ndelprograma:$ 
@@ -3382,13 +3284,13 @@ Package rerunfilecheck Info: File `proyecto.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 225.
  ) 
 Here is how much of TeX's memory you used:
- 11673 strings out of 492990
- 160450 string characters out of 6132622
- 542697 words of memory out of 5000000
- 14723 multiletter control sequences out of 15000+600000
+ 11553 strings out of 492990
+ 159172 string characters out of 6132622
+ 454697 words of memory out of 5000000
+ 14610 multiletter control sequences out of 15000+600000
  13800 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,12n,58p,495b,2019s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 34i,12n,58p,319b,1909s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></
@@ -3405,10 +3307,10 @@ xlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/tex
 live/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texli
 ve/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texliv
 e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on proyecto.pdf (43 pages, 393651 bytes).
+Output written on proyecto.pdf (43 pages, 393117 bytes).
 PDF statistics:
- 654 PDF objects out of 1000 (max. 8388607)
- 583 compressed objects within 6 object streams
- 302 named destinations out of 1000 (max. 500000)
+ 641 PDF objects out of 1000 (max. 8388607)
+ 570 compressed objects within 6 object streams
+ 291 named destinations out of 1000 (max. 500000)
  152 words of extra memory for PDF output out of 10000 (max. 10000000)
 

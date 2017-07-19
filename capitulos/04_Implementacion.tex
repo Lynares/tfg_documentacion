@@ -4,11 +4,49 @@ Ahora vamos a proceder a explicar cómo se ha solucionado los problemas
 propuestos, siendo estos explicados a través del programa que se ha 
 realizado, quedando así más clara la explicación.
 \intro
+
+Lo primero será mostrar que estructura se ha utilizado para almacenar los 
+flujos.
+\intro
 \begin{lstlisting}[style=CodigoC]
-## funcion para la comparacion de los flujos, c1 el flujo que esta en el set conex y c2 para el flujo que es candidato a guardarse en empa
+
+## Tablas para guardar los flujos que son emparejados
+global collection: table[addr, addr, port, port] of vector of connection &synchronized;
+global collection_added: table[addr, addr, port, port] of vector of connection;
+
+## El umbral: "Comparar la constante 'k', que es el umbral que fijaré con el resultado que devuelve la función,
+## si es más grande el resultado que 'k' se puede decir que los dos flujos son iguales, si es más pequeño podemos decir que los dos flujos no son iguales"
+## resultado del umbral que calculamos
+global umbral: double;
+
+## Definimos el umbral, de manera global para hacer las comparaciones
+global k=10;
+
+\end{lstlisting}
+
+En este primer código tenemos que: 
+\begin{itemize}
+\item Vamos a guardar los flujos en una tabla \textit{collection} que tiene como índices 
+dos direcciones IP y dos puertos, y a partir de estos indices tendremos un \textit{vector de connection}.
+\item La tabla \textit{collection_added} está destinada para guardar los flujos que son 
+emparejados.
+\item El \textit{umbral}, que será una variable global, y será donde almacenemos el resultado 
+de la función de comparación.
+\item \textit{k} es el umbral que definimos nosotros al principio, que será el que usemos como 
+referencia para saber si dos flujos son emparejables o no.
+\end{itemize}
+
+\begin{lstlisting}[style=CodigoC]
+## funcion para la comparacion de los flujos, c1 el flujo que esta el primero en el vector de la tabla y c2 para el flujo que es candidato a ser emparejado
 function emparejamiento(c1: connection, c2: connection ):double {
 
-  local Nip=1; ## Variable para saber cuantas conexiones tenemos
+  ## Añadimos variables para comprobar en la tabla, sin hacer bucle
+  local orig = c1$id$orig_h;
+  local dest = c1$id$resp_h;
+  local po = c1$id$orig_p;
+  local pd = c1$id$resp_p;
+
+  local Nip = |collection[orig,dest,po,pd]|; ## Variable para saber cuantas conexiones tenemos
   local Po1: count; ## Puerto origen del primer flujo
   local Po2: count; ## Puerto origen del segundo flujo
   local Pd1: count; ## Puerto destino del primer flujo
@@ -16,29 +54,11 @@ function emparejamiento(c1: connection, c2: connection ):double {
   local k1 = 1;  ## Variable fija
   local k2 = 10; ## Variable fija
   local dt: double; ## Variable para la diferencia de los tiempos
-  local resultado = 0.0; ## Lo ponemos a 0
+  local resultado = 0.0; ## Lo iniciamos a 0
+  
   print c1$uid;
   print c2$uid;
-## Podemos saltarnos este bucle si inicializamos Nip a 1
-  ## for (s in conex){
 
-  ##   if((s$id$orig_h == c1$id$orig_h) && (s$id$resp_h == c1$id$resp_h) && (s$id$orig_p == c1$id$orig_p) && (s$id$resp_p == c1$id$resp_p)){
-  ##           Nip=Nip+1;
-  ##           print fmt("Numero de Nip sin table: %d", Nip);
-  ##           break;
-  ##   }
-  ## }
-
-  if(c1$uid==c2$uid){
-    print fmt("Son el mismo flujo, no se realiza incremento en Nip");
-  }else{
-## Este bucle lo puedo hacer sin ningun problema, pues en los eventos todavia no se ha dicho que se guarde en el set
-  for (i in empa){
-    if((i$id$orig_h == c2$id$orig_h) && (i$id$resp_h == c2$id$resp_h) && (i$id$orig_p == c2$id$orig_p) && (i$id$resp_p == c2$id$resp_p)){
-            Nip=Nip+1;
-
-    }
-  }
   print fmt("Numero de Nip en table: %d", Nip);
   informacion_coincidencia(c1,c2);
   print fmt("Tiempo de inicio del flujo: %s", |c1$start_time|);
@@ -65,20 +85,59 @@ function emparejamiento(c1: connection, c2: connection ):double {
   ## print fmt("Tiempo paquete 1: %s", t1);
   ## print fmt("Tiempo paquete 2: %s", t2);
   print fmt("Diferencia de tiempo: %s", dt);
+
   resultado=(Nip-1)+(1/((Po1-Po2)+k1))+(1/((Pd1-Pd2)+k1))+(1/(dt+k2));
- }
+
  return resultado;
 
 }
 \end{lstlisting}
+
 En este trozo de código se muestra la función que se usa para devolver 
-el resultado de la función de comparación. El resultado será comparado 
-con el umbral que nosotros definimos, haciendo que si dicho resultado 
-es mayor que el umbral serán emparejables y por tanto serán guardados 
-en un table[connection] of connection, lo que sería comparable en C++ 
-con un map. Decidimos guardarlos dentro de cada uno de los eventos que 
-lanzamos cuando Bro reconoce un determinado protocolo, dichos eventos son:
+el resultado de la función de comparación. El resultado siempre es comparado 
+con el umbral que hemos definido antes de lanzar el programa, y una vez que se 
+usa esta función quiere decir que son \textit{comparables}, pero no sabemos todavía si son 
+\textit{emparejables}. Si son emparejables lo sabremos solamente después de 
+que hayamos ejecutado la función y se realice la comparación con el umbral. Para que 
+quede más claro aquí esta el código de la comparación con el umbral.
+
+\begin{lstlisting}[style=CodidoC]
+. . .
+
+	umbral=emparejamiento(cl,c);
+    print fmt("connection_finished");
+    if(umbral>k){
+      ## Si el umbral calculado es mayor que el umbral de comparacion lo añadimos
+      print fmt("Si son emparejables TCP"); ## Mostramos TCP para saber en que evento se han calculado
+      collection[orig,dest,po,pd][|collection[orig,dest,po,pd]|] = c;
+      informacion_coincidencia(cl, c);
+      if( [orig,dest,po,pd] !in collection_added ){
+
+        collection_added[orig,dest,po,pd]=vector(c);
+        print fmt("Añadimos una nueva conexion al vector de coincidencias");
+      } else {
+
+        ## Si ya esta, lo añadimos
+        collection_added[orig,dest,po,pd][|collection_added[orig,dest,po,pd]|] = c;
+        print fmt("Ya esta en vector de coincidencias y la añadimos");
+      }
+
+    } else{
+      ## Si el umbral calculado es menor que el umbral de comparacion no lo añadimos
+      print fmt("No son emparejables TCP");
+
+    }
+    
+. . .
+\end{lstlisting}
+
+En este ejemplo se calcularía para las conexiones de tipo \textit{TCP}.
 \intro
+La comparación se dará cuando Bro reconozca un flujo de un determinado tipo 
+de protocolo, en nuestro caso será mediante los eventos destinados a 
+reconocer los tipos de protocolos de la \textit{capa de transporte}.
+Dichos eventos son:
+
 \begin{itemize}
 \item connection\_established, el cual se lanza cuando Bro localiza un SYN-ACK que corresponda a un handshake de TCP.
 \item connection\_finished, el cual lanza Bro cuando una conexión TCP finaliza de forma normal. 
@@ -101,87 +160,96 @@ Para mostrar la información de los flujos tenemos dos opciones, de las
 cuales mostramos el código a continuación:
 \intro
 \begin{lstlisting}[style=CodigoC]
-## Creo funcion auxiliar para ver la informacion del flujo nuevo que se añade, no de todos los flujos todo el rato
-function informacion_flujo(c: connection){
-    print fmt("Informacion del flujo nuevo IPo: %s , Po: %s , IPd: %s , Pd: %s ", c$id$orig_h, c$id$orig_p, c$id$resp_h, c$id$resp_p);
-}
 
+## Creo funcion auxiliar para ver la informacion del flujos que son coincidentes
 
-## Creo funcion auxiliar para ver la informacion del flujo que se coincide
 function informacion_coincidencia(c: connection, p: connection){
     print fmt("Informacion del primer flujo  IPo: %s , Po: %s , IPd: %s , Pd: %s ", c$id$orig_h, c$id$orig_p, c$id$resp_h, c$id$resp_p);
     print fmt("Informacion del flujo coincidente  IPo: %s , Po: %s , IPd: %s , Pd: %s ", p$id$orig_h, p$id$orig_p, p$id$resp_h, p$id$resp_p);
 }
 
-La función informacion_flujo sirve para mostrar la información del flujo relativa a las IP’s y a los puertos que contiene. Por su parte la función informacion_coincidencia sirve para mostrar la información de dos flujos a la vez, mostrando sus IP’s y sus puertos, la cual será usada para mostrar al final la información que tenemos en la tabla y el flujo con el que coincide en el set de comparaciones.
+## Funcion auxiliar para mostrar la informacion de un solo flujo
 
-En el programa se hace uso también de un evento para eliminar los flujos que estén a punto de morir, este evento es:
+function informacion_flujo(c: connection){
+    print fmt("Informacion del flujo añadido IPo: %s , Po: %s , IPd: %s , Pd: %s, uid: %s ", c$id$orig_h, c$id$orig_p, c$id$resp_h, c$id$resp_p, c$uid);
+}
 
-connection_state_removed, evento que lanza Bro cuando va a eliminar de la memoria un flujo activo.
+\end{lstlisting}
 
-## Cuando la conexion va a ser borrada la eliminamos del set y en caso de tener otra conexion en el empa la añadimos
-## se obtienen los mismos flujos añadidos que eliminados, por lo tanto hay que controlar cuando lo añadimos y cuando lo eliminamos
-## Sirve para TCP, UDP e ICMP
+La función informacion\_flujo sirve para mostrar la información del flujo 
+relativa a las IP’s y a los puertos que contiene, así como el \textit{UID} 
+del flujo, que es el identificador único que se le asigna automáticamente 
+a cada flujo. 
+\intro
+Por su parte la función informacion\_coincidencia sirve para mostrar la 
+información de dos flujos a la vez, mostrando sus IP’s y sus puertos. 
+Esta función será usada para mostrar la información de los dos flujos que 
+son emparejables, siendo el primero de ellos el que se usa para comparar siempre 
+y el segundo es el nuevo flujo que se ha detectado. De esta forma tan sencilla 
+se puede mostrar toda la información interesante sin tener que recorrer al final de 
+la ejecución del programa todo la \textit{tabla de connection}.
+
+\intro
+Para eliminar los flujos que, por su \textit{timestamp} estén a punto de morir, Bro nos 
+da la opción mediante un evento de gestionar que hacer antes de que sean eliminados 
+de la memoria, dicho evento es: 
+
+\begin{itemize}
+\item connection\_state\_removed, evento que se lanza cuando un flujo activo va a ser 
+eliminado de la memoria.
+\end{itemize}
+
+Cabe destacar que el borrado no es todavía operativo, por lo que en el script puede 
+que este evento esté comentado.
+\intro
+\begin{lstlisting}[style=Codigoc]
 ## Generated when a connection’s internal state is about to be removed from memory. Bro generates this event reliably
 ## once for every connection when it is about to delete the internal state. As such, the event is well-suited for
 ## script-level cleanup that needs to be performed for every connection.
 ## This event is generated not only for TCP sessions but also for UDP and ICMP flows.
+
 event connection_state_remove(c: connection){
 
-## Creo un connection local para poder pasarlo de empa a conex
-   local cl: connection;
-## Variable booleana para controlar el acceso al set
-   local esta = F;
+  local orig = c$id$orig_h;
+  local dest = c$id$resp_h;
+  local po = c$id$orig_p;
+  local pd = c$id$resp_p;
+  local coleccion = collection[orig,dest,po,pd];
+  local tama=|coleccion|;
 
-## for que va recorriendo el set y haciendo comparaciones
-    for(s in empa){
-      if((s$id$orig_h == c$id$orig_h) && (s$id$resp_h == c$id$resp_h) && (s$id$orig_p == c$id$orig_p) && (s$id$resp_p == c$id$resp_p)){
-## Si se dan todas las condiciones la variable booleana de control de acceso al set se cambia a true, T
-              esta=T;
-## Al existir otro flujo lo copiamos en cl
-              cl=s;
-              break;
+
+  for(j in coleccion){
+    if(j+1 >= tama){
+      if(tama==1){
+        collection[orig,dest,po,pd]=vector();
       }
-    }
-
-    ## Aqui si tenemos otro flujo igual al que vamos a eliminar lo metemos en conex para que ocupe el lugar del que vamos a borrar
-    ## Con la variable booleana controlamos el decrecimiento del set
-    if (esta==T){
-      delete conex[c];
-      add conex[cl];
-      delete empa[cl];
-      ## print fmt("Hemos borrado");
-      ## print empa[cl];
+      if(j+1==tama){
+        delete collection[orig,dest,po,pd][tama]; ## Aqui esta el error
+      }
+      break;
     } else {
-      delete conex[c];
+      collection[orig,dest,po,pd][j]=coleccion[j+1];
     }
-    elimi=elimi+1;
-    ## Quitamos uno al tamaño del set
-    tams=tams-1;
-    esta=F;
-    ##  print fmt("Tamanio del set: %d", tams);
-    ##  informacion_flujo(c);
+  }
+
+  print fmt("Terminamos copia y borrado...");
 
 }
+
 \end{lstlisting}
 
-En nuestro caso antes de eliminarlo del set de comparaciones 
-lo que hacemos es ver si en la tabla de emparejados existe un 
-flujo con los mismos datos, en caso de que exista borramos el 
-flujo del set, pasamos al set el flujo de la tabla de emparejados 
-y este flujo lo eliminamos de la tabla. La ventaja que tiene 
-esto es que el timestamp será actualizado, haciendo que la 
-diferencia de los tiempos de dos flujos no sea demasiado grande 
-y por lo tanto teniendo más posibilidades de que exista algún 
-flujo que sea emparejable con el nuevo. En caso de que no exista 
-un flujo con las características deseadas para la sustitución en 
-el set de conexiones, simplemente será borrado, si no ha tenido 
-ningún flujo con el cual ha sido emparejado en todo el uso del 
-programa, este flujo borrado nunca será mostrado, en caso de que 
-si lo tuviese, el flujo siempre estará almacenado en una tabla 
-que mostramos al finalizar el programa.
+En este evento lo que tratamos de hacer es, antes de eliminarlo de 
+la memoria, ver si existe algún flujo que pueda ocupar su lugar 
+siendo el flujo referencia a la hora de comparar flujos. Básicamente 
+lo que hace es comprobar si el tamaño es mayor que 1. Si es 1 solamente 
+tendremos que borrar el vector contenido en la posición de la tabla, 
+y si tenemos que es mayor, tendremos que borrar el primero y mover todos 
+una posición hacia atrás. Nos interesa que este evento funcione, pues 
+si los \textit{timestamps} de dos flujos tienen mucha diferencia los daremos 
+como que no son comparables, cuando si se van actualizando, tendremos más 
+posibilidades de que la clasificación sea correcta.
 \intro
-Para añadir flujos al set de conexiones, tenemos un evento 
+Para añadir flujos a la tabla de conexiones, tenemos un evento 
 dedicado a ello:
 \intro
 \begin{itemize}
@@ -189,50 +257,44 @@ dedicado a ello:
 \end{itemize}
 
 \begin{lstlisting}[style=CodigoC]
-## Cada vez que entra un nuevo flujo lo comparo con lo que ya tengo en el set
-## Este evento se lanza con cada nueva conexion de un flujo que no sea conocido
+## Cada vez que entra un nuevo flujo compruebo que si esta en la tabla
+## Este evento se lanza con cada nueva conexion de un flujo que no sea conocido, pero al borrarlo de memoria será desconocido aunque ya lo tengamos en la tabla
 ## Generated for every new connection. This event is raised with the first packet of a previously unknown connection. Bro uses a flow-based definition of “connection” here that includes not only TCP sessions but also UDP and ICMP flows.
+
 event new_connection(c: connection){
 
-## Si el set esta vacio meto el primer flujo
-   if(tams==0){
-    add conex[c];
-   }
-## Sumamos uno al tamaño del set
-    tam=tam+1;
+  local orig = c$id$orig_h;
+  local dest = c$id$resp_h;
+  local po = c$id$orig_p;
+  local pd = c$id$resp_p;
+  print fmt("new_connection");
+ 
+  if( [orig,dest,po,pd] !in collection ){
 
-## Variable booleana para controlar el acceso al set
-     local met = F;
+    ## Si no estan los valores clave del flujo lo creamos
+    collection[orig,dest,po,pd]=vector(c);
+    informacion_flujo(c);
+    print fmt("Añadimos una nueva conexion");
+  
+  } else {
 
-## for que va recorriendo el set y haciendo comparaciones
-     for(s in conex){
-## Copiamos en la variable local para comparar con todo lo que hay en el set
-       if((s$id$orig_h != c$id$orig_h) && (s$id$resp_h != c$id$resp_h) && (s$id$orig_p != c$id$orig_p) && (s$id$resp_p != c$id$resp_p)){
-               ## Si se dan todas las condiciones la variable booleana de control de acceso al set se cambia a true, T
-               met=T;
-       }
-
-     }
-    ## Con la variable booleana controlamos el crecimiento del set
-     if (met==T){
-       add conex[c];
-       tams=tams+1;
-       ## print fmt("Meto un flujo nuevo por la conexion de origen distinta");
-     }
-     met=F;
-    ## print fmt("Numero de flujos al momento: %d", tam);
-    ## print fmt("Tamanio del set: %d", tams);
-    ## informacion_flujo(c);
+    ## Si ya esta, lo añadimos
+    collection[orig,dest,po,pd][|collection[orig,dest,po,pd]|] = c;
+    informacion_flujo(c);
+    print fmt("Ya esta y la añadimos");
+ 
+  }
 
 }
 \end{lstlisting}
 
-Lo primero que debemos de hacer es ver si el tamaño del set de 
-conexiones es 0, en caso de serlo añadimos el flujo directamente, 
-en caso de que no sea 0 tenemos que ver primero si tenemos un flujo 
-con los datos de comparación iguales, en caso de tenerlo el flujo 
-no será añadido, en caso de que no exista otro flujo con los mismos 
-datos de comparación lo guardaremos.
+Lo que se realiza en este evento es ver si en la tabla global tenemos 
+ya almacenado un flujo de esas características. Si no tenemos uno igual 
+creamos en la tabla para los valores de las IP's origen, destino y puertos 
+de origen y destino un nuevo vector que contenga solamente este nuevo flujo. 
+En caso de que si tengamos los valores ya almacenados solamente tendremos que 
+añadir al final del vector el nuevo flujo. En ambos casos mostraremos la 
+información del flujo.
 \intro
 Por último usamos dos eventos en el programa para ver cuando se 
 lanza y cuando finaliza el programa:
@@ -243,35 +305,24 @@ lanza y cuando finaliza el programa:
 \end{itemize}
 \intro
 \begin{lstlisting}[style=CodigoC]
-## Evento que se lanza cuando se inicia BRO.
+## Evento que se lanza cuando se inicia BRO
+
 event bro_init(){
 
   print fmt("Hora de inicio: %s", current_time());
 
 }
 
-## Evento que se genera cuando BRO va a tenerminar, menos si se realiza mediante una llamada a la funcion exit (ver documentacion)
+## Evento que se genera cuando BRO va a tenerminar
+
 event bro_done(){
 
-  ## Mostramos lo que tenemos en la tabla de emparejados
-  for(s in emparejados){
-    ## print fmt("Tamaño de la fila de la tabla: %d", |empa[s]|);
-    ## print fmt("Tenemos: %s en %s a %s en %s", emparejados[s]$id$orig_h, emparejados[s]$id$orig_p, emparejados[s]$id$resp_h, emparejados[s]$id$resp_p);
-    ## print fmt(" de %s en %s a %s en %s", s$id$orig_h, s$id$orig_p, s$id$resp_h, s$id$resp_p);
-    informacion_coincidencia(emparejados[s], s);
-  }
-
-  ## for(i in emparejados){
-    ## print fmt("Tenemos lo siguiente:");
-    ## print emparejados[i];
-  ## }
-
-  print fmt("Total de flujos: %d", tam);
+ 
   print fmt("Hora de finalizacion: %s", current_time());
+
 }
 \end{lstlisting}
 
-En el primer evento solamente mostramos la hora a la que se 
-inicia el programa mediante la función current_time. En el 
-evento del final mostramos los flujos que han sido emparejados 
-y mostramos la hora de finalización del programa.
+En el primer evento, que es el que se lanza cuando Bro se ejecuta, 
+mostramos la hora de inicio. En el segundo evento, que solamente 
+se ejecuta cuando Bro va a finalizar, mostramos la hora de finalización.
