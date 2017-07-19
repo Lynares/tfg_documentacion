@@ -4,8 +4,7 @@ Ahora vamos a proceder a explicar cómo se ha solucionado los problemas
 propuestos, siendo estos explicados a través del programa que se ha 
 realizado, quedando así más clara la explicación.
 \intro
-
-Lo primero será mostrar que estructura se ha utilizado para almacenar los 
+\noindent Lo primero será mostrar que estructura se ha utilizado para almacenar los 
 flujos.
 \intro
 \begin{lstlisting}[style=CodigoC]
@@ -14,8 +13,8 @@ flujos.
 global collection: table[addr, addr, port, port] of vector of connection &synchronized;
 global collection_added: table[addr, addr, port, port] of vector of connection;
 
-## El umbral: "Comparar la constante 'k', que es el umbral que fijaré con el resultado que devuelve la función,
-## si es más grande el resultado que 'k' se puede decir que los dos flujos son iguales, si es más pequeño podemos decir que los dos flujos no son iguales"
+## El umbral: "Comparar la constante 'k', que es el umbral que fijare con el resultado que devuelve la función,
+## si es mas grande el resultado que 'k' se puede decir que los dos flujos son iguales, si es mas pequenio podemos decir que los dos flujos no son iguales"
 ## resultado del umbral que calculamos
 global umbral: double;
 
@@ -24,11 +23,11 @@ global k=10;
 
 \end{lstlisting}
 
-En este primer código tenemos que: 
+\noindent En este primer código tenemos que: 
 \begin{itemize}
 \item Vamos a guardar los flujos en una tabla \textit{collection} que tiene como índices 
 dos direcciones IP y dos puertos, y a partir de estos indices tendremos un \textit{vector de connection}.
-\item La tabla \textit{collection_added} está destinada para guardar los flujos que son 
+\item La tabla \textit{collection\_added} está destinada para guardar los flujos que son 
 emparejados.
 \item El \textit{umbral}, que será una variable global, y será donde almacenemos el resultado 
 de la función de comparación.
@@ -38,6 +37,7 @@ referencia para saber si dos flujos son emparejables o no.
 
 \begin{lstlisting}[style=CodigoC]
 ## funcion para la comparacion de los flujos, c1 el flujo que esta el primero en el vector de la tabla y c2 para el flujo que es candidato a ser emparejado
+
 function emparejamiento(c1: connection, c2: connection ):double {
 
   ## Añadimos variables para comprobar en la tabla, sin hacer bucle
@@ -93,7 +93,7 @@ function emparejamiento(c1: connection, c2: connection ):double {
 }
 \end{lstlisting}
 
-En este trozo de código se muestra la función que se usa para devolver 
+\noindent En este trozo de código se muestra la función que se usa para devolver 
 el resultado de la función de comparación. El resultado siempre es comparado 
 con el umbral que hemos definido antes de lanzar el programa, y una vez que se 
 usa esta función quiere decir que son \textit{comparables}, pero no sabemos todavía si son 
@@ -131,7 +131,7 @@ quede más claro aquí esta el código de la comparación con el umbral.
 . . .
 \end{lstlisting}
 
-En este ejemplo se calcularía para las conexiones de tipo \textit{TCP}.
+\noindent En este ejemplo se calcularía para las conexiones de tipo \textit{TCP}.
 \intro
 La comparación se dará cuando Bro reconozca un flujo de un determinado tipo 
 de protocolo, en nuestro caso será mediante los eventos destinados a 
@@ -147,7 +147,7 @@ Dichos eventos son:
 \item icmp\_echo\_reply, el cual es lanzado por Bro cuando localiza una respuesta a los flujos del evento anterior.
 \end{itemize}
 
-Dentro de estos eventos descritos se realiza la comprobación de que dos 
+\noindent Dentro de estos eventos descritos se realiza la comprobación de que dos 
 flujos se pueden comparar, ya que tienen los mismos IP’s y puertos de 
 origen y destino. Una vez en la función de comparación se almacenarán 
 dichos puertos, pasándolos al tipo count para su uso en la función, se 
@@ -176,7 +176,7 @@ function informacion_flujo(c: connection){
 
 \end{lstlisting}
 
-La función informacion\_flujo sirve para mostrar la información del flujo 
+\noindent La función informacion\_flujo sirve para mostrar la información del flujo 
 relativa a las IP’s y a los puertos que contiene, así como el \textit{UID} 
 del flujo, que es el identificador único que se le asigna automáticamente 
 a cada flujo. 
@@ -199,7 +199,7 @@ de la memoria, dicho evento es:
 eliminado de la memoria.
 \end{itemize}
 
-Cabe destacar que el borrado no es todavía operativo, por lo que en el script puede 
+\noindent Cabe destacar que el borrado no es todavía operativo, por lo que en el script puede 
 que este evento esté comentado.
 \intro
 \begin{lstlisting}[style=Codigoc]
@@ -238,7 +238,7 @@ event connection_state_remove(c: connection){
 
 \end{lstlisting}
 
-En este evento lo que tratamos de hacer es, antes de eliminarlo de 
+\noindent En este evento lo que tratamos de hacer es, antes de eliminarlo de 
 la memoria, ver si existe algún flujo que pueda ocupar su lugar 
 siendo el flujo referencia a la hora de comparar flujos. Básicamente 
 lo que hace es comprobar si el tamaño es mayor que 1. Si es 1 solamente 
@@ -288,7 +288,7 @@ event new_connection(c: connection){
 }
 \end{lstlisting}
 
-Lo que se realiza en este evento es ver si en la tabla global tenemos 
+\noindent Lo que se realiza en este evento es ver si en la tabla global tenemos 
 ya almacenado un flujo de esas características. Si no tenemos uno igual 
 creamos en la tabla para los valores de las IP's origen, destino y puertos 
 de origen y destino un nuevo vector que contenga solamente este nuevo flujo. 
@@ -323,6 +323,6 @@ event bro_done(){
 }
 \end{lstlisting}
 
-En el primer evento, que es el que se lanza cuando Bro se ejecuta, 
+\noindent En el primer evento, que es el que se lanza cuando Bro se ejecuta, 
 mostramos la hora de inicio. En el segundo evento, que solamente 
 se ejecuta cuando Bro va a finalizar, mostramos la hora de finalización.

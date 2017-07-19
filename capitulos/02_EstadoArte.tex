@@ -22,13 +22,13 @@ fórmula:
 	 \end{cases}
 \end{equation*}
 
-Donde tenemos que G(x,y) es:
+\noindent Donde tenemos que G(x,y) es:
 \intro
 \begin{displaymath}
 G(x,y) = |NIP(x,y) – 1| + 1 / (dp1(x,y) + k1) + 1 / (dp2(x,y) + k1) + 1 / (dt(x,y) + k2)
 \end{displaymath}
 
-Tenemos que \textbf{x} e \textbf{y} son los flujos a comparar, \textbf{NIP(x,y)} es el número 
+\noindent Tenemos que \textbf{x} e \textbf{y} son los flujos a comparar, \textbf{NIP(x,y)} es el número 
 de veces que tenemos almacenado flujos similares, por lo cual siempre 
 será uno, como mínimo. \textbf{dp1(x,y)} son los puertos de origen de los dos 
 flujos, que al comparar siempre flujos que tienen los mismos puertos serán siempre el mismo puerto.
@@ -145,7 +145,7 @@ Para la instalación con los archivos de \textit{GitHub}, tendremos que hacer lo
 sudo apt-get install cmake make gcc g++ flex bison libpcap-dev libssl-dev python-dev swig zlib1g-dev
 \end{lstlisting}
 
-Una vez que terminemos de instalar todo lo del comando anterior tendremos todos los 
+\noindent Una vez que terminemos de instalar todo lo del comando anterior tendremos todos los 
 prerrequisitos para la instalación de Bro, ahora clonamos el 
 \textit{repositorio de GitHub} en nuestro ordenador:
 \intro
@@ -153,7 +153,7 @@ prerrequisitos para la instalación de Bro, ahora clonamos el
 git clone --recursive git://git.bro.org/bro
 \end{lstlisting}
 
-Y cuando termine de descargarlo nos metemos en la carpeta y ejecutamos lo siguiente:
+\noindent Cuando termine de descargarlo nos metemos en la carpeta y ejecutamos lo siguiente:
 \intro
 \begin{lstlisting}[style=Consola]
 ./configure
@@ -161,7 +161,7 @@ make
 make install
 \end{lstlisting}
 
-De esta forma ya tendremos instalado Bro en nuestro ordenador y podremos empezar 
+\noindent De esta forma ya tendremos instalado Bro en nuestro ordenador y podremos empezar 
 a usarlo.
 \intro
 Ahora para usarlo tendremos que hacer lo siguiente, lo primero será \textbf{ajustar el 
@@ -172,7 +172,7 @@ lo siguiente:
 export PATH=/usr/local/bro/bin:$PATH
 \end{lstlisting}
 
-Es importante hacerlo, pues sino obtendremos un error diciendo que Bro no se 
+\noindent Es importante hacerlo, pues sino obtendremos un error diciendo que Bro no se 
 encuentra instalado. Una vez hecho esto, podemos empezar realizando un script 
 sencillo y probar a ejecutarlo, un ejemplo de script sencillo es el que se ve 
 en el apartado \textit{Ejemplo  de uso de evento}, 
@@ -183,7 +183,7 @@ que hacer lo siguiente:
 ~$ bro -b -r pcap/nitroba.pcap scripts/bro-flows/prueba.bro
 \end{lstlisting}
 
-En este caso dentro de la carpeta Bro que se genera cuando clonamos el 
+\noindent En este caso dentro de la carpeta Bro que se genera cuando clonamos el 
 repositorio he creado una carpeta llamada scripts, para tener todos los 
 scripts allí guardados, por lo tanto al encontrarnos en la carpeta raíz 
 de Bro, tendremos que ponerlo en la ruta, la opción \textit{-b} que ponemos en la 
@@ -315,7 +315,6 @@ tratando.
 Ahora que tenemos algunos conceptos claros pondremos el ejemplo de un 
 programa en el cual se lanza un evento cada vez que aparece un flujo nuevo.
 \intro
-%\pagebreak
 
 \begin{lstlisting}[style=CodigoC]
 ## Para todo tipo de conexiones, ya sean TCP, UDP o ICMP. Este evento salta con cada nueva
@@ -351,7 +350,7 @@ event connection_state_remove(c: connection)
 }
 \end{lstlisting}
 
-Algunos comentarios sobre este código. Como habrá podido notar en el 
+\noindent Algunos comentarios sobre este código. Como habrá podido notar en el 
 lenguaje \textit{Bro} los comentarios se realizan con dos almohadillas, \textit{\#\#}, 
 los \textit{print} son como en la gran mayoría de lenguajes, con la particularidad 
 de que si vamos a mostrar un \textit{string} debemos de indicar que va formateado 

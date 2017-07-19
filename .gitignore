@@ -1,0 +1,11 @@
+*~
+
+auto/
+*.aux
+*.blg
+*.bbl
+*.log
+*.out
+*.toc
+*.div
+*.gz

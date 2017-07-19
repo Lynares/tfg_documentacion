@@ -5,21 +5,23 @@ en lo relativo a las comunicaciones, en un mundo cada vez
 más digitalizado e intercomunicado, lo que más importa es 
 la seguridad y para ello es esencial la clasificación del 
 tráfico, permitiendo detectar de forma temprana intrusiones 
-y comportamientos anormales, para los cuales podremos 
-prepararnos, de esta forma, por ejemplo, el encargado de un 
+y comportamientos anómalos, por ejemplo podríamos ver, mediante 
+la clasificación del tráfico si estamos siendo atacados mediante 
+denegación de servicio, \textit{DDoS}, y podríamos tomar medidas para cortar esa 
+conexión. De esta forma, por ejemplo, el encargado de un 
 servidor podrá mantener la calidad de servicio, pues mediante 
-ISP (Internet Service Provider) se puede establecer diferentes 
+\textit{ISP (Internet Service Provider)} se puede establecer diferentes 
 niveles de prioridad en el tráfico de red.
 \intro
 En este trabajo haremos uso de BRO, un NMS (Network Monitoring System), 
 al cual mediante la implementación de técnicas de emparejamiento de 
 flujos, lo dotaremos de la capacidad analítica de discernir que flujos 
-son emparejables, y por lo tanto pertenecen a lo mismo.
+son emparejables, y por lo tanto pertenecen a la misma conexión.
 
 \section{Capas de Red}
 
 Como ya sabrá, Internet sigue un modelo capas y que hay varios modelos para 
-organizar estas capas, como el TCP/IP y el OSI.
+organizar estas capas, como el TCP/IP y el OSI \cite{redes2010}.
 
 \begin{figure}[H]
   \includegraphics[width=1\textwidth]{imagenes/capas.png}
@@ -27,7 +29,7 @@ organizar estas capas, como el TCP/IP y el OSI.
   \caption{Modelos de capas de Internet.}
 \end{figure}
 
-Nosotros seguiremos el modelo TCP/IP, y a continuación, procederemos a dar 
+\noindent Nosotros seguiremos el \textit{modelo TCP/IP}, y a continuación, procederemos a dar 
 unas pinceladas sobre la capa de aplicación, la de transporte y la de enlace.
 
 \subsection{Capa de aplicación}
@@ -41,7 +43,7 @@ Los protocolos que encontramos en esta capa son \textbf{HTTP, SMTP y FTP}.
 \item El protocolo \textit{FTP} permite la transferencia de archivos entre dos terminales.
 \end{itemize}
 
-A parte de estos protocolos también corresponde a esta capa el \textbf{DNS}, 
+\noindent A parte de estos protocolos también corresponde a esta capa el \textbf{DNS}, 
 que es el encargado de traducir los nombres de los sitios web.
 
 \subsection{Capa de transporte}
@@ -60,7 +62,7 @@ sitúa junto con \textit{TCP y UDP}, aunque no pertenezca a la capa de transport
 En esencia, esta capa es la que se encarga de transportar los \textit{datagramas} 
 de un \textit{host} a otro.
 
-\subsection{¿Qué nos es útil?}
+\subsection{¿Qué es útil para nosotros?}
 
 En nuestro caso nos quedaremos solamente en la capa de transporte, 
 ignorando la información que podamos obtener de la capa 
