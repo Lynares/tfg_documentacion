@@ -16,39 +16,58 @@ al cual mediante la implementación de técnicas de emparejamiento de
 flujos, lo dotaremos de la capacidad analítica de discernir que flujos 
 son emparejables, y por lo tanto pertenecen a lo mismo.
 
-\section{Conceptos básicos}
+\section{Capas de Red}
 
-En este apartado vamos a aclarar los conceptos básicos que son necesarios 
-para entender este trabajo.
-\intro
-Lo primero que tenemos que tener claro es lo que es un paquete. Un paquete 
-es cada un fragmento de la información que queremos enviar a través de una red. 
-Este paquete contiene datos sobre quiénes somos, digitalmente, y hacia donde 
-enviamos la información, así que incluso un sólo paquete da mucha información 
-sobre quienes somos en la red.
-\intro
-Lo siguiente que debemos de saber es que es un flujo, para ello tenemos que 
-volver hacia la definición anterior, pues consiste en la historia de un grupo 
-de paquetes, esto quiere decir cómo se mueven los paquetes a través de las capas 
-de red, de datos y la física. Para quien no sepa sobre redes se estará 
-preguntando que son estas capas, pues bien, estas capas son del modelo OSI, que 
-es el modelo de referencia para los protocolos de red, siendo las distintas 
-capas las siguientes:
-\intro
-1. Aplicación
-2. Presentación
-3. Sesión
-4. Transporte
-5. Red
-6. Enlace de datos
-7. Física
-\intro
-Lo siguiente que explicaremos será que es un NMS o Network Monitoring System, 
-como el nombre nos indica consiste en un programa que se dedica a monitorizar 
-el tráfico del sistema y en caso de encontrar algún problema avisará al 
-administrador del sistema. En nuestro caso el NMS que usaremos será Bro, 
-aunque existen otros.
+Como ya sabrá, Internet sigue un modelo capas y que hay varios modelos para 
+organizar estas capas, como el TCP/IP y el OSI.
 
-\section{TCP y UDP}
+\begin{figure}[H]
+  \includegraphics[width=1\textwidth]{imagenes/capas.png}
+  \centering
+  \caption{Modelos de capas de Internet.}
+\end{figure}
 
-Describir que es TCP y que UDP, poner imágenes del libro sobre la comunicación.
+Nosotros seguiremos el modelo TCP/IP, y a continuación, procederemos a dar 
+unas pinceladas sobre la capa de aplicación, la de transporte y la de enlace.
+
+\subsection{Capa de aplicación}
+
+En la capa de aplicación encontramos las aplicaciones de red y sus protocolos. 
+Los protocolos que encontramos en esta capa son \textbf{HTTP, SMTP y FTP}. 
+\intro
+\begin{itemize}
+\item El protocolo \textit{HTTP} permite la solicitud y transferencia de documentos web.
+\item El protocolo \textit{SMTP} permite la transferencia de mensajes de correo electrónico.
+\item El protocolo \textit{FTP} permite la transferencia de archivos entre dos terminales.
+\end{itemize}
+
+A parte de estos protocolos también corresponde a esta capa el \textbf{DNS}, 
+que es el encargado de traducir los nombres de los sitios web.
+
+\subsection{Capa de transporte}
+
+La capa de transporte es la encargada de transportar los mensajes de la capa de aplicación. 
+Los protocolos de esta capa son \textbf{TCP y UDP}. La principal diferencia y será algo que 
+marque el trabajo es que \textit{TCP} está orientado a garantizar la conexión, mientras que \textit{UDP} no 
+garantiza la conexión.
+
+\subsection{Capa de red}
+
+En la capa de red es donde nos encontramos el protocolo \textbf{IP} y también 
+un protocolo, \textbf{ICMP}, que nuestro \textit{NMS} hay veces que localiza y 
+sitúa junto con \textit{TCP y UDP}, aunque no pertenezca a la capa de transporte.
+\intro
+En esencia, esta capa es la que se encarga de transportar los \textit{datagramas} 
+de un \textit{host} a otro.
+
+\subsection{¿Qué nos es útil?}
+
+En nuestro caso nos quedaremos solamente en la capa de transporte, 
+ignorando la información que podamos obtener de la capa 
+de aplicación. En caso de que nuestro NMS lo detecte, incluiremos ICMP, 
+pero solo para añadir más 
+información a los distintos flujos que podemos llegar a analizar, 
+pero despreciaremos la información relativa al resto de esta capa. 
+El archivo pcap que utilizaremos para la prueba será \textit{nitroba.pcap}, 
+el cual se puede obtener desde la web de Bro y el cual se corresponde con 
+la obtención del tráfico de una universidad de Sudáfrica.

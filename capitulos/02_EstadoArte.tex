@@ -4,7 +4,7 @@ La idea de la que partimos es la siguiente:
 Los flujos son un conjunto de paquetes que comparten la misma 
 información, IP de origen, IP de destino y los puertos de origen 
 y destino, aparte de esta información también tienen un tiempo de 
-inicio, relativo al timestamp del primer paquete del flujo y una 
+inicio, relativo al \textit{timestamp} del primer paquete del flujo y una 
 duración. Con estos datos ya podemos empezar a trabajar en el 
 emparejamiento, pues si dos flujos comparten las IP’s de origen y 
 destino y los puertos de origen y destino ya serían candidatos a 
@@ -42,63 +42,6 @@ Con esta fórmula obtendremos un número que podremos comparar con un
 umbral que estará definido a la hora de ejecutar el programa, si el umbral 
 definido es pequeño tendremos más flujos almacenados, si el umbral es más grande serán 
 menos los flujos que serán emparejables y por tanto almacenados para trabajar con ellos. \cite{comparacion}
-
-
-\section{Capas de Red}
-
-Como ya sabrá, Internet sigue un modelo capas y que hay varios modelos para 
-organizar estas capas, como el TCP/IP y el OSI.
-
-\begin{figure}[H]
-  \includegraphics[width=1\textwidth]{imagenes/capas.png}
-  \centering
-  \caption{Modelos de capas de Internet.}
-\end{figure}
-
-Nosotros seguiremos el modelo TCP/IP, y a continuación, procederemos a dar 
-unas pinceladas sobre la capa de aplicación, la de transporte y la de enlace.
-
-\subsection{Capa de aplicación}
-
-En la capa de aplicación encontramos las aplicaciones de red y sus protocolos. 
-Los protocolos que encontramos en esta capa son \textbf{HTTP, SMTP y FTP}. 
-\intro
-\begin{itemize}
-\item El protocolo \textit{HTTP} permite la solicitud y transferencia de documentos web.
-\item El protocolo \textit{SMTP} permite la transferencia de mensajes de correo electrónico.
-\item El protocolo \textit{FTP} permite la transferencia de archivos entre dos terminales.
-\end{itemize}
-
-A parte de estos protocolos también corresponde a esta capa el \textbf{DNS}, 
-que es el encargado de traducir los nombres de los sitios web.
-
-\subsection{Capa de transporte}
-
-La capa de transporte es la encargada de transportar los mensajes de la capa de aplicación. 
-Los protocolos de esta capa son \textbf{TCP y UDP}. La principal diferencia y será algo que 
-marque el trabajo es que \textit{TCP} está orientado a garantizar la conexión, mientras que \textit{UDP} no 
-garantiza la conexión.
-
-\subsection{Capa de red}
-
-En la capa de red es donde nos encontramos el protocolo \textbf{IP} y también 
-un protocolo, \textbf{ICMP}, que nuestro \textit{NMS} hay veces que localiza y 
-sitúa junto con \textit{TCP y UDP}, aunque no pertenezca a la capa de transporte.
-\intro
-En esencia, esta capa es la que se encarga de transportar los \textit{datagramas} 
-de un \textit{host} a otro.
-
-\subsection{¿Qué usaremos?}
-
-En nuestro caso nos quedaremos solamente en la capa de transporte, 
-ignorando la información que podamos obtener de la capa 
-de aplicación. En caso de que nuestro NMS lo detecte, incluiremos ICMP, 
-pero solo para añadir más 
-información a los distintos flujos que podemos llegar a analizar, 
-pero despreciaremos la información relativa al resto de esta capa. 
-El archivo pcap que utilizaremos para la prueba será \textit{nitroba.pcap}, 
-el cual se puede obtener desde la web de Bro y el cual se corresponde con 
-la obtención del tráfico de una universidad de Sudáfrica.
 
 \section{DPI}
 
