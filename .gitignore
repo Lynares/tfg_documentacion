@@ -2,10 +2,11 @@
 
 auto/
 *.aux
-*.blg
 *.bbl
+*.blg
+*.dvi
+*.gz
+*.lof
 *.log
 *.out
 *.toc
-*.div
-*.gz
