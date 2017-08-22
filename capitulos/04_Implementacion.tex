@@ -13,7 +13,7 @@ flujos.
 global collection: table[addr, addr, port, port] of vector of connection &synchronized;
 global collection_added: table[addr, addr, port, port] of vector of connection;
 
-## El umbral: "Comparar la constante 'k', que es el umbral que fijare con el resultado que devuelve la función,
+## El umbral: "Comparar la constante 'k', que es el umbral que fijare con el resultado que devuelve la funcion,
 ## si es mas grande el resultado que 'k' se puede decir que los dos flujos son iguales, si es mas pequenio podemos decir que los dos flujos no son iguales"
 ## resultado del umbral que calculamos
 global umbral: double;
@@ -40,7 +40,7 @@ referencia para saber si dos flujos son emparejables o no.
 
 function emparejamiento(c1: connection, c2: connection ):double {
 
-  ## Añadimos variables para comprobar en la tabla, sin hacer bucle
+  ## Aniadimos variables para comprobar en la tabla, sin hacer bucle
   local orig = c1$id$orig_h;
   local dest = c1$id$resp_h;
   local po = c1$id$orig_p;
@@ -101,29 +101,29 @@ usa esta función quiere decir que son \textit{comparables}, pero no sabemos tod
 que hayamos ejecutado la función y se realice la comparación con el umbral. Para que 
 quede más claro aquí esta el código de la comparación con el umbral.
 
-\begin{lstlisting}[style=CodidoC]
+\begin{lstlisting}[style=CodigoC]
 . . .
 
 	umbral=emparejamiento(cl,c);
     print fmt("connection_finished");
     if(umbral>k){
-      ## Si el umbral calculado es mayor que el umbral de comparacion lo añadimos
+      ## Si el umbral calculado es mayor que el umbral de comparacion lo aniadimos
       print fmt("Si son emparejables TCP"); ## Mostramos TCP para saber en que evento se han calculado
       collection[orig,dest,po,pd][|collection[orig,dest,po,pd]|] = c;
       informacion_coincidencia(cl, c);
       if( [orig,dest,po,pd] !in collection_added ){
 
         collection_added[orig,dest,po,pd]=vector(c);
-        print fmt("Añadimos una nueva conexion al vector de coincidencias");
+        print fmt("Aniadimos una nueva conexion al vector de coincidencias");
       } else {
 
-        ## Si ya esta, lo añadimos
+        ## Si ya esta, lo aniadimos
         collection_added[orig,dest,po,pd][|collection_added[orig,dest,po,pd]|] = c;
-        print fmt("Ya esta en vector de coincidencias y la añadimos");
+        print fmt("Ya esta en vector de coincidencias y lo aniadimos");
       }
 
     } else{
-      ## Si el umbral calculado es menor que el umbral de comparacion no lo añadimos
+      ## Si el umbral calculado es menor que el umbral de comparacion no lo aniadimos
       print fmt("No son emparejables TCP");
 
     }
@@ -171,7 +171,7 @@ function informacion_coincidencia(c: connection, p: connection){
 ## Funcion auxiliar para mostrar la informacion de un solo flujo
 
 function informacion_flujo(c: connection){
-    print fmt("Informacion del flujo añadido IPo: %s , Po: %s , IPd: %s , Pd: %s, uid: %s ", c$id$orig_h, c$id$orig_p, c$id$resp_h, c$id$resp_p, c$uid);
+    print fmt("Informacion del flujo aniadido IPo: %s , Po: %s , IPd: %s , Pd: %s, uid: %s ", c$id$orig_h, c$id$orig_p, c$id$resp_h, c$id$resp_p, c$uid);
 }
 
 \end{lstlisting}
@@ -188,7 +188,6 @@ son emparejables, siendo el primero de ellos el que se usa para comparar siempre
 y el segundo es el nuevo flujo que se ha detectado. De esta forma tan sencilla 
 se puede mostrar toda la información interesante sin tener que recorrer al final de 
 la ejecución del programa todo la \textit{tabla de connection}.
-
 \intro
 Para eliminar los flujos que, por su \textit{timestamp} estén a punto de morir, Bro nos 
 da la opción mediante un evento de gestionar que hacer antes de que sean eliminados 
@@ -203,6 +202,7 @@ eliminado de la memoria.
 que este evento esté comentado.
 \intro
 \begin{lstlisting}[style=Codigoc]
+
 ## Generated when a connection’s internal state is about to be removed from memory. Bro generates this event reliably
 ## once for every connection when it is about to delete the internal state. As such, the event is well-suited for
 ## script-level cleanup that needs to be performed for every connection.

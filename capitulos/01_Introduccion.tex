@@ -1,22 +1,82 @@
 \chapter{Introducción}
 
-La clasificación de tráfico en red es una tarea importante 
-en lo relativo a las comunicaciones, en un mundo cada vez 
-más digitalizado e intercomunicado, lo que más importa es 
-la seguridad y para ello es esencial la clasificación del 
-tráfico, permitiendo detectar de forma temprana intrusiones 
-y comportamientos anómalos, por ejemplo podríamos ver, mediante 
-la clasificación del tráfico si estamos siendo atacados mediante 
-denegación de servicio, \textit{DDoS}, y podríamos tomar medidas para cortar esa 
-conexión. De esta forma, por ejemplo, el encargado de un 
-servidor podrá mantener la calidad de servicio, pues mediante 
-\textit{ISP (Internet Service Provider)} se puede establecer diferentes 
-niveles de prioridad en el tráfico de red.
-\intro
-En este trabajo haremos uso de BRO, un NMS (Network Monitoring System), 
-al cual mediante la implementación de técnicas de emparejamiento de 
-flujos, lo dotaremos de la capacidad analítica de discernir que flujos 
-son emparejables, y por lo tanto pertenecen a la misma conexión.
+
+\section{Motivación y antecedentes}
+
+Dada la gran expansión de Internet desde los años 90, la seguridad se ha convertido en algo 
+fundamental. Hoy en día el uso de Internet se ha generalizado, llegando a todas las áreas, 
+desde finanzas hasta el envío de pruebas médicas, pasando por compras, redes sociales y demás, 
+por lo que la seguridad es algo primordial. 
+\intro De esta forma llegamos al emparejamiento de flujos, el cual es muy útil para los NMS, 
+sistemas de monitoreo de red, \textit{Network Monitoring System}, como podría ser BRO \cite{broindex}.
+Gracias al uso de estos programas el administrador de sistemas podrá prevenir ataques, como por ejemplo, los 
+de denegación de servicio, DDoS, \textit{Distributed Denial of Service}. Un administrador de sistemas deberá de 
+garantizar que el recurso que facilita y gestiona esté operativo siempre, por lo tanto deberá de analizar el 
+tráfico para evitar los posibles ataques, virus, etc.
+
+
+\intro Existen otras técnicas de clasificación de tráfico, como se puede ver en el artículo del 
+departamento \citep{comparacion}, estas técnicas son: 
+
+\begin{itemize}
+\item Clasificación basada en los puertos de la capa de transporte. \cite{iana}
+\item Clasificación basada en el contenido del paquete. \cite{payload}
+\item Clasificación basada en la aplicación de técnicas de aprendizaje automático sobre estadísticas de tráfico. \cite{learning}
+\end{itemize}
+Estas técnicas no son muy eficaces hoy en día, pues por ejemplo, la primera de las tres puede ser burlada 
+haciendo pasar cualquier tipo de conexión por el puerto 80. La segunda bastará con que los datos estén 
+encriptados para que no se pueda acceder al paquete, a parte de que no respeta la privacidad. Por lo tanto estas 
+dos técnicas son obviadas y se utiliza la tercera como opción más fiable, aunque tiene como inconveniente que 
+necesita tiempo para aprender a clasificar bien el tráfico.
+
+\intro Por lo tanto es necesario un nuevo método de clasificación, que sea funcional en cualquier circunstancia 
+y sea eficiente desde el principio. Por lo tanto el método de emparejamiento planteado por el departamento es 
+muy atractivo al ser necesario saber solo las IP's y los puertos. \cite{comparacion}
+
+\section{Objetivos}
+
+El objetivo del trabajo es desarrollar un módulo para Bro. En este módulo irá implementada la técnica de emparejamiento de flujos, de forma que pueda ser usada en redes fuera de un entorno de laboratorio.
+
+\intro Para ello será necesario conocer como Bro gestiona los flujo, desde su nacimiento a su muerte. 
+\intro También hará falta gestionar las entradas y salidas, aunque al principio se hará uso de un 
+archivo \textit{pcap} de prueba para controlar si todo funciona bien, 
+pudiendo pasar luego a analizar el tráfico de una red online.
+\intro Será necesario controlar Bro de una forma eficiente, dado que se gestiona desde la linea de comandos 
+podemos hacer que Bro no haga uso de los módulos.
+
+
+\section{Metodología}
+
+Para realizar este trabajo se establecen una serie de tareas:
+
+\begin{itemize}
+\item Familiarización con Bro.
+\item Pruebas con el lenguaje propio de Bro.
+\item Lectura del artículo del departamento. \cite{comparacion}
+\item Desarrollo del módulo en Bro.
+\item Pruebas del módulo.
+\end{itemize}
+
+
+FALTA DIAGRAMA DE GANTT.
+
+\intro Este proyecto no necesita de ningún gasto, pues Bro \cite{broindex} proporciona sus binarios de 
+forma gratuita. El módulo será subido a GitHub con licencia de software libre, por lo que cualquiera 
+podrá usarlo o modificarlo en el futuro. El único gasto es el de un ordenador con Linux, o bien con Mac OS, 
+pues de momento no está disponible para Windows. \cite{brodownload}
+
+
+\section{Estructura de la memoria}
+
+Esta memoria se organizará de la siguiente forma: En el capítulo 2 se hablará de 
+todos los fundamentos teóricos y tecnológicos sobre los que se basa este proyecto. 
+En el capítulo 3 se contará cómo se pretende resolver el problema expuesto. En el 
+capítulo 4 se encontrarán detalles de cómo se han implementado los diferentes módulos. 
+En el capítulo 5 se verán las pruebas realizadas, para comprobar que todo funciona como 
+estaba previsto, tanto a nivel funcional, como a nivel de aplicación. En el último capítulo 
+se verán las conclusiones del trabajo y cómo podría seguir trabajándose en el futuro.
+
+
 
 \section{Capas de Red}
 
