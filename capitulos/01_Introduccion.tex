@@ -53,7 +53,7 @@ a garantizar la conexión, mientras que \textit{UDP} no garantiza la conexión.
 \item \textbf{Capa de red}
 
 En la capa de red es donde se encuentra el protocolo \textbf{IP}, el cual es el encargado de especificar 
-el formato de envío entre los entre los routers y los hosts y también el protocolo \textbf{ICMP}, el cual 
+el formato de envío entre los routers y los hosts y también el protocolo \textbf{ICMP}, el cual 
 es un protocolo de control.
 
 \intro En esencia, esta capa es la que se encarga de transportar los \textit{datagramas} de un \textit{host} a otro.
@@ -64,7 +64,7 @@ es un protocolo de control.
 
 \intro En Internet la información que se envía se divide en paquetes. Estos paquetes tienen una IP de 
 origen y otra de destino, así como un puerto de origen y un puerto de destino. Estos paquetes, que contienen 
-parte de la información que se envía por la red, son juntados de nuevo una vez que llegan a su destino, de forma 
+parte de la información que se envía por la red, son unidos de nuevo una vez que llegan a su destino, de forma 
 que entonces se dispondrá de la información completa. Dependiendo del tipo de protocolo se tolerarán perdidas 
 de paquetes o no, por ilustrarlo en una llamada mediante \textit{Skype} se tolera perder algunos paquetes, 
 pues no se notará mucha diferencia. Si se pierden muchos paquetes la imagen se verá borrosa 
@@ -90,14 +90,14 @@ de tráfico. \cite{learning}
 \end{itemize}
 
 Estas técnicas no son muy eficaces hoy en día, pues por ejemplo, la primera de las tres puede ser burlada 
-haciendo pasar cualquier tipo de conexión por el puerto 80. La segunda bastará con que los datos estén 
-encriptados para que no se pueda acceder al paquete, a parte de que no respeta la privacidad. Por lo tanto estas 
+haciendo pasar cualquier tipo de conexión por el puerto 80. En la segunda, como se accede al paquete, bastará con que los datos estén 
+encriptados para que no se pueda acceder a dicho paquete, a parte de que no respeta la privacidad. Por lo tanto estas 
 dos técnicas son obviadas y se utiliza la tercera como opción más fiable, aunque tiene como inconveniente que 
 necesita tiempo para aprender a clasificar bien el tráfico.
 
 \intro Por lo tanto es necesario un nuevo método de clasificación, que sea funcional en cualquier circunstancia 
-y sea eficiente desde el principio. Por lo tanto el método de emparejamiento planteado por el departamento es 
-muy atractivo al ser necesario saber solo las IP's y los puertos. \cite{comparacion}
+y sea eficiente desde el principio. Por ello el método de emparejamiento planteado por el departamento es 
+muy atractivo al ser necesario saber solo las IP's y los puertos, ya que se respeta la seguridad. \cite{comparacion}
 
 \section{Objetivos}
 
@@ -127,7 +127,7 @@ Para realizar este trabajo se establecen una serie de tareas:
 
 Cada tarea anterior se realimentará de la siguiente, el ejemplo más claro es el desarrollo del módulo, que 
 irá cambiando por las pruebas, pues se detectarán los fallos, a su vez habrá que releer el artículo mientras 
-se desarrolla el módulo para asegurarse de que todo se desarrolla de acuerdo al trabajo previo, etc.
+se desarrolla el módulo para asegurarse de que todo se realiza de acuerdo al trabajo previo, etc.
 
 \intro En el siguiente diagrama de Gantt se puede ver una temporización de estas tareas. 
 
