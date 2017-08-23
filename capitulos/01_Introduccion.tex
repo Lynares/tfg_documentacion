@@ -1,15 +1,13 @@
 \chapter{Introducción}
 
-
 \section{Motivación y antecedentes}
 
 Dada la gran expansión de Internet desde los años 90, la seguridad se ha convertido en algo 
 fundamental. Hoy en día el uso de Internet se ha generalizado tanto que ha llegado a todas las áreas, 
-desde finanzas hasta el envío de pruebas médicas, pasando por compras, redes sociales y demás, 
-por lo que la seguridad es algo primordial.
+desde finanzas hasta el envío de pruebas médicas, pasando por compras, redes sociales y demás, por lo tanto 
+se tratan temas de carácter muy  privado y personal.
 
-\intro Internet sigue un modelo capas y que hay varios modelos para organizar estas capas, como 
-el TCP/IP y el OSI \cite{redes2010}.
+\intro Internet se organiza mediante un modelo de capas. Hay varios modelos de capas, como son el modelo TCP/IP y el modelo OSI. \cite{redes2010}
 
 \begin{figure}[H]
   \includegraphics[width=1\textwidth]{imagenes/capas.png}
@@ -17,14 +15,16 @@ el TCP/IP y el OSI \cite{redes2010}.
   \caption{Modelos de capas de Internet.}
 \end{figure}
 
-Del modelo TCP/IP es interesante pararse en las siguientes capas, pues es fundamental para 
-el emparejamiento de los flujos comprender que se está viendo y analizando.
+Dentro del modelo TCP/IP, que es el que se seguirá en este proyecto, es importante tener claro las siguientes 
+capas, pues forma parte de los conocimientos básicos para lograr entender el emparejamiento de flujos.
 
-\subsection{Capa de aplicación}
+\begin{itemize}
+
+\item \textbf{Capa de aplicación}
 
 En la capa de aplicación se encontrarán las aplicaciones de red y sus protocolos. 
-Los protocolos que se encuentran en esta capa son \textbf{HTTP, SMTP y FTP}. 
-\intro
+Los protocolos que se encuentran en esta capa son HTTP, SMTP y FTP.
+
 \begin{itemize}
 \item El protocolo \textit{HTTP} permite la solicitud y transferencia de documentos web.
 \item El protocolo \textit{SMTP} permite la transferencia de mensajes de correo electrónico.
@@ -32,28 +32,52 @@ Los protocolos que se encuentran en esta capa son \textbf{HTTP, SMTP y FTP}.
 \end{itemize}
 
 A parte de estos protocolos también corresponde a esta capa el \textbf{DNS}, el cual se encarga 
-de traducir los nombres de los sitios web.
+de traducir los nombres de los sitios web. 
 
-\subsection{Capa de transporte}
+\intro Para una información más extensa sobre la capa de aplicación consulte \cite{redes2010b}
+
+\item \textbf{Capa de transporte}
 
 La capa de transporte es la encargada de transportar los mensajes de la capa de aplicación. 
 Los protocolos de esta capa son \textbf{TCP y UDP}. La principal diferencia y será algo que 
 siempre se debe de tener presente cuando se trabaja con redes es que \textit{TCP} está orientado 
 a garantizar la conexión, mientras que \textit{UDP} no garantiza la conexión.
+\intro Para ampliar información sobre esta capa consulte \cite{redes2010c}
 
-\subsection{Capa de red}
+\begin{figure}[H]
+  \includegraphics[width=1\textwidth]{imagenes/tcpudp.jpeg}
+  \centering
+  \caption{Diagrama de conexión de TCP y UDP.}
+\end{figure}
 
-En la capa de red es donde se encuentra el protocolo \textbf{IP} y también el protocolo \textbf{ICMP}.
-\intro
-En esencia, esta capa es la que se encarga de transportar los \textit{datagramas} de un \textit{host} a otro.
+\item \textbf{Capa de red}
 
-\intro De esta forma llegamos al emparejamiento de flujos, el cual es muy útil para los NMS, 
+En la capa de red es donde se encuentra el protocolo \textbf{IP}, el cual es el encargado de especificar 
+el formato de envío entre los entre los routers y los hosts y también el protocolo \textbf{ICMP}, el cual 
+es un protocolo de control.
+
+\intro En esencia, esta capa es la que se encarga de transportar los \textit{datagramas} de un \textit{host} a otro.
+
+\intro Para ampliar sus conocimientos sobre la capa de red consulte \cite{redes2010d}
+
+\end{itemize}
+
+\intro En Internet la información que se envía se divide en paquetes. Estos paquetes tienen una IP de 
+origen y otra de destino, así como un puerto de origen y un puerto de destino. Estos paquetes, que contienen 
+parte de la información que se envía por la red, son juntados de nuevo una vez que llegan a su destino, de forma 
+que entonces se dispondrá de la información completa. Dependiendo del tipo de protocolo se tolerarán perdidas 
+de paquetes o no, por ilustrarlo en una llamada mediante \textit{Skype} se tolera perder algunos paquetes, 
+pues no se notará mucha diferencia. Si se pierden muchos paquetes la imagen se verá borrosa 
+y la voz no se escuchará bien. Ahora en un correo electrónico, no se tolerará perder paquetes, 
+pues entonces no se obtendrá la información completa. Cuando varios paquetes tienen el mismo origen y 
+el mismo destino se denomina flujo. \cite{redes2010a}
+
+\intro De esta forma se llega al emparejamiento de flujos, el cual es muy útil para los NMS, 
 sistemas de monitoreo de red, \textit{Network Monitoring System}, como podría ser BRO \cite{broindex}.
 Gracias al uso de estos programas el administrador de sistemas podrá prevenir ataques, como por ejemplo, los 
-de denegación de servicio, DDoS, \textit{Distributed Denial of Service}. Un administrador de sistemas deberá de 
-garantizar que el recurso que facilita y gestiona esté operativo siempre, por lo tanto deberá de analizar el 
-tráfico para evitar los posibles ataques, virus, etc.
-
+de denegación de servicio, DDoS, \textit{Distributed Denial of Service} \cite{redes2010e}. Un administrador 
+de sistemas deberá de garantizar que el recurso que facilita y gestiona esté operativo siempre, 
+por lo tanto deberá de analizar el tráfico para evitar los posibles ataques, virus, etc.
 
 \intro Existen otras técnicas de clasificación de tráfico, como se puede ver en el artículo del 
 departamento \citep{comparacion}, estas técnicas son: 
@@ -64,6 +88,7 @@ departamento \citep{comparacion}, estas técnicas son:
 \item Clasificación basada en la aplicación de técnicas de aprendizaje automático sobre estadísticas 
 de tráfico. \cite{learning}
 \end{itemize}
+
 Estas técnicas no son muy eficaces hoy en día, pues por ejemplo, la primera de las tres puede ser burlada 
 haciendo pasar cualquier tipo de conexión por el puerto 80. La segunda bastará con que los datos estén 
 encriptados para que no se pueda acceder al paquete, a parte de que no respeta la privacidad. Por lo tanto estas 
@@ -74,18 +99,19 @@ necesita tiempo para aprender a clasificar bien el tráfico.
 y sea eficiente desde el principio. Por lo tanto el método de emparejamiento planteado por el departamento es 
 muy atractivo al ser necesario saber solo las IP's y los puertos. \cite{comparacion}
 
-
 \section{Objetivos}
 
-El objetivo del trabajo es desarrollar un módulo para Bro. En este módulo irá implementada la técnica de emparejamiento de flujos, de forma que pueda ser usada en redes fuera de un entorno de laboratorio.
+El objetivo del trabajo es desarrollar un módulo para Bro. En este módulo irá implementada la 
+técnica de emparejamiento de flujos, de forma que pueda ser usada en redes fuera de un entorno de laboratorio.
 
-\intro Para ello será necesario conocer como Bro gestiona los flujo, desde su nacimiento a su muerte. 
+\intro Para ello será necesario conocer como Bro gestiona los flujos, desde su nacimiento a su muerte. 
+
 \intro También hará falta gestionar las entradas y salidas, aunque al principio se hará uso de un 
 archivo \textit{pcap} de prueba para controlar si todo funciona bien, 
 pudiendo pasar luego a analizar el tráfico de una red online.
-\intro Será necesario controlar Bro de una forma eficiente, dado que se gestiona desde la linea de comandos 
-podemos hacer que Bro no haga uso de los módulos.
 
+\intro Será necesario realizar pruebas al módulo que se pretende desarrollar, de modo que se detecten los 
+errores y se subsanen.
 
 \section{Metodología}
 
@@ -115,7 +141,6 @@ Este proyecto no necesita de ningún gasto, pues Bro \cite{broindex} proporciona
 forma gratuita. El módulo será subido a GitHub \cite{repo} con licencia de software libre, por lo que cualquiera 
 podrá usarlo o modificarlo en el futuro. El único \textit{gasto} es el de un ordenador con Linux, 
 o bien con Mac OS X, pues de momento no está disponible para Windows. \cite{brodownload}
-
 
 \section{Estructura de la memoria}
 
