@@ -5,7 +5,7 @@
 Dada la gran expansión de Internet desde los años 90, la seguridad se ha convertido en algo 
 fundamental. Hoy en día el uso de Internet se ha generalizado tanto que ha llegado a todas las áreas, 
 desde finanzas hasta el envío de pruebas médicas, pasando por compras, redes sociales y demás, por lo tanto 
-se tratan temas de carácter muy  privado y personal.
+se tratan temas de carácter muy privado y personal.
 
 \intro Internet se organiza mediante un modelo de capas. Hay varios modelos de capas, como son el modelo TCP/IP y el modelo OSI. \cite{redes2010}
 
@@ -66,18 +66,18 @@ es un protocolo de control.
 origen y otra de destino, así como un puerto de origen y un puerto de destino. Estos paquetes, que contienen 
 parte de la información que se envía por la red, son unidos de nuevo una vez que llegan a su destino, de forma 
 que entonces se dispondrá de la información completa. Dependiendo del tipo de protocolo se tolerarán perdidas 
-de paquetes o no, por ilustrarlo en una llamada mediante \textit{Skype} se tolera perder algunos paquetes, 
-pues no se notará mucha diferencia. Si se pierden muchos paquetes la imagen se verá borrosa 
-y la voz no se escuchará bien. Ahora en un correo electrónico, no se tolerará perder paquetes, 
-pues entonces no se obtendrá la información completa. Cuando varios paquetes tienen el mismo origen y 
-el mismo destino se denomina flujo. \cite{redes2010a}
+de paquetes o no, para ilustrar esta idea, en una llamada mediante \textit{Skype} se tolera 
+perder algunos paquetes, pues no se notará mucha diferencia. Si se pierden muchos paquetes 
+la imagen se verá borrosa y la voz no se escuchará bien. Ahora en un correo electrónico, 
+no se tolerará perder paquetes, pues entonces no se obtendrá la información completa. Cuando 
+varios paquetes tienen el mismo origen y el mismo destino se denomina flujo. \cite{redes2010a}
 
 \intro De esta forma se llega al emparejamiento de flujos, el cual es muy útil para los NMS, 
 sistemas de monitoreo de red, \textit{Network Monitoring System}, como podría ser BRO \cite{broindex}.
 Gracias al uso de estos programas el administrador de sistemas podrá prevenir ataques, como por ejemplo, los 
 de denegación de servicio, DDoS, \textit{Distributed Denial of Service} \cite{redes2010e}. Un administrador 
 de sistemas deberá de garantizar que el recurso que facilita y gestiona esté operativo siempre, 
-por lo tanto deberá de analizar el tráfico para evitar los posibles ataques, virus, etc.
+por lo tanto analizará el tráfico para evitar los posibles ataques, virus, etc.
 
 \intro Existen otras técnicas de clasificación de tráfico, como se puede ver en el artículo del 
 departamento \citep{comparacion}, estas técnicas son: 
@@ -89,29 +89,44 @@ departamento \citep{comparacion}, estas técnicas son:
 de tráfico. \cite{learning}
 \end{itemize}
 
-Estas técnicas no son muy eficaces hoy en día, pues por ejemplo, la primera de las tres puede ser burlada 
-haciendo pasar cualquier tipo de conexión por el puerto 80. En la segunda, como se accede al paquete, bastará con que los datos estén 
-encriptados para que no se pueda acceder a dicho paquete, a parte de que no respeta la privacidad. Por lo tanto estas 
-dos técnicas son obviadas y se utiliza la tercera como opción más fiable, aunque tiene como inconveniente que 
-necesita tiempo para aprender a clasificar bien el tráfico.
+Hoy en día, las dos primeras técnicas mencionadas no son muy eficaces, pues por ejemplo:
+\begin{itemize}
+\item La primera técnica puede ser burlada fácilmente, haciendo que las conexiones pasen por el puerto 80.
+\item En la segunda técnica, al tener que acceder a los paquetes, solo bastará con que estos estén 
+encriptados para que no se pueda acceder a dicho paquete. Y también se debe de tener en cuenta que 
+al acceder a los paquetes de una red que no es del propietario de la información es un delito y no respeta 
+la privacidad.
+\end{itemize}
+\intro Ahora bien, la tercera técnica si es eficaz y fiable, pero su principal inconveniente es que 
+necesita cierto tiempo para aprender a clasificar de una forma correcta el tráfico.
 
 \intro Por lo tanto es necesario un nuevo método de clasificación, que sea funcional en cualquier circunstancia 
-y sea eficiente desde el principio. Por ello el método de emparejamiento planteado por el departamento es 
-muy atractivo al ser necesario saber solo las IP's y los puertos, ya que se respeta la seguridad. \cite{comparacion}
+y sea eficiente desde el principio. Por ello, el método de emparejamiento planteado por el 
+departamento \cite{comparacion} es muy atractivo al ser necesario saber solo las IP's y los puertos, 
+ya que se respeta la seguridad, pues no es necesario acceder a los paquetes para conocer estos detalles. Incluso 
+no sería necesario ser un proveedor de servicios de Internet, ISP, para conocer estos datos.
+
 
 \section{Objetivos}
 
-El objetivo del trabajo es desarrollar un módulo para Bro. En este módulo irá implementada la 
+En este trabajo se hará uso del NMS mencionado anteriormente, llamado Bro \cite{broindex}, el cual cuenta con 
+su propio lenguaje de scripting. Dicho lenguaje es de fácil uso y comprensión, además de que está completamente 
+orientado a trabajar con conexiones, teniendo distintos tipos de datos que son realmente útiles. Dicho esto 
+el objetivo del trabajo es desarrollar un módulo para Bro. En este módulo irá implementada la 
 técnica de emparejamiento de flujos, de forma que pueda ser usada en redes fuera de un entorno de laboratorio.
 
-\intro Para ello será necesario conocer como Bro gestiona los flujos, desde su nacimiento a su muerte. 
-
-\intro También hará falta gestionar las entradas y salidas, aunque al principio se hará uso de un 
-archivo \textit{pcap} de prueba para controlar si todo funciona bien, 
-pudiendo pasar luego a analizar el tráfico de una red online.
-
-\intro Será necesario realizar pruebas al módulo que se pretende desarrollar, de modo que se detecten los 
+\begin{itemize}
+\item Para ello será necesario conocer como Bro gestiona los flujos, desde su nacimiento a su muerte. 
+\item También hará falta gestionar las entradas y salidas, aunque al principio se hará uso de un 
+archivo \textit{pcap} de prueba para controlar si todo funciona bien, pudiendo pasar luego a analizar 
+el tráfico de una red online.
+\item Implementar la función de emparejamiento de flujos.
+\item Será necesario realizar pruebas al módulo que se pretende desarrollar, de modo que se detecten los 
 errores y se subsanen.
+\end{itemize}
+
+\intro Por último, y fuera de los objetivos más técnicos, el desarrollo de esta memoria también se 
+considera un objetivo, que se tendrá en cuenta dentro de la temporización.
 
 \section{Metodología}
 
@@ -123,6 +138,7 @@ Para realizar este trabajo se establecen una serie de tareas:
 \item Lectura del artículo del departamento. \cite{comparacion}
 \item Desarrollo del módulo en Bro.
 \item Pruebas del módulo.
+\item Desarrollo de la memoria.
 \end{itemize}
 
 Cada tarea anterior se realimentará de la siguiente, el ejemplo más claro es el desarrollo del módulo, que 
@@ -144,10 +160,14 @@ o bien con Mac OS X, pues de momento no está disponible para Windows. \cite{bro
 
 \section{Estructura de la memoria}
 
-Esta memoria se organizará de la siguiente forma: En el capítulo 2 se hablará de 
-todos los fundamentos teóricos y tecnológicos sobre los que se basa este proyecto. 
-En el capítulo 3 se contará cómo se pretende resolver el problema expuesto. En el 
-capítulo 4 se encontrarán detalles de cómo se han implementado los diferentes módulos. 
-En el capítulo 5 se verán las pruebas realizadas, para comprobar que todo funciona como 
-estaba previsto, tanto a nivel funcional, como a nivel de aplicación. En el último capítulo 
-se verán las conclusiones del trabajo y cómo podría seguir trabajándose en el futuro.
+Esta memoria se organizará de la siguiente forma: 
+\begin{itemize}
+\item En el capítulo 2 se hablará de todos los fundamentos teóricos y tecnológicos sobre los que se 
+basa el proyecto.
+\item En el capítulo 3 se contará cómo se pretende resolver el problema expuesto.
+\item En el capítulo 4 se encontrará detallado cómo se han implementado los diferentes módulos.
+\item En el capítulo 5 se realizarán las pruebas, para comprobar que todo funciona como 
+estaba previsto, tanto a nivel funcional como a nivel de aplicación.
+\item En el último capítulo se hablará de las conclusiones recogidas a lo largo de este proyecto y las posibles 
+opciones que tiene para seguir trabajando sobre él.
+\end{itemize}
