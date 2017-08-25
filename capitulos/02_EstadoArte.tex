@@ -43,23 +43,24 @@ los flujos. Este tipo de clasificación tiene un porcentaje de acierto del 95\%,
 artículo \cite{comparacion}.
 
 \subsection{DPI}
-La Inspección Profunda de Paquetes o DPI, por sus siglas en inglés, Deep 
-Packet Inspection, consiste en analizar un paquete entero, no solo la 
-cabecera del paquete. En la cabecera de un paquete suele ir el protocolo, 
-el tiempo de vida del paquete y las direcciones IP's de origen y destino. Como 
-podrá observar a nosotros también nos interesan los puertos de origen y destino para poder 
-realizar nuestra comprobación mediante la fórmula expuesta anteriormente.
-Gracias a esta técnica podemos detectar intrusiones, ataques de denegación de servicio 
-y demás \cite{dpiaproximacion}, lo cual es bastante 
-interesante, ya que el administrador podrá saber qué medidas tomar respecto a las 
-intrusiones. Este análisis también sirve para realizar estadísticas 
-sobre el tráfico de una red, que en nuestro caso nos interesa bastante, 
-pues nosotros vamos a realizar emparejamiento de flujos, mediante la 
-información de sus paquetes, siendo el tiempo del primer paquete una de las 
-medidas que usamos como variable para la comparación de los flujos. Aunque esta 
-técnica es más costosa que la inspección de paquetes poco profunda, la 
-cual consiste en analizar solamente las cabeceras de los paquetes, para nosotros es necesaria, 
-pues necesitamos saber los puertos.
+
+Clasificación basada en el contenido del paquete o DPI. \cite{payload}
+
+\intro Esta técnica de clasificación consiste en analizar los paquetes, más allá de su cabecera. La Inspección Profunda 
+de Paquetes, DPI por sus siglas en inglés, \textit{Deep Packet Inspection}. Esta técnica lo que hace es 
+analizar todos los paquetes en busca de cadenas que se repitan, además de las IP's y los puertos. Una vez que 
+tiene una cadena, la usa para buscar paquetes que tienen ese patrón, de esta forma establece la clasificación.
+
+\intro Esta técnica es útil para buscar virus, intrusiones y demás. Suele ser usada por los proveedores de 
+servicios de Internet, ISP, por sus siglas en inglés \textit{Internet Service Provider} y grandes empresas. 
+Se puede decir que es una técnica que no respeta la privacidad, pues entra dentro de la información del paquete, 
+más allá de la cabecera. Aunque en el caso de una gran empresa si puede hacerse, pues si se está en la red propia 
+no es delito mirar la información. En algunos países, como Alemania, donde es ilegal el uso de \textit{torrents}, 
+las autoridades pueden pedir información al proveedor de servicios sobre uno de sus clientes, si cree que este 
+está infringiendo la red, por lo que esta técnica es ideal para este tipo de cometidos.
+
+\intro Esta técnica también es ideal para saber si se está siendo atacado. \cite{dpiaproximacion}
+
 \section{BRO}
 
 \subsection{Funcionalidades básicas de BRO}
