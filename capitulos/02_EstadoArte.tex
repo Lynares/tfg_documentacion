@@ -1,13 +1,65 @@
 \chapter{Estado del arte}
 
+Aquí se encontrará la parte teórica del proyecto. Se desglosará en que consiste la identificación de tráfico y 
+las distintas técnicas que existen. También se hablará de Bro \cite{broindex}, el NMS que se usará para 
+llevar a cabo el desarrollo del módulo. Se introducirá en que consiste, cómo gestiona los eventos y sus 
+funcionalidades, así como la posibilidad de ampliar estas.
+
+\intro Por último se presentará de forma teórica en que consiste el emparejamiento de flujos y de qué forma 
+se podría usar para identificar el tráfico.
+
 \section{Identificación de tráfico}
+
+La identificación de tráfico, por si sola, no clasifica el tráfico. Solamente proporciona información obtenida 
+de los paquetes. Esta información puede ser obtenida con distintas técnicas, las cuales se detallarán a 
+continuación.
 
 \subsection{Técnicas de identificación de tráfico}
 
+Existen varias técnicas de identificación de tráfico, cómo se pudo ver en el capítulo de introducción. Ahora 
+serán explicadas de una forma más detallada.
+
+\intro Clasificación basada en los puertos de la capa de transporte. \cite{iana}
+
+\intro Esta clasificación consiste en clasificar el tráfico dependiendo de los puertos de la capa de transporte, 
+fue diseñada por IANA \cite{ianaexplicacion}. IANA es la organización que se encarga de asignar los protocolos 
+de Internet, algunos nombres de dominios y coordinar la asignación de direcciones IP. 
+
+\intro Entonces, IANA es quien asigna el número de puerto a los distintos protocolos, haciendo que se pueda 
+clasificar el tráfico por el número de puerto al que se envía. Este sistema tiene el inconveniente de que 
+ahora mismo, se están desarrollando multitud de aplicaciones web, las cuales se conectan mediante el 
+puerto 80, es decir, mediante el protocolo HTTP. Pero esto no es cierto, pues se puede hacer que cualquier 
+aplicación envíe información por el puerto 80, sin que sea HTTP, lo cual daría una mala clasificación.
+
+
 \subsection{Identificación de tráfico basada en flujos}
 
-\subsection{DPI}
+Clasificación basada en la aplicación de técnicas de aprendizaje automático sobre estadísticas 
+de tráfico \cite{learning}, se aplica sobre flujos.
 
+\intro Esta clasificación es muy sencilla. Consta de algoritmos de aprendizaje automático, los cuales se 
+dedican a realizar análisis estadísticos. De esta forma aprenden las características determinadas de 
+los flujos. Este tipo de clasificación tiene un porcentaje de acierto del 95\%, según se puede leer en el 
+artículo \cite{comparacion}.
+
+\subsection{DPI}
+La Inspección Profunda de Paquetes o DPI, por sus siglas en inglés, Deep 
+Packet Inspection, consiste en analizar un paquete entero, no solo la 
+cabecera del paquete. En la cabecera de un paquete suele ir el protocolo, 
+el tiempo de vida del paquete y las direcciones IP's de origen y destino. Como 
+podrá observar a nosotros también nos interesan los puertos de origen y destino para poder 
+realizar nuestra comprobación mediante la fórmula expuesta anteriormente.
+Gracias a esta técnica podemos detectar intrusiones, ataques de denegación de servicio 
+y demás \cite{dpiaproximacion}, lo cual es bastante 
+interesante, ya que el administrador podrá saber qué medidas tomar respecto a las 
+intrusiones. Este análisis también sirve para realizar estadísticas 
+sobre el tráfico de una red, que en nuestro caso nos interesa bastante, 
+pues nosotros vamos a realizar emparejamiento de flujos, mediante la 
+información de sus paquetes, siendo el tiempo del primer paquete una de las 
+medidas que usamos como variable para la comparación de los flujos. Aunque esta 
+técnica es más costosa que la inspección de paquetes poco profunda, la 
+cual consiste en analizar solamente las cabeceras de los paquetes, para nosotros es necesaria, 
+pues necesitamos saber los puertos.
 \section{BRO}
 
 \subsection{Funcionalidades básicas de BRO}
@@ -17,6 +69,10 @@
 \subsection{Incorporación de funcionalidades}
 
 \section{Emparejamiento de flujos}
+
+El emparejamiento de flujos, por si mismo, sólo identifica el tráfico, por lo tanto se necesitará otra técnica 
+para clasificar el tráfico.
+
 
 %Aqui empieza lo antiguo
 
@@ -65,25 +121,8 @@ umbral que estará definido a la hora de ejecutar el programa, si el umbral
 definido es pequeño tendremos más flujos almacenados, si el umbral es más grande serán 
 menos los flujos que serán emparejables y por tanto almacenados para trabajar con ellos. \cite{comparacion}
 
-\section{DPI}
 
-La Inspección Profunda de Paquetes o DPI, por sus siglas en inglés, Deep 
-Packet Inspection, consiste en analizar un paquete entero, no solo la 
-cabecera del paquete. En la cabecera de un paquete suele ir el protocolo, 
-el tiempo de vida del paquete y las direcciones IP's de origen y destino. Como 
-podrá observar a nosotros también nos interesan los puertos de origen y destino para poder 
-realizar nuestra comprobación mediante la fórmula expuesta anteriormente.
-Gracias a esta técnica podemos detectar intrusiones, ataques de denegación de servicio 
-y demás \cite{dpiaproximacion}, lo cual es bastante 
-interesante, ya que el administrador podrá saber qué medidas tomar respecto a las 
-intrusiones. Este análisis también sirve para realizar estadísticas 
-sobre el tráfico de una red, que en nuestro caso nos interesa bastante, 
-pues nosotros vamos a realizar emparejamiento de flujos, mediante la 
-información de sus paquetes, siendo el tiempo del primer paquete una de las 
-medidas que usamos como variable para la comparación de los flujos. Aunque esta 
-técnica es más costosa que la inspección de paquetes poco profunda, la 
-cual consiste en analizar solamente las cabeceras de los paquetes, para nosotros es necesaria, 
-pues necesitamos saber los puertos.
+
 
 \section{NMS y BRO}
 
