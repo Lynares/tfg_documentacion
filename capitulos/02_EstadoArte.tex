@@ -63,7 +63,48 @@ está infringiendo la red, por lo que esta técnica es ideal para este tipo de c
 
 \section{BRO}
 
+Bro \cite{broindex}, es un analizador de tráfico de red de código abierto. Al ser de código abierto permite 
+ser usado por quien lo desee sin necesidad de pagar licencias. Funciona sobre sistemas basados en Linux y 
+Mac OS X. Una de sus principales características es la posibilidad de buscar amenazas en la red que 
+se esté monitorizando.
+
+\intro Bro incorpora la posibilidad de introducir funcionalidades nuevas, mediante la programación en su 
+propio lenguaje de \textit{scripting}, del mismo nombre. Esto se desarrollará más adelante y en la 
+parte de implementación se podrá ver cómo se desarrolla y algunos ejemplos de código escrito en Bro.
+
+\intro No tiene interfaz gráfica, por lo que su gestión se realiza desde la linea de comandos. Este aspecto 
+para el usuario que no esté familiarizado con la consola de Linux puede suponer un problema. {Pero uno de sus 
+principales ventajas es la rapidez con la que analiza los ficheros pcap.} \textbf{RELEER}
+
+\begin{figure}[H]
+  \includegraphics[width=0.5\textwidth]{imagenes/logo-bro.png}
+  \centering
+  \caption{Logo de Bro.}
+\end{figure}
+
 \subsection{Funcionalidades básicas de BRO}
+
+La funcionalidad más básica de Bro, es el análisis del tráfico de la red en la cual se esté ejecutando. 
+Mientras que se encuentra ejecutándose, genera registros o \textit{logs} en texto plano que se 
+podrán leer. Pero hay que tener cuidado y guardarlos fuera de la carpeta en la que se generan o se 
+irán reescribiendo cuando vaya analizando más tráfico. Algunos \textit{logs} que se generan son los siguientes.
+
+\begin{itemize}
+\item \textit{dpd.log}. Consiste en un resumen de los protocolos encontrados en puertos que no son estándar.
+\item \textit{dns.log}. Contendrá toda la actividad correspondiente al \textit{DNS}
+\item \textit{ftp.log}. Un registro de la actividad a nivel de sesión de \textit{FTP}.
+\item \textit{files.log}. Un resumen con los archivos transferidos a través de una red. Incluye 
+protocolos \textit{HTTP, FTP y SMTP.}
+\item \textit{http.log}. Registro de toda la actividad \textit{HTTP} con sus réplicas.
+\item \textit{ssl.log}. Un registro de las sesiones \textit{SSL}, incluidos los certificados que se utilizan.
+\item \textit{weird.log}. En este \textit{log} se guarda la información correspondiente a actividad 
+inesperada o rara a nivel de protocolo. Al analizar gran cantidad de tráfico no es muy útil, pues ocurren 
+muchas cosas raras, pero a pequeña escala es bastante interesante para detectar intrusiones y demás.
+\item \textit{conn.log}. Aquí se puede ver la información correspondiente a conexiones  \textit{TCP, UDP e ICMP}.
+\end{itemize}
+
+Para más información sobre \textit{logs} generados por una monitorización de Bro lea \cite{brologs}.
+
 
 \subsection{Eventos y trazas}
 
@@ -140,6 +181,10 @@ duración así como el \textit{timestamp} y más información que, en este caso,
 será relevante, como la \textit{historia del flujo}, donde se nos informa del 
 tipo de paquetes que contiene e incluso el \textit{número de paquetes} de los que consta el flujo.
 \intro
+
+
+EVENTOS
+
 En el caso de los eventos, también nos facilitarán el trabajo, pues tenemos 
 eventos que gestionan todo lo que tiene que ver con los flujos, desde 
 cuando aparece un nuevo flujo el cual no tenemos identificado previamente, 
