@@ -68,26 +68,29 @@ ser usado por quien lo desee sin necesidad de pagar licencias. Funciona sobre si
 Mac OS X. Una de sus principales características es la posibilidad de buscar amenazas en la red que 
 se esté monitorizando.
 
-\intro Bro incorpora la posibilidad de introducir funcionalidades nuevas, mediante la programación en su 
-propio lenguaje de \textit{scripting}, del mismo nombre. Esto se desarrollará más adelante y en la 
-parte de implementación se podrá ver cómo se desarrolla y algunos ejemplos de código escrito en Bro.
-
-\intro No tiene interfaz gráfica, por lo que su gestión se realiza desde la linea de comandos. Este aspecto 
-para el usuario que no esté familiarizado con la consola de Linux puede suponer un problema. {Pero uno de sus 
-principales ventajas es la rapidez con la que analiza los ficheros pcap.} \textbf{RELEER}
-
 \begin{figure}[H]
   \includegraphics[width=0.5\textwidth]{imagenes/logo-bro.png}
   \centering
   \caption{Logo de Bro.}
 \end{figure}
 
+\intro No tiene interfaz gráfica, por lo que su gestión se realiza desde la linea de comandos. Cuando se analiza 
+tráfico, Bro generará unos registros, los cuales están divididos en función de parámetros definidos por Bro.
+
+\intro Bro incorpora la posibilidad de introducir funcionalidades nuevas, mediante la programación en su 
+propio lenguaje de \textit{scripting}, del mismo nombre. Esto se desarrollará más adelante y en la 
+parte de implementación se podrá ver cómo se desarrolla y algunos ejemplos de código escrito en Bro.
+
+\intro El lenguaje de scripting está orientado a trabajar con eventos. Por lo tanto para añadir una 
+nueva funcionalidad a Bro habrá que usar los eventos que ya tiene Bro y crear la función a partir de ahí.
+
 \subsection{Funcionalidades básicas de BRO}
 
-La funcionalidad más básica de Bro, es el análisis del tráfico de la red en la cual se esté ejecutando. 
+La funcionalidad básica de Bro es el análisis del tráfico de la red, en la cual se esté ejecutando. 
 Mientras que se encuentra ejecutándose, genera registros o \textit{logs} en texto plano que se 
-podrán leer. Pero hay que tener cuidado y guardarlos fuera de la carpeta en la que se generan o se 
-irán reescribiendo cuando vaya analizando más tráfico. Algunos \textit{logs} que se generan son los siguientes.
+podrán leer usando un editor de texto. Si se analiza un archivo \textit{pcap} los logs no cambiarán. Sin 
+embargo si se analiza tráfico a tiempo real, los registros se irán actualizando a medida que pase el tiempo. 
+Algunos \textit{logs} que se generan son los siguientes.
 
 \begin{itemize}
 \item \textit{dpd.log}. Consiste en un resumen de los protocolos encontrados en puertos que no son estándar.
@@ -105,10 +108,44 @@ muchas cosas raras, pero a pequeña escala es bastante interesante para detectar
 
 Para más información sobre \textit{logs} generados por una monitorización de Bro lea \cite{brologs}.
 
+\intro Ahora con toda esta información, el administrador del sistema podrá determinar si existen amenazas en 
+la red.
 
 \subsection{Eventos y trazas}
 
+La programación en Bro no es secuencial, no se escribe un \textit{script} y se espera que se ejecute en el orden 
+en el que está escrito. Es programación orientada a eventos. Por lo tanto depende de cuando se den los eventos 
+en el análisis ese será el orden.
+
+\intro Un evento se da cuando Bro detecta un \textit{comportamiento}, por ejemplo cuando detecta un paquete 
+de respuesta \textit{UDP}. Por lo tanto la programación deberá de ser pensada en función de los eventos 
+disponibles.
+
+\intro Dentro de cada evento se podrá hacer lo que se desee, con la información que capture ese evento. Si 
+el evento captura información de una conexión \textit{TCP}, se tendrá que trabajar con esa información y las 
+distintas variables globales que se hayan definido previamente.
+
+\intro Una traza es una captura del tráfico de una red. Con casi cualquier programa de diagnóstico se puede 
+realizar capturas de red. 
+
+\intro En el caso de Bro se podrá generar trazas de red mediante un script de Python
+\cite{brotrace}, el cual se puede descargar desde el repositorio de GitHub de Bro. Con dicho script también 
+se podrá trabajar sobre la traza, separando el tráfico entrante del saliente, desglosando en distintos registros 
+el tipo de tráfico y demás.
+
+
 \subsection{Incorporación de funcionalidades}
+
+La incorporación de funcionalidades a Bro es una de las características que más llaman la atención. Gracias 
+a esto se podrá realizar un análisis muy personalizado usando un script creado por el administrador de redes. De 
+esta forma podrá filtrar el tráfico de una determinada IP mientras se sigue analizando el tráfico de forma normal, 
+con los registros que genera Bro de forma automática. Es una forma muy sencilla de comprobar si realmente alguien 
+tiene un comportamiento extraño.
+
+\intro A la hora de incorporar funcionalidades a Bro se puede hacer todo lo que se desee. Una búsqueda rápida 
+por GitHub arrojará una gran cantidad de gente que aporta nuevos scripts a Bro. Ahora lo ideal sería incorporar 
+un módulo, de forma que si el resto de la comunidad lo desea pueda hacer uso de él, solamente llamando a las 
+funciones que forman ese módulo.
 
 \section{Emparejamiento de flujos}
 
@@ -145,7 +182,7 @@ fórmula:
 G(x,y) = |NIP(x,y) – 1| + 1 / (dp1(x,y) + k1) + 1 / (dp2(x,y) + k1) + 1 / (dt(x,y) + k2)
 \end{displaymath}
 
-\noindent Tenemos que \textbf{x} e \textbf{y} son los flujos a comparar, \textbf{NIP(x,y)} es el número 
+\intro Tenemos que \textbf{x} e \textbf{y} son los flujos a comparar, \textbf{NIP(x,y)} es el número 
 de veces que tenemos almacenado flujos similares, por lo cual siempre 
 será uno, como mínimo. \textbf{dp1(x,y)} son los puertos de origen de los dos 
 flujos, que al comparar siempre flujos que tienen los mismos puertos serán siempre el mismo puerto.
