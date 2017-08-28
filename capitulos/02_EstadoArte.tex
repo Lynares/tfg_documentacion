@@ -28,9 +28,9 @@ el paso previo a la clasificación del tráfico. Podría considerarse que son el
 El tráfico, hasta ahora, se puede identificar de la siguiente forma.
 
 \begin{itemize}
-\item Por los puertos de la capa de transporte, establecido por IANA. \cite{iana}
-\item Por el contenido del paquete o DPI. \cite{payload}
-\item Por la aplicación de técnicas de aprendizaje automático sobre estadísticas de tráfico, \textit[{machine 
+\item Por los puertos de la capa de transporte, establecido por \textit{IANA}. \cite{iana}
+\item Por el contenido del paquete o \textit{DPI}. \cite{payload}
+\item Por la aplicación de técnicas de aprendizaje automático sobre estadísticas de tráfico, \textit{machine 
 learning}. \cite{learning}
 \end{itemize}
 
@@ -93,8 +93,10 @@ siendo atacado. \cite{dpiaproximacion}
 
 Bro \cite{broindex}, es un analizador de tráfico de red de código abierto. Al ser de código abierto permite 
 ser usado por quien lo desee sin necesidad de pagar licencias. Funciona sobre sistemas basados en Linux y 
-Mac OS X. Una de sus principales características es la posibilidad de buscar amenazas en la red que 
-se esté monitorizando.
+Mac OS X. Una de sus principales características es la gran cantidad de información que devuelve con un solo 
+escaneo. Otros monitores de red devuelven menos información, teniendo que ser el propio administrador el que 
+analice después la información obtenida por estos. Por lo tanto tardará más en resolver los posibles problemas 
+que encuentre en la red.
 
 \begin{figure}[H]
   \includegraphics[width=0.5\textwidth]{imagenes/logo-bro.png}
@@ -103,17 +105,17 @@ se esté monitorizando.
 \end{figure}
 
 \intro No tiene interfaz gráfica, por lo que su gestión se realiza desde la linea de comandos. Cuando se analiza 
-tráfico, Bro generará unos registros, los cuales están divididos en función de parámetros definidos por Bro.
+tráfico, Bro generará unos registros, los cuales están divididos en función de parámetros definidos por parte del 
+equipo que lo ha desarrollado.
 
 \intro Bro incorpora la posibilidad de introducir funcionalidades nuevas, mediante la programación en su 
 propio lenguaje de \textit{scripting}, del mismo nombre. Esto se desarrollará más adelante y en la 
 parte de implementación se podrá ver cómo se desarrolla y algunos ejemplos de código escrito en Bro.
 
-\intro El lenguaje de scripting está orientado a trabajar con eventos. Por lo tanto para añadir una 
-nueva funcionalidad a Bro habrá que usar los eventos que ya tiene Bro y crear la función a partir de ahí.
+\intro El lenguaje de scripting está orientado a trabajar con eventos. Por lo tanto a la hora de añadir una nueva funcionalidad habrá que crearla a partir del uso de los eventos que puede gestionar Bro.
 
-\intro Bro está estructurado de forma que todos los flujos de paquetes que analiza son procesados por el motor de eventos. Este motor convierte los flujos de paquetes en eventos, de forma que es más sencillo trabajar con ellos. 
-Una vez que los eventos son procesados se generarán los registros correspondientes. \cite{broarquitectura}
+\intro \noindent Bro está estructurado de forma que todos los flujos de paquetes que analiza son procesados por el motor de eventos. Este motor convierte los flujos de paquetes en eventos, de forma que es más sencillo trabajar con ellos. 
+Una vez que los eventos son procesados se generan los registros correspondientes, los cuales podrán ser analizados posteriormente. \cite{broarquitectura}
 
 \begin{figure}[H]
   \includegraphics[width=0.5\textwidth]{imagenes/arquitectura-bro.png}
@@ -123,11 +125,11 @@ Una vez que los eventos son procesados se generarán los registros correspondien
 
 \subsection{Funcionalidades básicas de BRO}
 
-La funcionalidad básica de Bro es el análisis del tráfico de la red, en la cual se esté ejecutando. 
-Mientras que se encuentra ejecutándose, genera registros o \textit{logs} en texto plano que se 
+La funcionalidad básica de Bro es la monitorización de la red en la que se ejecuta. 
+Mientras que se encuentra en ejecución, genera registros o \textit{logs} en texto plano que se 
 podrán leer usando un editor de texto. Si se analiza un archivo \textit{pcap} los logs no cambiarán. Sin 
 embargo si se analiza tráfico a tiempo real, los registros se irán actualizando a medida que pase el tiempo. 
-Algunos \textit{logs} que se generan son los siguientes.
+Algunos de los \textit{logs} que se generarán son los siguientes.
 
 \begin{itemize}
 \item \textit{dpd.log}. Consiste en un resumen de los protocolos encontrados en puertos que no son estándar.
@@ -146,17 +148,16 @@ muchas cosas raras, pero a pequeña escala es bastante interesante para detectar
 \intro Para más información sobre \textit{logs} generados por una monitorización de Bro lea \cite{brologs}.
 
 \intro Ahora con toda esta información, el administrador del sistema podrá determinar si existen amenazas en 
-la red.
+la red o si hay algún componente defectuoso.
 
 \subsection{Eventos y trazas}
 
 La programación en Bro no es secuencial, no se escribe un \textit{script} y se espera que se ejecute en el orden 
-en el que está escrito. Es programación orientada a eventos. Por lo tanto depende de cuando se den los eventos 
-en el análisis ese será el orden.
+en el que está escrito. La programación aquí esta orientada a eventos. Por lo tanto el orden depende de cuando 
+se ejecute un determinado evento en el análisis.
 
-\intro Un evento se da cuando Bro detecta un \textit{comportamiento}, por ejemplo cuando detecta un paquete 
-de respuesta \textit{UDP}. Por lo tanto la programación deberá de estar pensada en función de los eventos 
-disponibles.
+\intro Un evento se da cuando Bro detecta un "comportamiento", por ejemplo cuando detecta un paquete 
+de respuesta \textit{UDP}. Si se programa para ese evento que muestre un mensaje, este se mostrará cada vez que se detecte un paquete de respuesta \textit{UDP}. Por lo tanto la programación deberá de estar pensada en función de los eventos disponibles.
 
 \intro Dentro de cada evento se podrá hacer lo que se desee, con la información que capture ese evento. Si 
 el evento captura información de una conexión \textit{TCP}, se tendrá que trabajar con esa información y las 
@@ -175,16 +176,17 @@ el tipo de tráfico y demás.
 
 \subsection{Incorporación de funcionalidades}
 
-La incorporación de funcionalidades a Bro es una de las características que más llaman la atención. Gracias 
+La incorporación de funcionalidades al monitoreo realizado por Bro es una característica muy llamativa. Gracias 
 a esto se podrá realizar un análisis muy personalizado usando un script creado por el administrador de redes. De 
-esta forma podrá filtrar el tráfico de una determinada IP mientras se sigue analizando el tráfico de forma normal, 
-con los registros que genera Bro de forma automática. Es una forma muy sencilla de comprobar si realmente alguien 
-dentro de la red tiene un comportamiento extraño.
+esta forma podrá, por ejemplo, filtrar el tráfico de una determinada IP mientras se sigue analizando el tráfico 
+de forma normal, con los registros que genera Bro de forma automática. Es una forma muy sencilla de comprobar 
+si por ejemplo el servicio que administra está recibiendo demasiadas peticiones desde una misma IP. Lo cual 
+sería un indicio de ataque de denegación de servicio.
 
 \intro A la hora de incorporar funcionalidades a Bro se puede hacer todo lo que se desee. Una búsqueda rápida 
-por GitHub arrojará una gran cantidad de personas que aportan nuevos scripts a Bro \citep{gitbeacon}. Ahora lo 
-ideal sería incorporar un módulo, de forma que si el resto de la comunidad lo desea pueda hacer uso de 
-él, solamente llamando a las funciones que forman ese módulo.
+por GitHub arrojará una gran cantidad de personas que contribuyen con una gran cantidad de nuevas 
+funcionalidades \citep{gitbeacon}. Ahora lo ideal sería incorporar un módulo, de forma que si el resto 
+de la comunidad lo desea pueda hacer uso de él de una forma sencilla.
 
 \section{Emparejamiento de flujos}
 
@@ -231,9 +233,9 @@ y la anterior suelen estar definidas entre 1 y 10000.
 paquetes o \textit{timestamps}.
 \end{itemize}
 
-\intro Con esta fórmula se obtendrá un número, el cual será comparado con un umbral que se define previamente. Si 
-el umbral definido es pequeño tendremos más flujos emparejados. Si el umbral es mayor serán menos los flujos 
-que serán emparejados, al no cumplir los requisitos.
+\intro Con esta fórmula se obtendrá como resultado un número, el cual será comparado con un umbral que se 
+define previamente. Si el umbral definido es pequeño tendremos más flujos emparejados. Si el umbral es mayor 
+serán menos los flujos que serán emparejados al no cumplir los requisitos.
 
-\intro El emparejamiento de flujos, por si mismo, sólo identifica el tráfico, por lo tanto se 
+\intro El emparejamiento de flujos, por si mismo, sólo identifica el tráfico. Por lo tanto se 
 necesitará otra técnica para clasificar el tráfico.
