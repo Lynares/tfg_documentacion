@@ -11,55 +11,82 @@ se podría usar para identificar el tráfico.
 \section{Identificación de tráfico}
 
 La identificación de tráfico, por si sola, no clasifica el tráfico. Solamente proporciona información obtenida 
-de los paquetes. Esta información puede ser obtenida con distintas técnicas, las cuales se detallarán a 
-continuación.
+de los paquetes, pudiendo ser los paquetes ordenados por distintas características una vez que ha 
+sido identificado, por ejemplo la clase a la que pertenece.
+
+\intro Por lo tanto la identificación del tráfico de la red es esencial para realizar una clasificación 
+posterior, la cual se podrá analizar en busca de amenazas o intrusos. Para poder identificar el tráfico será 
+necesario realizar algún método que sea práctico y eficiente.
 
 \subsection{Técnicas de identificación de tráfico}
 
-Existen varias técnicas de identificación de tráfico, cómo se pudo ver en el capítulo de introducción. Ahora 
-serán explicadas de una forma más detallada.
+Existen varias técnicas de identificación de tráfico, como ya se explicó anteriormente. Estas técnicas son 
+el paso previo a la clasificación del tráfico. Podría considerarse que son el paso intermedio a la clasificación. 
+El tráfico, hasta ahora, se puede identificar de la siguiente forma.
 
-\intro Clasificación basada en los puertos de la capa de transporte. \cite{iana}
+\begin{itemize}
+\item Por los puertos de la capa de transporte, establecido por IANA. \cite{iana}
+\item Por el contenido del paquete o DPI. \cite{payload}
+\item Por la aplicación de técnicas de aprendizaje automático sobre estadísticas de tráfico, machine 
+learning. \cite{learning}
+\end{itemize}
 
-\intro Esta clasificación consiste en clasificar el tráfico dependiendo de los puertos de la capa de transporte, 
-fue diseñada por IANA \cite{ianaexplicacion}. IANA es la organización que se encarga de asignar los protocolos 
-de Internet, algunos nombres de dominios y coordinar la asignación de direcciones IP. 
-
-\intro Entonces, IANA es quien asigna el número de puerto a los distintos protocolos, haciendo que se pueda 
-clasificar el tráfico por el número de puerto al que se envía. Este sistema tiene el inconveniente de que 
-ahora mismo, se están desarrollando multitud de aplicaciones web, las cuales se conectan mediante el 
-puerto 80, es decir, mediante el protocolo HTTP. Pero esto no es cierto, pues se puede hacer que cualquier 
-aplicación envíe información por el puerto 80, sin que sea HTTP, lo cual daría una mala clasificación.
-
+\intro En los siguientes apartados se verán de una forma más detallada.
 
 \subsection{Identificación de tráfico basada en flujos}
 
-Clasificación basada en la aplicación de técnicas de aprendizaje automático sobre estadísticas 
+En este ámbito se encuentran dos de las tres técnicas. Se detallarán a continuación.
+\begin{itemize}
+
+\item Identificación basada en los puertos de la capa de transporte. \cite{iana}
+
+\intro Esta técnica consiste en identificar el tráfico dependiendo de los puertos de la capa de transporte, 
+fue diseñada por IANA \cite{ianaexplicacion}. 
+
+\intro IANA es la organización que se encarga de asignar los protocolos 
+de Internet, algunos nombres de dominios y coordinar la asignación de direcciones IP. 
+
+\intro Entonces, IANA es quien asigna el número de puerto a los distintos protocolos, haciendo que se pueda 
+identificar el tráfico por el número de puerto al que se envía. Este sistema tiene el inconveniente de que 
+ahora mismo, se están desarrollando multitud de aplicaciones web, las cuales se conectan mediante el 
+puerto 80, es decir, mediante el protocolo HTTP. Pero esto no es cierto, pues se puede hacer que cualquier 
+aplicación envíe información por el puerto 80, sin que sea HTTP, lo cual daría como resultado una mala 
+identificación y posterior clasificación.
+
+\item Identificación basada en la aplicación de técnicas de aprendizaje automático sobre estadísticas 
 de tráfico \cite{learning}, se aplica sobre flujos.
 
 \intro Esta clasificación es muy sencilla. Consta de algoritmos de aprendizaje automático, los cuales se 
 dedican a realizar análisis estadísticos. De esta forma aprenden las características determinadas de 
 los flujos. Este tipo de clasificación tiene un porcentaje de acierto del 95\%, según se puede leer en el 
 artículo \cite{comparacion}.
+\end{itemize}
 
 \subsection{DPI}
 
-Clasificación basada en el contenido del paquete o DPI. \cite{payload}
+\begin{itemize}
 
-\intro Esta técnica de clasificación consiste en analizar los paquetes, más allá de su cabecera. La Inspección Profunda 
-de Paquetes, DPI por sus siglas en inglés, \textit{Deep Packet Inspection}. Esta técnica lo que hace es 
-analizar todos los paquetes en busca de cadenas que se repitan, además de las IP's y los puertos. Una vez que 
-tiene una cadena, la usa para buscar paquetes que tienen ese patrón, de esta forma establece la clasificación.
+\item Identificación basada en el contenido del paquete o DPI. \cite{payload}
+
+\intro Esta técnica de identificación consiste en analizar los paquetes, más allá de su cabecera. 
+La Inspección Profunda de Paquetes, DPI por sus siglas en inglés, \textit{Deep Packet Inspection}. 
+Esta técnica lo que hace es analizar todos los paquetes en busca de cadenas que se repitan, además 
+de las IP's y los puertos. Una vez que tiene una cadena, la usa para buscar paquetes que tienen ese patrón, 
+de esta forma establece un patrón de identificación.
 
 \intro Esta técnica es útil para buscar virus, intrusiones y demás. Suele ser usada por los proveedores de 
 servicios de Internet, ISP, por sus siglas en inglés \textit{Internet Service Provider} y grandes empresas. 
 Se puede decir que es una técnica que no respeta la privacidad, pues entra dentro de la información del paquete, 
 más allá de la cabecera. Aunque en el caso de una gran empresa si puede hacerse, pues si se está en la red propia 
-no es delito mirar la información. En algunos países, como Alemania, donde es ilegal el uso de \textit{torrents}, 
+no es delito mirar la información que contienen los paquetes. 
+
+\intro En algunos países, como Alemania, donde es ilegal el uso de \textit{torrents}, 
 las autoridades pueden pedir información al proveedor de servicios sobre uno de sus clientes, si cree que este 
 está infringiendo la red, por lo que esta técnica es ideal para este tipo de cometidos.
 
-\intro Esta técnica también es ideal para saber si se está siendo atacado. \cite{dpiaproximacion}
+\intro Además de para lo descrito, esta técnica también es ideal para saber si se está 
+siendo atacado. \cite{dpiaproximacion}
+\end{itemize}
 
 \section{BRO}
 
@@ -84,6 +111,15 @@ parte de implementación se podrá ver cómo se desarrolla y algunos ejemplos de
 \intro El lenguaje de scripting está orientado a trabajar con eventos. Por lo tanto para añadir una 
 nueva funcionalidad a Bro habrá que usar los eventos que ya tiene Bro y crear la función a partir de ahí.
 
+\intro Bro está estructurado de forma que todos los flujos de paquetes que analiza son procesados por el motor de eventos. Este motor convierte los flujos de paquetes en eventos, de forma que es más sencillo trabajar con ellos. 
+Una vez que los eventos son procesados se generarán los registros correspondientes. \cite{broarquitectura}
+
+\begin{figure}[H]
+  \includegraphics[width=0.5\textwidth]{imagenes/arquitectura-bro.png}
+  \centering
+  \caption{Arquitectura de Bro.}
+\end{figure}
+
 \subsection{Funcionalidades básicas de BRO}
 
 La funcionalidad básica de Bro es el análisis del tráfico de la red, en la cual se esté ejecutando. 
@@ -106,7 +142,7 @@ muchas cosas raras, pero a pequeña escala es bastante interesante para detectar
 \item \textit{conn.log}. Aquí se puede ver la información correspondiente a conexiones  \textit{TCP, UDP e ICMP}.
 \end{itemize}
 
-Para más información sobre \textit{logs} generados por una monitorización de Bro lea \cite{brologs}.
+\intro Para más información sobre \textit{logs} generados por una monitorización de Bro lea \cite{brologs}.
 
 \intro Ahora con toda esta información, el administrador del sistema podrá determinar si existen amenazas en 
 la red.
@@ -118,7 +154,7 @@ en el que está escrito. Es programación orientada a eventos. Por lo tanto depe
 en el análisis ese será el orden.
 
 \intro Un evento se da cuando Bro detecta un \textit{comportamiento}, por ejemplo cuando detecta un paquete 
-de respuesta \textit{UDP}. Por lo tanto la programación deberá de ser pensada en función de los eventos 
+de respuesta \textit{UDP}. Por lo tanto la programación deberá de estar pensada en función de los eventos 
 disponibles.
 
 \intro Dentro de cada evento se podrá hacer lo que se desee, con la información que capture ese evento. Si 
@@ -126,7 +162,9 @@ el evento captura información de una conexión \textit{TCP}, se tendrá que tra
 distintas variables globales que se hayan definido previamente.
 
 \intro Una traza es una captura del tráfico de una red. Con casi cualquier programa de diagnóstico se puede 
-realizar capturas de red. 
+realizar capturas de red. En la propia web de Bro se encuentran algunos archivos de trazas de red, en 
+formato \textit{pcap}, de forma que se puedan realizar pruebas sobre ellos sin necesitar realizar una 
+traza propia.
 
 \intro En el caso de Bro se podrá generar trazas de red mediante un script de Python
 \cite{brotrace}, el cual se puede descargar desde el repositorio de GitHub de Bro. Con dicho script también 
@@ -140,7 +178,7 @@ La incorporación de funcionalidades a Bro es una de las características que m�
 a esto se podrá realizar un análisis muy personalizado usando un script creado por el administrador de redes. De 
 esta forma podrá filtrar el tráfico de una determinada IP mientras se sigue analizando el tráfico de forma normal, 
 con los registros que genera Bro de forma automática. Es una forma muy sencilla de comprobar si realmente alguien 
-tiene un comportamiento extraño.
+dentro de la red tiene un comportamiento extraño.
 
 \intro A la hora de incorporar funcionalidades a Bro se puede hacer todo lo que se desee. Una búsqueda rápida 
 por GitHub arrojará una gran cantidad de personas que aportan nuevos scripts a Bro \citep{gitbeacon}. Ahora lo 
@@ -149,7 +187,10 @@ ideal sería incorporar un módulo, de forma que si el resto de la comunidad lo 
 
 \section{Emparejamiento de flujos}
 
-Por lo tanto cómo ya se ha visto, con Bro se podrá implementar una herramienta de identificación de tráfico.
+La técnica de emparejamiento de flujos, fue planteada por el departamento de Teoría de la Señal, 
+Telemática y Comunicaciones, \textit{TSTC}, de la Universidad de Granada, en el año 2011 \cite{presentacion}. 
+Luego en el año 2013, el departamento realizó pruebas de la técnica de identificación en un entorno de 
+laboratorio \cite{comparacion}.
 
 \intro En el emparejamiento de flujos, la idea de la que se parte es muy sencilla. Si dos paquetes comparten 
 IP's de origen y destino, y puertos de origen y destino, se podrá decir que esos dos paquetes pertenecen a 
@@ -195,318 +236,3 @@ que serán emparejados, al no cumplir los requisitos.
 
 \intro El emparejamiento de flujos, por si mismo, sólo identifica el tráfico, por lo tanto se 
 necesitará otra técnica para clasificar el tráfico.
-
-ANTIGUO ->
-
-\section{NMS y BRO}
-
-Bro es un NMS, Network Monitoring System, cuya principal actividad 
-es analizar el tráfico de una red para la búsqueda de amenazas. Una de 
-las muchas peculiaridades de Bro es que usa un lenguaje propio, llamado 
-también Bro, el cual tiene similitudes con \textit{Python} y \textit{Java}, y se gestiona 
-mediante \textbf{eventos}. En el caso de este trabajo se utilizará dicho lenguaje, 
-el cual en un principio puede parecer difícil, pues no disponemos de más 
-documentación que la propia de la web de Bro \cite{broindex}, pero que acaba siendo 
-bastante útil para la tarea que queremos, pues tiene un tipo de dato 
-llamado \textit{connection}, el cual está relacionado con los flujos, siendo al 
-final este tipo el que representa al propio flujo. En este tipo se establecen bastantes 
-datos que nos serán útiles, como la IP de origen, la de destino, así 
-como los puertos y sus protocolos, también guarda la información de la 
-duración así como el \textit{timestamp} y más información que, en este caso, no 
-será relevante, como la \textit{historia del flujo}, donde se nos informa del 
-tipo de paquetes que contiene e incluso el \textit{número de paquetes} de los que consta el flujo.
-\intro
-
-
-EVENTOS
-
-En el caso de los eventos, también nos facilitarán el trabajo, pues tenemos 
-eventos que gestionan todo lo que tiene que ver con los flujos, desde 
-cuando aparece un nuevo flujo el cual no tenemos identificado previamente, 
-lo cual para nuestro trabajo es fundamental, pues nos hace el programa más 
-eficiente, ya que cada vez que se lanza ese evento significa que tenemos 
-que añadir ese flujo a la lista de flujos comparables, sin tener que 
-compararlo con los que tengamos previamente almacenados. También tenemos 
-flujos que nos indicarán cuando un flujo esté a punto de morir, siendo el 
-momento de eliminarlo de la lista de comparables y, en caso de tener 
-flujos con los que éste ha sido comparado, pasará el primero de estos a 
-reemplazar el flujo que va a morir en la lista de comparables, de ésta 
-forma nos evitamos tener que estar comprobando la duración del flujo 
-para eliminarlo manualmente. Con todo ésto conseguimos un programa eficiente 
-en cuanto a tiempo y que, gracias a estos eventos, va a identificar los dos 
-protocolos de la capa de transporte, siendo estos \textbf{TCP} y \textbf{UDP}. Cabe destacar que los 
-eventos de \textit{UDP} empleados en nuestro programa son muy costoso, por lo tanto 
-en caso de tener mucho tráfico \textit{UDP}, siendo de dos tipos distinto \textbf{reply} y 
-\textbf{request}, puede hacer que el análisis tarde más tiempo del deseado, pero 
-el programa suele funcionar en una horquilla de tiempo bastante aceptable 
-en términos de rendimiento para el análisis del tráfico, aunque cabe 
-destacar que en nuestro caso analizamos archivos, no tráfico en tiempo real. 
-En el apartado \textit{Implementación} se hablará sobre los eventos usados con más detalle.
-\intro
-Bro también nos otorga una gran cantidad de \textbf{logs} en los cuales él mismo puede 
-llegar a clasificar el tráfico dependiendo del protocolo que se use, siendo 
-algunos ejemplos, \textit{HTTP, DNS, SSL, etc.} pero no nos interesa, pues se tratan de protocolos 
-de la capa de aplicación. Aunque como en nuestro caso usamos la información contenida en 
-un archivo \textbf{pcap}, la información de los protocolos de la capa de aplicación, 
-dependerá de si han sido cargados los \textit{scripts} correspondientes cuando se 
-realizó la captura del tráfico, pues en los flujos 
-de Bro la información relativa a \textit{HTTP, DNS, etc.} es opcional, siendo únicamente 
-obligatorio, en lo relativo a puertos que se informe de si pertenece a \textit{TCP, UDP o ICMP}.
-\intro
-Bro trabaja sobre Linux y sobre la terminal por lo tanto será necesario leer 
-la documentación para saber que opciones nos interesa tener activadas cuando 
-vayamos a analizar el tráfico, pues al no tener interfaz gráfica nos puede 
-ocurrir que no tengamos activado lo que queramos y otras cosas que no 
-precisamos si estén activas.
-\intro
-También es digno de mención que la información que hay en la red sobre Bro 
-es bastante escasa, quedando casi exclusivamente la información que se puede 
-encontrar en la web de Bro \cite{broindex}, por lo tanto a la hora de alguna 
-duda, la web será nuestra principal opción y en caso de no encontrar lo que 
-queramos tendremos que hacer bastantes pruebas hasta dar con la clave. 
-También podemos realizar una búsqueda por \textit{GitHub} para coger ideas de cómo 
-podemos resolver nuestras dudas. Aquí por ejemplo se puede encontrar información 
-sobre cómo operar tablas con vectores de la manera correcta \cite{gitbeacon}.
-
-\subsection{Requisitos de Bro}
-
-Podemos descargar los binarios y el código fuente desde la web de Bro \cite{brodownload}, 
-pero en mi caso después de experimentar ciertos fallos con ésta instalación, 
-recomiendo seguir la instalación de Bro de su web en el apartado de instalación \cite{broinstall}, 
-pues allí nos guía a una instalación que es más fácil de mantener actualizada, 
-ya que descargamos el código fuente directamente del \textbf{repositorio de GitHub}, 
-por lo cual si hay algún cambio importante, con alguna mejora interesante 
-la podremos tener casi directamente a nuestra disposición.
-\intro
-Para la instalación con los archivos de \textit{GitHub}, tendremos que hacer lo siguiente:
-\intro
-\begin{lstlisting}[style=Consola]
-sudo apt-get install cmake make gcc g++ flex bison libpcap-dev libssl-dev python-dev swig zlib1g-dev
-\end{lstlisting}
-
-\noindent Una vez que terminemos de instalar todo lo del comando anterior tendremos todos los 
-prerrequisitos para la instalación de Bro, ahora clonamos el 
-\textit{repositorio de GitHub} en nuestro ordenador:
-\intro
-\begin{lstlisting}[style=Consola]
-git clone --recursive git://git.bro.org/bro
-\end{lstlisting}
-
-\noindent Cuando termine de descargarlo nos metemos en la carpeta y ejecutamos lo siguiente:
-\intro
-\begin{lstlisting}[style=Consola]
-./configure
-make
-make install
-\end{lstlisting}
-
-\noindent De esta forma ya tendremos instalado Bro en nuestro ordenador y podremos empezar 
-a usarlo.
-\intro
-Ahora para usarlo tendremos que hacer lo siguiente, lo primero será \textbf{ajustar el 
-PATH} de nuestro terminal, para ello, tendremos que ejecutar en nuestro terminal 
-lo siguiente:
-\intro
-\begin{lstlisting}[style=Consola]
-export PATH=/usr/local/bro/bin:$PATH
-\end{lstlisting}
-
-\noindent Es importante hacerlo, pues sino obtendremos un error diciendo que Bro no se 
-encuentra instalado. Una vez hecho esto, podemos empezar realizando un script 
-sencillo y probar a ejecutarlo, un ejemplo de script sencillo es el que se ve 
-en el apartado \textit{Ejemplo  de uso de evento}, 
-supongamos que el script se llama \textit{prueba.bro}, para lanzarlo tendremos 
-que hacer lo siguiente:
-\intro
-\begin{lstlisting}[style=Consola]
-~$ bro -b -r pcap/nitroba.pcap scripts/bro-flows/prueba.bro
-\end{lstlisting}
-
-\noindent En este caso dentro de la carpeta Bro que se genera cuando clonamos el 
-repositorio he creado una carpeta llamada scripts, para tener todos los 
-scripts allí guardados, por lo tanto al encontrarnos en la carpeta raíz 
-de Bro, tendremos que ponerlo en la ruta, la opción \textit{-b} que ponemos en la 
-orden es solo para este ejemplo, lo que hace es no cargar los scripts 
-que se encuentran en el directorio \textit{base/}. Como necesitamos leer de un 
-archivo \textit{pcap}, tenemos que poner la opción \textit{-r}, que indica a Bro que tiene 
-un archivo de datos que leer, al igual que con los scripts, también hemos 
-creado una carpeta pcap en la cual guardamos los archivos \textit{pcap} que queramos 
-leer. Una vez que lo ejecutemos se nos mostrará en el terminal un mensaje 
-cada vez que se genere un flujo nuevo, cuando se exceda el timeout también 
-y cuando un flujo vaya a ser eliminado de la memoria.
-
-\subsection{Gestión de tráfico en Bro}
-
-\subsubsection{Nacimiento y muerte de flujos}
-
-En Bro el \textbf{nacimiento de un flujo} es controlado por un evento, dicho de otro 
-modo, cuando aparece un nuevo flujo se lanza un evento, de ésta forma podremos 
-controlar cuando un flujo nuevo aparece y podremos analizar toda su información 
-en este evento o en los siguientes antes de que el flujo muera, o en el caso de 
-tenerlo almacenado, antes de eliminarlo, pues una vez que lo eliminemos no 
-podremos recuperarlo, por lo tanto para el análisis detallado del tráfico es 
-interesante guardarlo.
-\intro
-\textbf{La muerte de un flujo} funciona también por eventos, siendo activado el evento cuando el 
-flujo está a punto de morir, por lo tanto todavía podremos operar sobre él, 
-por ejemplo, podremos decidir si queremos que el flujo sea eliminado o seguir 
-guardándolo para análisis estadísticos, realizar una comparación para ver si tenemos más 
-flujos con sus características para reemplazarlo, etc.
-\intro
-Por lo tanto como se comentó en apartados anteriores en Bro la mayor parte de 
-la información se gestiona con eventos, lo cual facilita enormemente el trabajo 
-que tenemos por delante.
-
-\subsubsection{Marcas temporales}
-
-Es interesante remarcar el uso de los \textbf{timestamps}, pues como ya se sabe son una 
-variable importante que usaremos en la comparación, esta variable es necesaria para emparejar 
-los flujos, cierto es que los datos más importantes son las IP’s y los puertos, 
-pues si no son iguales no procederemos a aplicar la fórmula necesaria para el 
-emparejamiento, pero llegado el momento también podríamos comparar los \textit{timestamps} 
-para comprobar si son distintos, pues en caso de que sean iguales podríamos desechar la 
-comparación, pues básicamente sería comparar el mismo flujo, por algún error de programación 
-y esto nos haría el programa más eficiente.
-\intro
-En Bro, como lenguaje de programación, volvemos a encontrarnos con un tipo de 
-dato propio para la gestión de estos datos, en este caso el tipo es time \cite{timetype}, 
-cuyo nombre es de por si muy indicativo de lo que va a contener. La peculiaridad 
-de este tipo de dato es que el tiempo viene dado en valor absoluto, por lo cual 
-tendremos que formatearlo para representarlo, aunque no será necesario si solamente 
-queremos operar con él. Bro dispone de funciones para pasar de \textit{double} a 
-\textit{time}, \textbf{double\_to\_time}, 
-obtener el tiempo actual, \textbf{current\_time}, y por último también disponemos de una 
-función para obtener el tiempo del último paquete procesado, \textbf{network time}, 
-obteniendo así su \textit{timestamp}, aunque parezca que necesita estar procesando de 
-manera online para usar esta función no es así, pues también sirve para los 
-archivos de datos de tráfico de red guardados, como los archivos \textit{pcap} que 
-usaremos nosotros para el emparejamiento. Para mostrar correctamente el valor 
-del tiempo podemos usar \textbf{strftime}, lo cual nos formateará el tiempo y lo mostrará 
-acorde a lo que le indiquemos en la cabecera de la función. También contamos con el 
-caso contrario, es decir, pasar de \textit{string} a \textit{time}, para ello tendremos que usar la 
-función \textbf{strptime}.
-\intro
-Para acabar tenemos una de las funciones más importantes que es \textbf{time\_to\_double}, que sirve para pasar 
-un tipo \textit{time} a \textit{double}, haciendo más fácil operar con él.
-
-\subsubsection{Listado de flujos activos}
-
-Para mantener un \textbf{listado de flujos activos} haremos uso de un contenedor para 
-almacenarlos y haremos uso de los eventos de Bro para gestionarlos. Primero, cuando 
-se generen flujos que previamente no habíamos visto los guardaremos para compararlos, 
-si aparecen flujos que ya tenemos reconocidos, los compararemos con los almacenados 
-y si nos interesa los guardaremos, y por último cuando Bro nos indique que algún flujo 
-va a ser eliminado de la memoria y por lo tanto ese flujo ya no estará activo una vez que el evento termine, por lo tanto tendremos que operar con el flujo antes de que el evento termine, para ello veremos 
-si hay algún candidato a ocupar su puesto en el listado de flujos emparejados y lo 
-eliminamos del listado de flujos comparables.
-\intro
-Para mantener un listado de flujos activos Bro nos proporciona varias formas. La 
-primera es usar un \textbf{vector}, el cual es fácil de usar si venimos de lenguajes como \textit{C++}, 
-podremos incluir datos usando los corchetes, \textit{[ ]}, indicando el índice dentro 
-de ellos, para borrar un elemento usaremos \textit{delete} y para consultar el tamaño del 
-vector usaremos \textit{|v|}, pero sin embargo por si sólo es muy \textbf{ineficiente} para almacenar 
-datos del tipo connection, pues solo dispone de índices numéricos.
-\intro
-Otro tipo para almacenar datos es \textbf{set}, el cual para borrar y consultar el tamaño 
-es igual que para los vectores, sin embargo, para agregar datos tendremos que usar \textit{add se[s]}, 
-estando entre los corchetes lo que queremos almacenar, aunque también podemos 
-almacenar datos redifiniendo el set, por ejemplo, \textit{s1 = set(1,2,3)}. El set también 
-es \textbf{ineficiente}, aunque menos, pues en un índice, aunque podemos guardar varios 
-elementos estos tienen que ser únicos y corremos el riesgo de eliminar los datos almacenados al insertar nuevos datos.
-\intro
-Por último podemos usar un tipo \textit{table}, que es básicamente un \textit{map}, de los que se 
-usan en \textit{C++}, pudiendo hacerlos bastante interesantes, pues podemos hacer un \textbf{table 
-de connection de vector} o de set de connection, por lo tanto esta será la forma 
-que usaremos para almacenar el listado de flujos activos, pues nos da bastante 
-versatilidad a la hora de manejar el listado de los flujos, porque podemos 
-acceder por índice a la lista de todos los flujos que comparten datos, haciendo 
-que sea una tarea bastante asequible, en términos de eficiencia.
-
-\subsection{Identificación de flujos en Bro (Tipo de flujo/Protocolo)}
-
-Como ya se explicó en otro apartado, Bro consta del tipo \textit{connection} \cite{connectiontype} 
-para referirse y tratar los flujos, por lo tanto cómo en el flujo hay 
-información sobre el protocolo que usa, podemos consultarlo haciendo 
-referencia al flujo que estamos tratando. Hay que destacar que dentro 
-de \textit{connection}, en \textit{history}, existe otro tipo llamado \textit{Conn::Info} \cite{conntype} que 
-extiende aún más los datos de \textit{connection}, y siendo capaz sus datos de 
-crear los \textit{logs} de lo que estemos analizando, por lo que podremos generar 
-un log con los protocolos que son usados en la sesión. Cabe destacar que 
-mostrando la información del puerto mediante el tipo \textit{port}, el \textit{string} que 
-nos muestra lleva el número del puerto y el protocolo al que pertenece, 
-pudiendo así extraer si es \textit{TCP o UDP}. Aunque si lo que queremos es 
-obtener solamente el protocolo de transporte al que pertenece el flujo 
-podemos hacer uso de la función \textit{get\_port\_transport\_proto} \cite{getproto}.
-\intro
-Es destacable que el tipo de dato  \textit{port} soporta la comparación, lo cual 
-será usado en el programa.  
-\intro
-También en las múltiples extensiones de Bro encontramos un analizador 
-de protocolos, protocol analyzer \cite{protoanalyzer}, el cual dispone de varias funciones 
-interesantes para el análisis de protocolos, pero que nosotros no usaremos.
-\intro
-Después de lo expuesto en esta sección podemos decir que a partir del protocolo al que 
-nos indique el flujo que pertenece, podremos clasificar mejor el tipo de flujo que estamos 
-tratando.
-
-\subsection{Ejemplo de uso de eventos}
-
-Ahora que tenemos algunos conceptos claros pondremos el ejemplo de un 
-programa en el cual se lanza un evento cada vez que aparece un flujo nuevo.
-\intro
-
-\begin{lstlisting}[style=CodigoC]
-## Para todo tipo de conexiones, ya sean TCP, UDP o ICMP. Este evento salta con cada nueva
-## conexion, con el primer paquete de una conexion desconocida, por lo que mirando el
-## documento generado vemos que esto es un nuevo flujo.
-event new_connection(c: connection)
-  {
-
-   if ( connection_exists( c$id ) ) {
-      print fmt("Nueva conexion establecida Timestamp: %s desde %s a %s", strftime("%Y/%M/%d %H:%m:%S", network_time()), c$id$orig_h, c$id$resp_h);
-      print fmt("Protocolo del puerto: %s", get_port_transport_proto(c$id$orig_p));
-      print fmt("Informacion de las 4 tuplas del paquete: %s", c$id);
-   } else {
-     print fmt("La conexion ya existe");
-     print fmt("_______________________________________________________________");
-   }
-
- }
-
-## Solo disponible para conexiones TCP, se genera cuando no hay actividad en un
-## periodo de tiempo determinado.
-event connection_timeout(c: connection)
-  {
-    print fmt("Conexion TCP ha excedido el timeout: %s",c$id);
-  }
-## Este evento salta para todo tipo de conexion, se da cuando el estado interno
-## esta a punto de eliminarse de memoria
-event connection_state_remove(c: connection)
-{
-
-  print fmt("Conexion de %s a %s a punto de ser eliminada de la memoria", c$id$orig_h, c$id$resp_h);
-
-}
-\end{lstlisting}
-
-\noindent Algunos comentarios sobre este código. Como habrá podido notar en el 
-lenguaje \textit{Bro} los comentarios se realizan con dos almohadillas, \textit{\#\#}, 
-los \textit{print} son como en la gran mayoría de lenguajes, con la particularidad 
-de que si vamos a mostrar un \textit{string} debemos de indicar que va formateado 
-mediante \textit{fmt}, \textit{\%s} es para mostrar el \textit{string}, tal y como se hace en \textit{C} con 
-los datos de tipo \textit{int} mostrándolo con \textit{\%i}, por ejemplo. Por último para 
-acceder a la distinta información que contiene el tipo de dato debemos 
-de usar \textit{\$}, esto es parecido a como accedemos en \textit{Java} a los datos de las clases.
-\intro
-Aunque el código está comentado merece la pena hacer algunas valoraciones 
-sobre los eventos usados, el evento \textbf{new\_connection} es muy útil, pues se 
-ejecuta cada vez que llega un flujo que no ha sido usado antes y además 
-reconoce \textit{TCP, UDP e ICMP}. El evento \textbf{connection\_timeout} aunque sólo sirva 
-para flujos del protocolo \textit{TCP} es bastante útil para empezar a trabajar 
-sobre Bro, pues sirve para empezar a comprender como funcionan los eventos. 
-Por último el evento \textbf{connection\_state\_removed} se lanza para \textit{TCP, UDP e ICMP} 
-cuando los flujos están a punto de morir, por lo tanto tiene un gran valor 
-para eliminar de memoria los flujos que ya no nos interesan porque no están 
-activos, y si este evento no se lanza no serán eliminados, en caso de que 
-los flujos estén guardados.
-
