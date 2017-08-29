@@ -12,20 +12,20 @@ se podría usar para identificar el tráfico.
 \section{Identificación de tráfico}
 
 Hay que tener claro que identificar el tráfico no es clasificarlo. Identificar el tráfico consiste en analizarlo 
-y obtener patrones comunes con los cuales se pueda ordenar el tráfico de forma posterior. Algunas de los patrones 
+y obtener patrones comunes con los cuales se pueda ordenar el tráfico de forma posterior. Algunos de los patrones 
 que se pueden tener en cuenta a la hora de identificar tráfico son los puertos, las IP's o la clase a la que 
 pertenece.
 
 \intro Por lo tanto la identificación del tráfico de la red es esencial para realizar una clasificación 
-posterior, la cual se podrá analizar en busca de amenazas o intrusos, a nivel de seguridad y componentes lentos 
-o defectuosos que afecten al rendimiento del servicio. Para poder identificar el tráfico lo deseable es un 
-método que sea rápido y proteja la privacidad de los distintos usuarios.
+posterior. Dicha clasificación se podrá analizar en busca de amenazas o intrusos, a nivel de seguridad 
+y componentes lentos o defectuosos que afecten al rendimiento del servicio. Para poder identificar el 
+tráfico lo deseable es un método que sea rápido y proteja la privacidad de los distintos usuarios.
 
 \subsection{Técnicas de identificación de tráfico}
 
 Existen varias técnicas de identificación de tráfico, como ya se explicó anteriormente. Estas técnicas son 
-el paso previo a la clasificación del tráfico. Podría considerarse que son el paso intermedio a la clasificación. 
-El tráfico, hasta ahora, se puede identificar de la siguiente forma.
+el paso previo a la clasificación del tráfico. Podría considerarse que son el paso intermedio a la clasificación, 
+teniendo en cuenta que el tráfico es capturado, identificado y clasificado. El tráfico, hasta ahora, se puede identificar de la siguiente forma.
 
 \begin{itemize}
 \item Por los puertos de la capa de transporte, establecido por \textit{IANA}. \cite{iana}
@@ -50,17 +50,17 @@ asignar los protocolos de Internet, algunos nombres de dominios y coordinar la a
 \intro Por lo tanto, IANA es quien asigna el número de puerto a los distintos protocolos, haciendo que se pueda 
 identificar el tráfico por el número de puerto al que se envía. Este sistema tiene el inconveniente de que 
 ahora mismo, se están desarrollando multitud de aplicaciones web. Estas aplicaciones se conectan mediante el 
-puerto 80, es decir, mediante el protocolo HTTP. Pero esto es en teoría , pues se puede hacer que cualquier 
+puerto 80, es decir, mediante el protocolo HTTP. Pero esto es solo teoría, pues se puede hacer que cualquier 
 aplicación envíe información por el puerto 80, sin que sea HTTP, lo cual daría como resultado una mala 
 identificación y posterior clasificación.
 
 \item Identificación basada en la aplicación de técnicas de aprendizaje automático sobre estadísticas 
 de tráfico \cite{learning}.
 
-\intro Esta clasificación es muy sencilla. Consta de algoritmos de aprendizaje automático, los cuales se 
-dedican a realizar análisis estadísticos. De esta forma aprenden las características determinadas de 
-los flujos. La clasificación de tráfico que se realiza con este método tiene un porcentaje de acierto 
-del 95\%, según se puede leer en el artículo \cite{comparacion}.
+\intro Esta técnica de identificación es muy sencilla. Consta de algoritmos de aprendizaje automático, 
+los cuales se dedican a realizar análisis estadísticos. De esta forma los algoritmos aprenden que características 
+tienen los flujos y los identifican en función de estas. Por lo tanto cuanto más tiempo pase, los patrones serán 
+mejores y se tendrán más aciertos a la hora de la identificación.
 \end{itemize}
 
 \subsection{DPI}
@@ -70,23 +70,22 @@ del 95\%, según se puede leer en el artículo \cite{comparacion}.
 \item Identificación basada en el contenido del paquete o DPI. \cite{payload}
 
 \intro Esta técnica de identificación consiste en analizar los paquetes, más allá de su cabecera. 
-La Inspección Profunda de Paquetes, DPI por sus siglas en inglés, \textit{Deep Packet Inspection}. 
-Esta técnica lo que hace es analizar todos los paquetes en busca de cadenas que se repitan, además 
+La Inspección Profunda de Paquetes, DPI por sus siglas en inglés, \textit{Deep Packet Inspection}, esta técnica 
+lo que hace es analizar todos los paquetes en busca de cadenas que se repitan, además 
 de las IP's y los puertos. Una vez que tiene una cadena, la usa para buscar paquetes que tienen ese patrón, 
 de esta forma establece un patrón de identificación.
 
 \intro Esta técnica es útil para buscar virus, intrusiones y demás. Suele ser usada por los proveedores de 
 servicios de Internet, ISP, \textit{Internet Service Provider} y grandes empresas. 
-Se puede decir que es una técnica que no respeta la privacidad, pues entra dentro de la información del paquete, 
-más allá de la cabecera. Aunque en el caso de una gran empresa si puede hacerse, pues si se está en la red propia 
+Se puede decir que es una técnica que no respeta la privacidad, pues entra dentro de la propia información del paquete. Aunque en el caso de una gran empresa si puede hacerse, pues si se está en la red propia 
 no es delito mirar la información que contienen los paquetes. 
 
 \intro En algunos países, como Alemania, donde es ilegal el uso de \textit{torrents}, 
 las autoridades pueden pedir información al proveedor de servicios sobre uno de sus clientes, si cree que este 
 está infringiendo la red, por lo que esta técnica es ideal para este tipo de cometidos.
 
-\intro Además de para lo descrito, esta técnica también es ideal para saber si se está 
-siendo atacado. \cite{dpiaproximacion}
+\intro Además de para lo descrito, esta técnica también es ideal para saber si se está siendo atacado y por quien. 
+\cite{dpiaproximacion}
 \end{itemize}
 
 \section{BRO}
@@ -112,7 +111,7 @@ equipo que lo ha desarrollado.
 propio lenguaje de \textit{scripting}, del mismo nombre. Esto se desarrollará más adelante y en la 
 parte de implementación se podrá ver cómo se desarrolla y algunos ejemplos de código escrito en Bro.
 
-\intro El lenguaje de scripting está orientado a trabajar con eventos. Por lo tanto a la hora de añadir una nueva funcionalidad habrá que crearla a partir del uso de los eventos que puede gestionar Bro.
+\intro El lenguaje de \textit{scripting} está orientado a trabajar con eventos. Por lo tanto a la hora de añadir una nueva funcionalidad habrá que crearla a partir del uso de los eventos que puede gestionar el programa.
 
 \intro \noindent Bro está estructurado de forma que todos los flujos de paquetes que analiza son procesados por el motor de eventos. Este motor convierte los flujos de paquetes en eventos, de forma que es más sencillo trabajar con ellos. 
 Una vez que los eventos son procesados se generan los registros correspondientes, los cuales podrán ser analizados posteriormente. \cite{broarquitectura}
@@ -127,7 +126,7 @@ Una vez que los eventos son procesados se generan los registros correspondientes
 
 La funcionalidad básica de Bro es la monitorización de la red en la que se ejecuta. 
 Mientras que se encuentra en ejecución, genera registros o \textit{logs} en texto plano que se 
-podrán leer usando un editor de texto. Si se analiza un archivo \textit{pcap} los logs no cambiarán. Sin 
+podrán leer usando un editor de texto. Si se analiza un archivo \textit{pcap} los \textit{logs} no cambiarán. Sin 
 embargo si se analiza tráfico a tiempo real, los registros se irán actualizando a medida que pase el tiempo. 
 Algunos de los \textit{logs} que se generarán son los siguientes.
 
@@ -156,8 +155,8 @@ La programación en Bro no es secuencial, no se escribe un \textit{script} y se 
 en el que está escrito. La programación aquí esta orientada a eventos. Por lo tanto el orden depende de cuando 
 se ejecute un determinado evento en el análisis.
 
-\intro Un evento se da cuando Bro detecta un "comportamiento", por ejemplo cuando detecta un paquete 
-de respuesta \textit{UDP}. Si se programa para ese evento que muestre un mensaje, este se mostrará cada vez que se detecte un paquete de respuesta \textit{UDP}. Por lo tanto la programación deberá de estar pensada en función de los eventos disponibles.
+\intro Un evento se da cuando Bro detecta un ``comportamiento", por ejemplo cuando detecta un paquete 
+de respuesta \textit{UDP}. Si se programa para que ese evento muestre un mensaje, este se mostrará cada vez que se detecte un paquete de respuesta \textit{UDP}. Por lo tanto la programación deberá de estar pensada en función de los eventos disponibles.
 
 \intro Dentro de cada evento se podrá hacer lo que se desee, con la información que capture ese evento. Si 
 el evento captura información de una conexión \textit{TCP}, se tendrá que trabajar con esa información y las 
@@ -168,8 +167,8 @@ realizar capturas de red. En la propia web de Bro se encuentran algunos archivos
 formato \textit{pcap}, de forma que se puedan realizar pruebas sobre ellos sin necesitar realizar una 
 traza propia.
 
-\intro En el caso de Bro se podrá generar trazas de red mediante un script de Python
-\cite{brotrace}, el cual se puede descargar desde el repositorio de GitHub de Bro. Con dicho script también 
+\intro En el caso de Bro se podrá generar trazas de red mediante un \textit{script} de \textit{Python}
+\cite{brotrace}, el cual se puede descargar desde el repositorio de \textit{GitHub} de Bro. Con dicho script también 
 se podrá trabajar sobre la traza, separando el tráfico entrante del saliente, desglosando en distintos registros 
 el tipo de tráfico y demás.
 
@@ -177,23 +176,23 @@ el tipo de tráfico y demás.
 \subsection{Incorporación de funcionalidades}
 
 La incorporación de funcionalidades al monitoreo realizado por Bro es una característica muy llamativa. Gracias 
-a esto se podrá realizar un análisis muy personalizado usando un script creado por el administrador de redes. De 
+a esto se podrá realizar un análisis muy personalizado usando un \textit{script} creado por el administrador de redes. De 
 esta forma podrá, por ejemplo, filtrar el tráfico de una determinada IP mientras se sigue analizando el tráfico 
 de forma normal, con los registros que genera Bro de forma automática. Es una forma muy sencilla de comprobar 
 si por ejemplo el servicio que administra está recibiendo demasiadas peticiones desde una misma IP. Lo cual 
 sería un indicio de ataque de denegación de servicio.
 
 \intro A la hora de incorporar funcionalidades a Bro se puede hacer todo lo que se desee. Una búsqueda rápida 
-por GitHub arrojará una gran cantidad de personas que contribuyen con una gran cantidad de nuevas 
+por \textit{GitHub} arrojará una gran cantidad de personas que contribuyen con una gran cantidad de nuevas 
 funcionalidades \citep{gitbeacon}. Ahora lo ideal sería incorporar un módulo, de forma que si el resto 
 de la comunidad lo desea pueda hacer uso de él de una forma sencilla.
 
 \section{Emparejamiento de flujos}
 
 La técnica de emparejamiento de flujos, fue planteada por el departamento de Teoría de la Señal, 
-Telemática y Comunicaciones, \textit{TSTC}, de la Universidad de Granada, en el año 2011 \cite{presentacion}. 
-Luego en el año 2013, el departamento realizó pruebas de la técnica de identificación en un entorno de 
-laboratorio \cite{comparacion}.
+Telemática y Comunicaciones, \textit{TSTC}, de la Universidad de Granada, en el año 2011 \cite{presentacion} \cite{comparacion}. 
+%Luego en el año 2013, el departamento realizó pruebas de la técnica de identificación en un entorno de 
+%laboratorio \cite{comparacion}.
 
 \intro En el emparejamiento de flujos, la idea de la que se parte es muy sencilla. Si dos paquetes comparten 
 IP's de origen y destino, y puertos de origen y destino, se podrá decir que esos dos paquetes pertenecen a 
@@ -202,7 +201,7 @@ es comparar los tiempos de esos paquetes, de forma que sean coherentes en el flu
 tiempo, se podrá descartar que pertenezcan al mismo flujo. Esta idea se puede ver en \cite{comparacion} de una 
 forma mucho más técnica.
 
-\intro En el mismo artículo se encuentra la fórmula que se sigue para el emparejamiento.
+\intro En el mismo artículo \cite{comparacion} se encuentra la fórmula que se sigue para el emparejamiento.
 
 \begin{equation*}
 	F(x,y)=

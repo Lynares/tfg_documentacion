@@ -11,14 +11,31 @@ los flujos activos y emparejados.
 En este problema la arquitectura que se va a emplear es una arquitectura modular. En dicha arquitectura el software 
 se divide en grupos que son bien diferenciados, pero a la vez están muy bien acoplados los unos con los otros.
 
-\intro Bro ya está divido en módulos que funcionan como un único módulo. También dispone de algunos módulos 
-que pueden ser sustituidos, eliminados y simplemente desactivados cuando se vaya a realizar un análisis y 
-todo el sistema seguirá funcionando bien. Por lo tanto el módulo que se vaya a implementar debe de ser independiente 
-de estos módulos que pueden ser desactivados, aunque también debería de poder hacer uso de ellos en determinadas 
-tareas especificas.
+\intro Bro dispone además de varios \textit{frameworks}. Con estos \textit{frameworks} se podrá crear módulos muy 
+potentes. Algunas de las utilidades de estos \textit{frameworks} son las siguientes.
+\begin{itemize}
+\item Geolocalización. Se podrá encontrar la localización geográfica de una IP.
+\item Análisis de ficheros. 
+\item Framework de loggins. Con este \textit{framework} se podrá extender los archivos de registro que se generan.
+\item NetControl framework. Este \textit{framework} permitirá tener un control muy amplio y diverso del tráfico.
+\end{itemize}
+
+\intro Para mayor conocimiento de estos \textit{frameworks} y otros acceda a \cite{broframeworks}.
+
+\intro Se podría pensar que para el módulo que se requiere lo ideal sería usar el \textit{framework} de NetControl, 
+pero no es así. Es un \textit{framework} que aunque se extienda no aporta nada que no tenga ya Bro para la creación 
+del módulo que se necesita.
+
+\intro Por lo tanto la arquitectura final del sistema que se pretende construir será un módulo que sea compatible 
+con el resto de módulos de los que está compuesto Bro.
 
 \section{Módulo y funciones}
 
+El módulo que se pretende construir debe de constar solamente con lo imprescindible para que pueda 
+
+
 \section{Gestión de flujos}
+
+
 
 \section{Estructura de datos}
