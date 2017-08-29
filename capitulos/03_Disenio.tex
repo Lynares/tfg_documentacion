@@ -1,6 +1,21 @@
 \chapter{Diseño y arquitectura del sistema}
 
+En este capítulo se encuentra cómo se pretende resolver el problema que ha sido presentado. Por lo tanto 
+se encuentran detalles de la arquitectura del sistema. Detalles del módulo y sus funciones. La gestión de 
+los flujos activos y emparejados.
+
+\intro Todo esto es contado desde la vista del diseño, por lo tanto aquí no se encontrará nada de código.
+
 \section{Arquitectura del sistema}
+
+En este problema la arquitectura que se va a emplear es una arquitectura modular. En dicha arquitectura el software 
+se divide en grupos que son bien diferenciados, pero a la vez están muy bien acoplados los unos con los otros.
+
+\intro Bro ya está divido en módulos que funcionan como un único módulo. También dispone de algunos módulos 
+que pueden ser sustituidos, eliminados y simplemente desactivados cuando se vaya a realizar un análisis y 
+todo el sistema seguirá funcionando bien. Por lo tanto el módulo que se vaya a implementar debe de ser independiente 
+de estos módulos que pueden ser desactivados, aunque también debería de poder hacer uso de ellos en determinadas 
+tareas especificas.
 
 \section{Módulo y funciones}
 
