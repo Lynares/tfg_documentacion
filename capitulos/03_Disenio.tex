@@ -31,10 +31,41 @@ con el resto de módulos de los que está compuesto Bro.
 
 \section{Módulo y funciones}
 
-El módulo que se pretende construir debe de constar solamente con lo imprescindible para que pueda 
+El módulo que se pretende construir deberá de contar solamente con lo mínimo. De esta forma se pretende que su 
+ejecución sea óptima. Una mala programación del módulo dejará al analizador de red ejecutando el análisis de forma 
+indefinida. Para que sea óptimo la funcionalidad del módulo deberá de estar clara y presente siempre.
 
+\intro Las funciones que se pretende que tenga este módulo en esencia son dos, la detección y almacenado 
+del tráfico y la aplicación de la fórmula a los distintos flujos que se han detectado. De una forma más amplia 
+las funcionalidades del módulo serán las siguientes. 
+
+\begin{itemize}
+\item \textit{Función que aplique la fórmula de emparejamiento}. 
+\intro A esta función se le pasará dos flujos, de forma que se aplique la fórmula y se discierna si pueden 
+ser emparejados o no.
+\item \textit{Funciones que detecten el tráfico}. 
+\intro Esto se hará con los eventos de Bro. Los eventos detectarán el tipo de tráfico que se está analizando 
+y aplicarán la función anterior.
+\end{itemize}
+
+\intro Para realizar esto es necesario conocer como gestiona los flujos Bro y de que forma se mantendrán los que 
+son emparejados y los que están activos.
 
 \section{Gestión de flujos}
+
+La gestión de flujos en Bro pasa completamente por eventos. Por lo tanto se tendrá que crear variables globales 
+para el almacenamiento de los flujos que sean potencialmente emparejables. 
+
+\intro El nacimiento de un flujo es controlado por un evento. Por lo tanto cuando se detecta un nuevo flujo se 
+lanza un evento. Este evento tendrá que ser usado para controlar si ya se tiene un flujo de características 
+parecidas o por el contrario no. Esta decisión tendrá distintos efectos en el módulo. De no tenerlo detectado 
+se tendrá que almacenar como un flujo activo nuevo. Si se tiene almacenado se deberá de comparar con los flujos 
+activos almacenados que pueden ser emparejados.
+
+\intro La muerte de un flujo también es controlada por eventos. Aquí lo importante es, si todavía es interesante 
+a pesar de que este muerto, tener el flujo almacenado. Si no se quiere tener el flujo almacenado porque ya no 
+está activo en el sistema, tendrá que ser almacenado en el mismo evento. Si se quiere almacenar porque puede 
+seguir siendo útil para las comparaciones que se pueden realizar en el futuro, no se hará nada. 
 
 
 
