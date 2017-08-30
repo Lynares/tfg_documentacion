@@ -1,33 +1,19 @@
 \chapter{Diseño y arquitectura del sistema}
 
-En este capítulo se encuentra cómo se pretende resolver el problema que ha sido presentado. Por lo tanto 
-se encuentran detalles de la arquitectura del sistema. Detalles del módulo y sus funciones. La gestión de 
-los flujos activos y emparejados.
+En este capítulo se contará cómo se va a estructurar el módulo. Se explicará que funcionalidades debe de tener para que sea funcional. También se verá cómo gestiona Bro los flujos. 
 
-\intro Todo esto es contado desde la vista del diseño, por lo tanto aquí no se encontrará nada de código.
+\intro Todo esto será contado desde la vista del diseño, por lo tanto no se verá código, aunque se verán un par de tipos de datos interesantes. También se verá la arquitectura que seguirá el sistema.
 
 \section{Arquitectura del sistema}
 
 En este problema la arquitectura que se va a emplear es una arquitectura modular. En dicha arquitectura el software 
 se divide en grupos que son bien diferenciados, pero a la vez están muy bien acoplados los unos con los otros.
 
-\intro Bro dispone además de varios \textit{frameworks}. Con estos \textit{frameworks} se podrá crear módulos muy 
-potentes. Algunas de las utilidades de estos \textit{frameworks} son las siguientes.
-\begin{itemize}
-\item Geolocalización. Se podrá encontrar la localización geográfica de una IP.
-\item Análisis de ficheros. 
-\item Framework de loggins. Con este \textit{framework} se podrá extender los archivos de registro que se generan.
-\item NetControl framework. Este \textit{framework} permitirá tener un control muy amplio y diverso del tráfico.
-\end{itemize}
+\intro Se podría pensar que para el módulo que se requiere, lo ideal sería usar el \textit{framework} de NetControl, presentado en el capítulo anterior, pero no es así. Dicho \textit{framework} aunque extiende la funcionalidad sobre las redes, es muy genérico. No aporta nada que sea de provecho para lo que se busca realizar.
 
-\intro Para mayor conocimiento de estos \textit{frameworks} y otros acceda a \cite{broframeworks}.
+\intro El módulo debe de ser ligero, para que el rendimiento sea óptimo. Por lo tanto se debe de prescindir de todo lo que no sea fundamental para la captura del tráfico en la capa de transporte y el posterior análisis de dicho tráfico.
 
-\intro Se podría pensar que para el módulo que se requiere lo ideal sería usar el \textit{framework} de NetControl, 
-pero no es así. Es un \textit{framework} que aunque se extienda no aporta nada que no tenga ya Bro para la creación 
-del módulo que se necesita.
-
-\intro Por lo tanto la arquitectura final del sistema que se pretende construir será un módulo que sea compatible 
-con el resto de módulos de los que está compuesto Bro.
+\intro Por lo tanto la arquitectura final del sistema que se pretende construir será un módulo basado en los eventos relacionados con el tráfico en la capa de transporte y su funcionalidad deberá de ser solamente la necesaria para que el análisis sea lo más rápido posible. 
 
 \section{Módulo y funciones}
 
@@ -48,6 +34,10 @@ ser emparejados o no.
 y aplicarán la función anterior.
 \end{itemize}
 
+\intro Lo que es interesante es capturar el tráfico de la capa de transporte. Dicho tráfico se corresponde a los protocolos \textit{TCP y UDP}. 
+
+\intro Se debe de tener en cuenta que siempre se podrá extender la funcionalidad del módulo. Pero de momento no resulta interesante. La posible extensión corresponde a posibles trabajos futuros.
+
 \intro Para realizar esto es necesario conocer como gestiona los flujos Bro y de que forma se mantendrán los que 
 son emparejados y los que están activos.
 
@@ -67,6 +57,18 @@ a pesar de que este muerto, tener el flujo almacenado. Si no se quiere tener el 
 está activo en el sistema, tendrá que ser almacenado en el mismo evento. Si se quiere almacenar porque puede 
 seguir siendo útil para las comparaciones que se pueden realizar en el futuro, no se hará nada. 
 
-
-
 \section{Estructura de datos}
+
+Las principales estructuras de datos que se necesitan para el desarrollo de este trabajo serán dos vectores, o semejantes para el almacenamiento de los flujos activos y los emparejados. Aunque esto se podrá ver mejor en la implementación.
+
+\intro Dichas estructuras de almacenamiento, deberán de ser capaces de estar ordenados por las IP's y los puertos. De esta forma se consigue que el acceso a los datos sea mucho más rápido. Incluso se podría prescindir de bucles, los cuales pueden acabar siendo un problema en cuanto a rendimiento si se llega a almacenar muchos flujos.
+
+\intro Bro proporciona cierto tipos de datos muy interesantes y los cuales, además, incluyen mucha más información. 
+Algunos de estos tipos de datos son. 
+\begin{itemize}
+\item \textit{connection}. \intro Este tipo de dato es el flujo en si. Por lo tanto será de vital comprenderlo para poder trabajar como se desea. Para obtener más información sobre este tipo de dato lea \cite{connectiontype}.
+\item \textit{time}. \intro Este tipo de dato también es interesante. Aunque en otros lenguajes se puede obtener, en Bro es un tipo de dato por si mismo. Por lo tanto se podrá operar sobre él desde el principio, siendo una gran ventaja a la hora de calcular el tiempo de inicio de los flujos. Para leer más \cite{timetype}. 
+\end{itemize}
+
+\intro Estos dos tipos serán los más utilizados e interesantes, junto con los contenedores de los flujos. Hay más tipos de datos, incluso algunos extienden la información disponible sobre los flujos \cite{conntype}.
+
