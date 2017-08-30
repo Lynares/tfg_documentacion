@@ -52,6 +52,12 @@ será necesario el uso de algún tipo de contenedor para este cometido.
 protocolos \textit{TCP y UDP}. Por lo tanto será necesario ver que tipo de eventos son los que controlan el tráfico 
 de estos dos protocolos. Esto se verá de forma más amplia en la siguiente sección.
 
+\intro Las entradas y salidas son de fácil gestión. Las entradas de tráfico podrán ser mediante archivos o 
+analizando directamente el tráfico de la red. Las salidas, por su parte, serán mediante terminal. Esto puede 
+suponer cierto inconveniente si se obtienen demasiadas salidas. También se pueden guardar las salidas en un 
+fichero mediante el carácter >. Con esto se guardará en un fichero en la ruta que se especifique, siendo el 
+posterior análisis mucho más cómodo desde, por ejemplo, un editor de texto.
+
 \intro Se debe de tener en cuenta que siempre se podrá extender la funcionalidad del módulo. Pero de momento no 
 resulta interesante. La posible extensión corresponde a posibles trabajos futuros.
 
@@ -85,13 +91,16 @@ eventos distintos, cada uno destinado a un protocolo distinto.
 
 \section{Estructuras de datos}
 
-Las principales estructuras de datos que se necesitan para el desarrollo de este trabajo serán dos vectores, o 
-semejantes para el almacenamiento de los flujos activos y los emparejados. Aunque esto se podrá ver mejor en la 
-implementación.
+Las principales estructuras de datos que se necesitan para el desarrollo de este trabajo serán dos tablas \cite{brotable} de 
+vectores para el almacenamiento de los flujos activos y los emparejados. Los vectores son iguales que en cualquier 
+otro lenguaje de programación, mientras que las tablas son parecidas a los \textit{maps} de \textit{C++}. Aunque 
+esto se podrá ver con mejor detalle en el apartado de implementación.
 
 \intro Dichas estructuras de almacenamiento, deberán de ser capaces de estar ordenados por las IP's y los puertos. 
-De esta forma se consigue que el acceso a los datos sea mucho más rápido. Incluso se podría prescindir de bucles, 
-los cuales pueden acabar siendo un problema en cuanto a rendimiento si se llega a almacenar muchos flujos.
+Lo que se obtiene juntando las tablas con los vectores es precisamente esto. Una especie de matriz bidimensional, 
+la cual está indexada. Por lo tanto se obtiene un acceso a los datos sea mucho más rápido. Incluso se podría 
+prescindir de bucles, los cuales pueden acabar siendo un problema en cuanto a rendimiento si se llega a almacenar 
+muchos flujos.
 
 \intro Bro proporciona cierto tipos de datos muy interesantes y los cuales, además, incluyen mucha más información. 
 Algunos de estos tipos de datos son. 
