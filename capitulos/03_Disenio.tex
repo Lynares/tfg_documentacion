@@ -25,24 +25,24 @@ también se tendrá que usar una función propia. Esta función se encargará de
 de flujos vista en el último apartado del capítulo anterior, esta función devolverá un número que será el que 
 se compare con el umbral.
 
-\intro Entonces, a modo de resumen, la arquitectura final del sistema que se plantea será un módulo 
-compuesto por los distintos eventos de gestión del tráfico de la capa de transporte y una función auxiliar para 
-el cálculo del umbral de emparejamiento. 
+\intro Por lo tanto, a modo de resumen, la arquitectura final del sistema que se plantea será un módulo 
+compuesto por los distintos eventos destinados a la gestión del tráfico de la capa de transporte y una función 
+auxiliar para el cálculo del umbral de emparejamiento. 
 
 \section{Módulo y funciones}
 
-Dado que una mala programación del módulo puede dejar al monitor de red colgado con una traza simple. Se tratará de 
+Dado que una mala programación del módulo puede dejar al monitor de red colgado con una traza sencilla. Se tratará 
 que el módulo contenga solamente lo justo para llevar a cabo la identificación del tráfico. De esta forma se 
 obtendrá un módulo cuya ejecución será óptima. 
 
 \intro Las funcionalidades que se espera que tenga este módulo en esencia son dos, la detección y almacenado 
-del tráfico y la aplicación de la fórmula, vista en el anterior capítulo, a los distintos flujos que se han 
-detectado. De una forma más amplia las funciones del módulo serán las siguientes. 
+del tráfico y la aplicación de la fórmula para conocer si dos flujos son emparejables, a los distintos flujos que 
+se han detectado. De una forma más amplia las funciones del módulo serán las siguientes. 
 
 \begin{itemize}
 \item \textit{Función que aplique la fórmula de emparejamiento}. 
-\intro A esta función se le pasará dos flujos, de forma que se aplique la fórmula y se discierna si pueden 
-ser emparejados o no.
+\intro A esta función se le pasará dos flujos, de forma que se aplique la fórmula y devuelva un número, el cual 
+será el que indique si los flujos son emparejables o no.
 \item \textit{Funciones que detecten el tráfico}. 
 \intro Esto se hará con los eventos de Bro. Los eventos detectarán el tipo de tráfico que se está analizando 
 y aplicarán la función anterior.
@@ -57,26 +57,26 @@ de estos dos protocolos. Esto se verá de forma más amplia en la siguiente secc
 \intro Las entradas y salidas son de fácil gestión. Las entradas de tráfico podrán ser mediante archivos o 
 analizando directamente el tráfico de la red. Las salidas, por su parte, serán mediante terminal. Esto puede 
 suponer cierto inconveniente si se obtienen demasiadas salidas. También se pueden guardar las salidas en un 
-fichero mediante el carácter >. Con esto se guardará en un fichero en la ruta que se especifique, siendo el 
+fichero mediante el carácter \textit{mayor que} . Con esto se guardará en un fichero en la ruta que se especifique, siendo el 
 posterior análisis mucho más cómodo desde, por ejemplo, un editor de texto.
 
 \intro Se debe de tener en cuenta que siempre se podrá extender la funcionalidad del módulo. Pero de momento no 
-resulta interesante. La posible extensión corresponde a posibles trabajos futuros.
+resulta interesante. La posible extensión correspondería a posibles trabajos futuros.
 
 \intro Para realizar este módulo es necesario conocer como gestiona los flujos Bro y de que forma se mantendrán 
 los que son emparejados y los que están activos.
 
 \section{Gestión de flujos}
 
-La gestión de flujos en Bro pasa completamente por eventos. Por lo cual se tendrán que crear variables globales 
-para el almacenamiento de los flujos que sean emparejables y los que estén activos.
+La gestión de flujos en Bro se realiza completamente con eventos. Por lo cual se tendrán que crear variables 
+globales para el almacenamiento de los flujos que sean emparejables y los que estén activos.
 
 \intro El \textit{nacimiento de un flujo} es controlado por un evento. Por lo tanto cuando se detecta un nuevo 
 flujo se lanza un evento. Este evento se tendrá que controlar de forma que si se tiene ya un flujo activo con las 
 mismas características, se compare y se almacene. Si por el contrario no se tiene ningún flujo con esas 
 características se tendrá que almacenar directamente en el contenedor de flujos activos.
 
-\intro La \textit{muerte de un flujo} también es controlada por eventos. Ahora lo importante es si es interesante 
+\intro La \textit{muerte de un flujo} también es controlada por un evento. Ahora lo importante es si es interesante 
 a nivel del análisis seguir almacenando los flujos aunque estos hayan muerto. Si no se quiere tener almacenados 
 flujos muertos se tendrá que eliminar de la estructura en la que está almacenado. Si se quiere seguir trabajando 
 con ellos habrá que mantenerlos guardados en la estructura. Obviamente si el flujo que va a morir está emparejado 
@@ -84,20 +84,17 @@ con otro se borrará solo del contenedor de flujos activos. Manteniéndose en el
 lo contrario se perderá información. Todo esto habrá que decidirlo en el evento que gestiona la muerte del flujo.
 
 \intro Estos dos comportamientos de los flujos están controlados por eventos genéricos. Con un único evento se 
-detecta que el flujo ha nacido o ha muerto, independientemente del tipo de protocolo al que pertenezca. No pasará 
-esto con los distintos estados de los flujos que serán detectados. Pues no es lo mismo detectar un ACK de un flujo 
-TCP que una respuesta de un flujo UDP. Serán tratados en eventos distintos y tendrán que ser gestionados con 
-eventos distintos, cada uno destinado a un protocolo distinto. 
+detecta que el flujo ha nacido y con otro evento si ha muerto, independientemente del tipo de protocolo al que 
+pertenezca. No pasará esto con los distintos estados de los flujos que serán detectados. Pues no es lo mismo 
+detectar un ACK de un flujo TCP que una respuesta de un flujo UDP. Serán tratados en eventos distintos y tendrán que ser gestionados con eventos distintos, cada uno destinado a un protocolo distinto. 
 
 \intro A continuación se verán las estructuras de datos necesarias para llevar a cabo el desarrollo del módulo.
 
 \section{Estructuras de datos}
 
 Las principales estructuras de datos que se necesitan para el desarrollo de este trabajo serán dos 
-tablas \cite{brotable} de 
-vectores para el almacenamiento de los flujos activos y los emparejados. Los vectores son iguales que en cualquier 
-otro lenguaje de programación, mientras que las tablas son parecidas a los \textit{maps} de \textit{C++}. Aunque 
-esto se podrá ver con mejor detalle en el apartado de implementación.
+tablas, \textit{table} \cite{brotable}, de vectores para el almacenamiento de los flujos activos y los emparejados. 
+Los vectores son iguales que en cualquier otro lenguaje de programación, mientras que las tablas son parecidas a los \textit{maps} de \textit{C++}. Aunque esto se podrá ver con mejor detalle en el apartado de implementación.
 
 \intro Dichas estructuras de almacenamiento, deberán de ser capaces de estar ordenadas por las IP's y los puertos. 
 Lo cual se obtiene juntando las tablas con los vectores para así conseguir una especie de matriz bidimensional, 
@@ -105,7 +102,7 @@ la cual está indexada. Por lo tanto se consigue que el acceso a los datos sea m
 prescindir de bucles, los cuales pueden acabar siendo un problema en cuanto a rendimiento si se llega a almacenar 
 muchos flujos.
 
-\intro Bro proporciona cierto tipos de datos muy interesantes y los cuales, además, incluyen mucha más información. 
+\intro Bro proporciona cierto tipos de datos muy interesantes, los cuales además, incluyen mucha más información. 
 Algunos de estos tipos de datos son. 
 
 \begin{itemize}
@@ -126,8 +123,8 @@ siendo pues las IP's y los puertos.
   ser comparado e incluso ordenado mediante operadores. \cite{broaddr}
 
   \item \textit{port}. Este tipo es el usado para los puertos. Además del número de puerto también indica el 
-  protocolo de la capa de transporte que usa. Soporta la comparación, pero no por el número, sino por el tipo de 
-  protocolo. \cite{broport}
+  protocolo de la capa de transporte que usa. Soporta la comparación y ordenación, pero no por el número, sino por 
+  el tipo de protocolo. \cite{broport}
   \end{itemize}
   
 \intro Para obtener más información sobre el tipo de dato \textit{connection} lea \cite{connectiontype}.
