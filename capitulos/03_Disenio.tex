@@ -1,29 +1,31 @@
 \chapter{Diseño y arquitectura del sistema}
 
-En este capítulo se contará cómo se va a estructurar el módulo. Se explicará que funcionalidades debe de tener 
-para que sea funcional. También se verá cómo gestiona Bro los flujos. 
+En este capítulo se hablará cómo se va a estructurar el módulo, las diferentes funcionalidades que debe tener 
+para que sea funcional y por último cómo Bro gestiona los flujos.
 
-\intro Todo esto será contado desde la vista del diseño, por lo tanto no se verá código, aunque se verán un par 
-de tipos de datos interesantes. También se verá la arquitectura que seguirá el sistema.
+\intro Todo esto se planteará desde la vista del diseño, se verán algunos tipos de datos interesantes para el 
+desarrollo, aunque el código se verá más adelante en el capítulo de implementación. También se hablará de la 
+arquitectura que va a seguir el sistema.
 
 \section{Arquitectura del sistema}
 
-Para describir la arquitectura del sistema hay que tener en cuenta la arquitectura propia de Bro. Este monitor de 
-red es un software modular. Esto quiere decir que esta compuesto de diferentes módulos que al ser ejecutados 
+Para describir la arquitectura del sistema hay que tener en cuenta la arquitectura que compone a Bro. Este monitor 
+de red es un software modular, esto quiere decir que esta compuesto de diferentes módulos que al ser ejecutados 
 funcionan como un único sistema.
 
-\intro Por lo tanto la arquitectura de este problema se debe de acoplar a la arquitectura propia de Bro. Esto 
-quiere decir, que se construirá un módulo. Entre los requisitos del módulo a desarrollar se encuentra que sea 
-ligero y eficiente. Por lo tanto se tendrá que usar los distintos eventos que proporciona Bro para crearlo de 
-la forma deseada.
+\intro Por lo tanto la arquitectura de este problema se debe de acoplar a la arquitectura propia de Bro. Para ello, 
+se construirá un módulo que se acople con el monitor de red. Entre los requisitos del módulo a desarrollar se 
+encuentra que sea ligero y eficiente. Por lo tanto se tendrá que usar los distintos eventos que proporciona Bro 
+para crearlo de la forma deseada.
 
 \intro Se prescindirá del uso de los \textit{frameworks} descritos en el capítulo anterior, pues su uso no aporta 
 nada que no se pueda realizar exclusivamente con los eventos destinados a gestionar el tráfico de la capa de 
-transporte. Con el uso de estos eventos y alguna función auxiliar para el cálculo del umbral de emparejamiento 
-de forma que se realicen menos cálculos dentro de los propios eventos. Con este esquema será suficiente 
-para alcanzar los objetivos propuestos.
+transporte. Se tendrá que usar los eventos para gestionar absolutamente todo lo que pasa en el módulo, a parte 
+también se tendrá que usar una función propia. Esta función se encargará de aplicar la fórmula del emparejamiento 
+de flujos vista en el último apartado del capítulo anterior, esta función devolverá un número que será el que 
+se compare con el umbral.
 
-\intro Entonces, a modo de resumen, la arquitectura final del sistema que se plantea será un módulo. Este estará 
+\intro Entonces, a modo de resumen, la arquitectura final del sistema que se plantea será un módulo 
 compuesto por los distintos eventos de gestión del tráfico de la capa de transporte y una función auxiliar para 
 el cálculo del umbral de emparejamiento. 
 
@@ -66,7 +68,7 @@ los que son emparejados y los que están activos.
 
 \section{Gestión de flujos}
 
-La gestión de flujos en Bro pasa completamente por eventos. Por lo tanto se tendrá que crear variables globales 
+La gestión de flujos en Bro pasa completamente por eventos. Por lo cual se tendrán que crear variables globales 
 para el almacenamiento de los flujos que sean emparejables y los que estén activos.
 
 \intro El \textit{nacimiento de un flujo} es controlado por un evento. Por lo tanto cuando se detecta un nuevo 
@@ -79,7 +81,7 @@ a nivel del análisis seguir almacenando los flujos aunque estos hayan muerto. S
 flujos muertos se tendrá que eliminar de la estructura en la que está almacenado. Si se quiere seguir trabajando 
 con ellos habrá que mantenerlos guardados en la estructura. Obviamente si el flujo que va a morir está emparejado 
 con otro se borrará solo del contenedor de flujos activos. Manteniéndose en el contenedor de flujos emparejados. De 
-lo contrario se perderá información. Todo esto habrá que decidirlo en el evento que gestiona la muerte.
+lo contrario se perderá información. Todo esto habrá que decidirlo en el evento que gestiona la muerte del flujo.
 
 \intro Estos dos comportamientos de los flujos están controlados por eventos genéricos. Con un único evento se 
 detecta que el flujo ha nacido o ha muerto, independientemente del tipo de protocolo al que pertenezca. No pasará 
@@ -91,26 +93,57 @@ eventos distintos, cada uno destinado a un protocolo distinto.
 
 \section{Estructuras de datos}
 
-Las principales estructuras de datos que se necesitan para el desarrollo de este trabajo serán dos tablas \cite{brotable} de 
+Las principales estructuras de datos que se necesitan para el desarrollo de este trabajo serán dos 
+tablas \cite{brotable} de 
 vectores para el almacenamiento de los flujos activos y los emparejados. Los vectores son iguales que en cualquier 
 otro lenguaje de programación, mientras que las tablas son parecidas a los \textit{maps} de \textit{C++}. Aunque 
 esto se podrá ver con mejor detalle en el apartado de implementación.
 
-\intro Dichas estructuras de almacenamiento, deberán de ser capaces de estar ordenados por las IP's y los puertos. 
-Lo que se obtiene juntando las tablas con los vectores es precisamente esto. Una especie de matriz bidimensional, 
-la cual está indexada. Por lo tanto se obtiene un acceso a los datos sea mucho más rápido. Incluso se podría 
+\intro Dichas estructuras de almacenamiento, deberán de ser capaces de estar ordenadas por las IP's y los puertos. 
+Lo cual se obtiene juntando las tablas con los vectores para así conseguir una especie de matriz bidimensional, 
+la cual está indexada. Por lo tanto se consigue que el acceso a los datos sea mucho más rápido. Incluso se podría 
 prescindir de bucles, los cuales pueden acabar siendo un problema en cuanto a rendimiento si se llega a almacenar 
 muchos flujos.
 
 \intro Bro proporciona cierto tipos de datos muy interesantes y los cuales, además, incluyen mucha más información. 
 Algunos de estos tipos de datos son. 
+
 \begin{itemize}
-\item \textit{connection}. \intro Este tipo de dato es el flujo en si. Por lo tanto será de vital comprenderlo para 
-poder trabajar como se desea. Para obtener más información sobre este tipo de dato lea \cite{connectiontype}.
-\item \textit{time}. \intro Este tipo de dato también es interesante. Aunque en otros lenguajes se puede obtener, 
+
+\item \textit{connection}. 
+
+\intro Este tipo de dato es el flujo en si. Por lo tanto será de vital importancia comprenderlo para poder trabajar 
+como se desea.
+
+\intro Dentro del tipo de dato \textit{connection} existe un registro llamado \textit{id}, el cual esta 
+compuesto por el tipo de dato \textit{conn\_id} \cite{broconnid}. Este dato sirve para identificar los flujos 
+mediante una tupla formada por 4 datos. Estos datos son los que se precisan para indexar la matriz bidimensional, 
+siendo pues las IP's y los puertos.
+
+  \begin{itemize}
+
+  \item \textit{addr}. Este tipo de dato representa una IP. Reconoce tanto IPv4 como IPv6. Este tipo de dato puede 
+  ser comparado e incluso ordenado mediante operadores. \cite{broaddr}
+
+  \item \textit{port}. Este tipo es el usado para los puertos. Además del número de puerto también indica el 
+  protocolo de la capa de transporte que usa. Soporta la comparación, pero no por el número, sino por el tipo de 
+  protocolo. \cite{broport}
+  \end{itemize}
+  
+\intro Para obtener más información sobre el tipo de dato \textit{connection} lea \cite{connectiontype}.
+
+\item \textit{time}. 
+
+\intro Este tipo de dato también es interesante. Aunque en otros lenguajes se puede obtener, 
 en Bro es un tipo de dato por si mismo. Por lo tanto se podrá operar sobre él desde el principio, siendo una gran 
 ventaja a la hora de calcular el tiempo de inicio de los flujos. Para leer más \cite{timetype}. 
+
+\intro Es importante entender que para realizar el cálculo para el emparejamiento de flujos, se necesita el 
+\textit{timestamp} del primer paquete de cada flujo, pues será sobre este tiempo sobre el que se apoye el 
+cálculo del emparejamiento.
+
 \end{itemize}
 
-\intro Estos dos tipos serán los más utilizados e interesantes, junto con los contenedores de los flujos. Hay más 
-tipos de datos, incluso algunos extienden la información disponible sobre los flujos \cite{conntype}.
+\intro Estos dos tipos de datos a parte de ser los más interesantes para el cálculo del emparejamiento, también 
+serán los más utilizados junto a los contenedores para los flujos. Existen más tipos de datos e incluso los hay que 
+extienden la información disponible sobre los flujos. Para leer más sobre esto \cite{conntype}.
