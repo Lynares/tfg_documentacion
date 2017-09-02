@@ -8,7 +8,6 @@ como la descripción de una API.
 \intro Lo primero que se va a detallar es la función para calcular el emparejamiento.
 
 \begin{lstlisting}[style=CodigoC]
-
 function emparejamiento(c1: connection, c2: connection ):double 
 
 \end{lstlisting}
@@ -35,12 +34,34 @@ cálculo. Gracias a la indexación basta con buscarlo en la tabla y calcular el 
 \intro A continuación se procederá a la explicación de los distintos tipos de eventos usados y para que son usados.
 
 \begin{lstlisting}[style=CodigoC]
-
 event new_connection(c: connection)
 
 \end{lstlisting}
 
-\intro Este evento recibe como entrada un flujo
+\intro Este evento recibe como entrada un flujo nuevo. Este flujo es una nueva conexión, la cual no está identificada 
+previamente. Esto quiere decir o que es nueva o que ha sido borrada.
+
+\intro Este evento no devuelve nada, por lo tanto si en el momento en el que es detectado se tendrá que crear un nuevo 
+indice o guardarlo en las tablas.
+
+\intro Este tipo de evento detecta las conexiones de tipo \textit{TCP y UDP}.
+
+\intro Ahora se verá cómo se van a gestionar la muerte de los flujos.
+
+\begin{lstlisting}[style=CodigoC]
+event connection_state_remove(c: connection)
+
+\end{lstlisting}
+
+\intro Este evento se activa cuando el flujo que entra en él va a morir, o ser borrado de la memoria. Es un flujo 
+que ya ha sido procesado por el módulo.
+
+\intro Lo que se realiza dentro de este evento es buscar en la tabla el índice el vector. De esta forma 
+se borrará el primer flujo almacenado en el vector.
+
+\intro De ser el único flujo almacenado en el vector, se borrará el vector entero. Si hay más flujos almacenados 
+se moverán los demás una posición hacia atrás. De esta forma se seguirá teniendo un rendimiento óptimo.
+
 
 
 
