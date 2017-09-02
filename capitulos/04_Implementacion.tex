@@ -62,10 +62,56 @@ se borrará el primer flujo almacenado en el vector.
 \intro De ser el único flujo almacenado en el vector, se borrará el vector entero. Si hay más flujos almacenados 
 se moverán los demás una posición hacia atrás. De esta forma se seguirá teniendo un rendimiento óptimo.
 
+\intro A continuación se verán los distintos eventos que van a detectar el diferente tipo de tráfico.
 
+\begin{lstlisting}[style=CodigoC]
+event connection_established(c: connection)
 
+event connection_finished(c: connection)
 
+event udp_request(u: connection)
 
+event udp_reply(u: connection)
 
+\end{lstlisting}
 
+\intro Los dos primeros eventos son los correspondientes al tráfico \textit{TCP}. Los otros dos, como se puede ver 
+en el nombre están destinados al tráfico \textit{UDP}.
 
+\intro El primer evento relacionado con \textit{TCP} se activa cuando se detecta un paquete \textit{SYN-ACK} que 
+responde al \textit{handshake} que se realiza en las conexiones de este tipo.
+
+\intro El segundo evento detecta cuando la conexión \textit{TCP} finaliza de forma normal.
+
+\intro Los dos eventos relacionados con \textit{UDP} detectan paquetes de dos tipos distintos.
+
+\begin{itemize}
+\item \textit{UDP request}. Se genera por cada paquete que es enviado por el creador del flujo.
+\item \textit{UDP reply}. Este es generado por cada paquete que es enviado por el receptor del flujo.
+\end{itemize}
+
+\intro Estos dos últimos eventos son bastantes costosos, pero son absolutamente necesarios, son los únicos 
+eventos que detectan conexiones de tipo \textit{UDP}.
+
+\intro Dentro de todos estos eventos se realiza lo mismo. Primero se comprueba que los dos flujos no son el mismo, 
+si son el mismo se termina el análisis. Si no son lo mismo se pasa a la función de emparejamiento ya descrita y 
+se compara el número que se obtiene con el umbral que se ha definido antes de la ejecución. Si el resultado es 
+mayor que el umbral son emparejables, por lo cual se tendrá que guardar en la tabla de emparejados y se informa 
+mediante un mensaje en pantalla de que lo son. Si es menor que el umbral no son emparejables y mediante un mensaje 
+en pantalla se informa de que no son emparejables.
+
+\intro Es necesario recordar que se puede dar que se puede estar usando dos eventos o más a la vez, por lo que los 
+mensajes en pantalla pueden ser confusos. Se tiene que tener en cuenta que hay cierto retardo en los mensajes, por 
+lo que lo interesante es el resultado final de las tablas.
+
+\intro Además de estos eventos se tienen los siguientes eventos genéricos.
+
+\begin{lstlisting}[style=CodigoC]
+event bro_init()
+
+event bro_done()
+\end{lstlisting}
+
+\intro El primero se lanza cuando Bro se inicia y mostrará el tiempo de inicio. El segundo se lanza cuando 
+Bro finaliza, por lo tanto es el último evento que se lanzará y mostrará la hora de finalización. Con estos 
+dos eventos se tendrá control de cuando fue lanzado el análisis y cuando finalizó.
