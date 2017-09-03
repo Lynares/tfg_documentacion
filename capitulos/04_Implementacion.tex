@@ -2,8 +2,8 @@
 
 A continuación se contará cómo se ha implementado el módulo de Bro, resolviendo así el problema planteado.
 
-\intro La descripción del módulo será sin entrar en detalles de la programación. Se trata de una descripción 
-como la descripción de una API.
+\intro La descripción del módulo será sin entrar en detalles de la programación. Se hará una descripción 
+breve de los distintos eventos y funciones.
 
 \intro Lo primero que se va a detallar es la función para calcular el emparejamiento.
 
@@ -115,3 +115,38 @@ event bro_done()
 \intro El primero se lanza cuando Bro se inicia y mostrará el tiempo de inicio. El segundo se lanza cuando 
 Bro finaliza, por lo tanto es el último evento que se lanzará y mostrará la hora de finalización. Con estos 
 dos eventos se tendrá control de cuando fue lanzado el análisis y cuando finalizó.
+
+\intro Aparte de estos eventos, también existen dentro del módulo otros dos eventos destinados a detectar 
+paquetes del protocolo \textit{ICMP}. Este tipo de eventos son necesarios pues Bro los detecta igual que los 
+de tipo \textit{TCP y UDP}.
+
+\begin{lstlisting}[style=CodigoC]
+event icmp_echo_request(c: connection, icmp: icmp_conn, id: count, seq: count, payload: string)
+
+event icmp_echo_reply(c: connection, icmp: icmp_conn, id: count, seq: count, payload: string)
+\end{lstlisting}
+
+\intro El protocolo \textit{ICMP} se usa para el control, enviando mensajes de error si un router o un host 
+no son alcanzables.
+
+\intro Al igual que con los eventos de \textit{UDP}, el \textit{request} es enviado por el creador del flujo, 
+siendo una petición. El \textit{reply} es enviado por el receptor del \textit{request}, por lo que se considera 
+la respuesta del anterior. El funcionamiento es el mismo que en los anteriores eventos que gestionan el tráfico.
+
+\intro Aunque estos dos eventos tienen más parámetros de entrada que los eventos anteriores, para calcular el 
+emparejamiento solo será usado el primer parámetro, el cual hace referencia al flujo. El trato del flujo dentro 
+de los eventos es el mismo que el que se aplica a los eventos \textit{TCP y UDP} anteriormente descrito.
+
+\intro A continuación se verá cómo se ha implementado las estructuras de almacenamiento de los flujos.
+
+\begin{lstlisting}[style=CodigoC]
+global collection: table[addr, addr, port, port] of vector of connection &synchronized;
+
+global collection_added: table[addr, addr, port, port] of vector of connection;
+\end{lstlisting}
+
+\intro Se trata de dos tablas globales, cuyo indice está constituido por las IP's de origen y destino y los 
+puertos de origen y destino. Además como los indices son únicos, cada índice apunta a un vector, y dentro de 
+dicho vector se almacenan los flujos ordenados dependiendo de cuando son detectados.
+
+
