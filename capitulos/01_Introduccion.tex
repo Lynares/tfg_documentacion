@@ -109,11 +109,8 @@ no sería necesario ser un proveedor de servicios de Internet, ISP, para conocer
 
 \section{Objetivos}
 
-En este trabajo se hará uso del NMS mencionado anteriormente, llamado Bro \cite{broindex}, el cual cuenta con 
-su propio lenguaje de scripting. Dicho lenguaje es de fácil uso y comprensión, además de que está completamente 
-orientado a trabajar con conexiones, teniendo distintos tipos de datos que son realmente útiles. Dicho esto 
-el objetivo del trabajo es desarrollar un módulo para Bro. En este módulo irá implementada la 
-técnica de emparejamiento de flujos, de forma que pueda ser usada en redes fuera de un entorno de laboratorio.
+El objetivo de este trabajo es el desarrollo de un módulo para un NMS. Con el desarrollo del módulo se tratará 
+de demostrar que el emparejamiento de flujos se puede realizar fuera de un entorno de laboratorio.
 
 \begin{itemize}
 \item Para ello será necesario conocer como Bro gestiona los flujos, desde su nacimiento a su muerte. 
@@ -133,17 +130,20 @@ considera un objetivo, que se tendrá en cuenta dentro de la temporización.
 Para realizar este trabajo se establecen una serie de tareas:
 
 \begin{itemize}
-\item Lectura del artículo del departamento. \cite{comparacion}
-\item Estudio del uso de Bro y de su lenguaje de scripting.
-\item Pruebas con el lenguaje propio de Bro.
-\item Desarrollo del módulo en Bro.
-\item Pruebas del módulo.
-\item Desarrollo de la memoria.
+\item Estado del Arte.
+	\begin{itemize}
+	\item Lectura del artículo del departamento. \cite{comparacion}
+	\item Búsqueda de información sobre la identificación de tráfico.
+	\end{itemize}
+\item Análisis de las herramientas.
+\item Diseñar el módulo de Bro.
+\item Implementar el módulo.
+\item Evaluación y pruebas del módulo.
 \end{itemize}
 
-Cada tarea anterior se realimentará de la siguiente, el ejemplo más claro es el desarrollo del módulo, que 
-irá cambiando por las pruebas, pues se detectarán los fallos, a su vez habrá que releer el artículo mientras 
-se desarrolla el módulo para asegurarse de que todo se realiza de acuerdo al trabajo previo, etc.
+%Cada tarea anterior se realimentará de la siguiente, el ejemplo más claro es el desarrollo del módulo, que 
+%irá cambiando por las pruebas, pues se detectarán los fallos, a su vez habrá que releer el artículo mientras 
+%se desarrolla el módulo para asegurarse de que todo se realiza de acuerdo al trabajo previo, etc.
 
 \intro En el siguiente diagrama de Gantt se puede ver una temporización de estas tareas. 
 
