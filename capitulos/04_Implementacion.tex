@@ -20,15 +20,14 @@ origen y destino de los flujos. También se obtendrán los \textit{timestamps} d
 conseguirá la diferencia de tiempo. 
 
 \intro Para poder operar con los puertos habrá que pasarlos a tipo \textit{count}, de esta forma se elimina la 
-terminación con el tipo de protocolo del puerto. Se comentó anteriormente que se podía operar con esta terminación 
+terminación con el tipo de protocolo del puerto. Se comentó anteriormente que se podía operar con esta terminación, 
 pero al tener que operar con otros tipos de datos que no son puertos es mejor quitar la terminación, pues de lo 
 contrario no se obtendrá un buen resultado. 
 
-\intro Lo mismo que con los puertos pasa con el tipo \textit{time}. Se puede operar con el tipo de dato 
-\textit{time} pero no es recomendable hacerlo ya que se va a trabajar con más tipos de datos de carácter 
-matemático.
+\intro Lo mismo que con los puertos pasa con el tipo \textit{time}. Se puede operar con este tipo de dato 
+pero no es recomendable hacerlo ya que se va a trabajar con más tipos de datos de carácter matemático.
 
-\intro El número de veces que se tiene un flujo con los mismos datos o \textit{Nip}, en la fórmula, es de fácil 
+\intro El número de veces que se tiene un flujo con los mismos datos, o \textit{Nip} en la fórmula, es de fácil 
 cálculo. Gracias a la indexación basta con buscarlo en la tabla y calcular el tamaño del vector. 
 
 \intro A continuación se procederá a la explicación de los distintos tipos de eventos usados y para que son usados.
@@ -41,8 +40,8 @@ event new_connection(c: connection)
 \intro Este evento recibe como entrada un flujo nuevo. Este flujo es una nueva conexión, la cual no está identificada 
 previamente. Esto quiere decir o que es nueva o que ha sido borrada.
 
-\intro Este evento no devuelve nada, por lo tanto si en el momento en el que es detectado se tendrá que crear un nuevo 
-indice o guardarlo en las tablas.
+\intro Este evento no devuelve nada, por lo tanto en el momento en el que es detectado el flujo se tendrá que crear 
+un nuevo indice en la tabla de flujos activos o guardarlo para hacer la posterior comparación.
 
 \intro Este tipo de evento detecta las conexiones de tipo \textit{TCP y UDP}.
 
@@ -53,7 +52,7 @@ event connection_state_remove(c: connection)
 
 \end{lstlisting}
 
-\intro Este evento se activa cuando el flujo que entra en él va a morir, o ser borrado de la memoria. Es un flujo 
+\intro Este evento se activa cuando el flujo que entra como parámetro va a morir, o ser borrado de la memoria. Es un flujo 
 que ya ha sido procesado por el módulo.
 
 \intro Lo que se realiza dentro de este evento es buscar en la tabla el índice el vector. De esta forma 
@@ -148,5 +147,8 @@ global collection_added: table[addr, addr, port, port] of vector of connection;
 \intro Se trata de dos tablas globales, cuyo indice está constituido por las IP's de origen y destino y los 
 puertos de origen y destino. Además como los indices son únicos, cada índice apunta a un vector, y dentro de 
 dicho vector se almacenan los flujos ordenados dependiendo de cuando son detectados.
+
+\intro La primera tabla almacena los flujos que están activos. La segunda almacena los que ya están emparejados.
+
 
 
