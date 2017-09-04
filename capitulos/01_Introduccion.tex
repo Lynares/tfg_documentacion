@@ -4,9 +4,8 @@
 
 A partir de los años 90 Internet tuvo una gran expansión, pasando de solo compartir información entre investigadores, 
 como se hacía al principio, a permitir realizar compras, hacer videollamadas, pedir cita en el médico, gestionar 
-todo lo relacionado con el banco y demás. Internet 
-llega a miles de millones de personas que consumen recursos de forma masiva. Por lo que es crucial tener cierta 
-calidad de servicio en los recursos que se consumen.
+todo lo relacionado con el banco y demás. Internet llega a miles de millones de personas que consumen recursos de forma masiva. 
+Por lo que es crucial tener cierta calidad de servicio \cite{microqos} en los recursos que se consumen.
 
 \intro La calidad de servicio es lo más importante tanto a nivel de desarrollo como de consumidor. Como desarrollador, 
 se tendrá que pensar en esta característica como una de las más importantes, pues un mal servicio hará que se pierdan 
@@ -53,17 +52,18 @@ lanzarán cuando se inicie el programa.
 
 \section{Objetivos}
 
-El objetivo de este trabajo es el desarrollo de un módulo para un NMS. Con el desarrollo del módulo se tratará 
-de demostrar que el emparejamiento de flujos se puede realizar fuera de un entorno de laboratorio.
+El objetivo de este trabajo es el desarrollo de un módulo para un NMS, en este caso Bro. Con el desarrollo del módulo se tratará 
+de demostrar que la técnica de emparejamiento de flujos se puede realizar fuera de un entorno de laboratorio.
 
-\intro Este objetivo se dividirá en subobjetivos, mediante los cuales se obtendrá un módulo completamente funcional.
+\intro Este objetivo se descompone en distintos subojetivos.
 
 \begin{itemize}
 \item Conocimiento de la gestión de los flujos en Bro.
 \item También hará falta gestionar las entradas y salidas. En un principio se hará uso de un archivo \textit{pcap}, de forma 
-que todo este controlado. Después será posible realizar una ejecución a tiempo real de una red.
+que se pueda comprobar que todo funciona correctamente. Una vez terminado será posible realizar una ejecución a tiempo real en una 
+red.
 \item Implementación de la función de emparejamiento de flujos, así como el control de los distintos eventos para la gestión del 
-tráfico
+tráfico.
 \item Se realizarán pruebas del funcionamiento correcto del módulo.
 \end{itemize}
 
@@ -79,9 +79,9 @@ Para realizar este trabajo se establecen una serie de tareas:
 	\begin{itemize}
 	\item Lectura del artículo del departamento. \cite{comparacion}
 	\item Búsqueda de información sobre la identificación de tráfico.
+	\item Análisis de las herramientas.
 	\end{itemize}
-\item Análisis de las herramientas.
-\item Diseñar el módulo de Bro.
+\item Diseñar el módulo.
 \item Implementar el módulo.
 \item Evaluación y pruebas del módulo.
 \end{itemize}
