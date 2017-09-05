@@ -8,36 +8,34 @@ las cuentas bancarias, etc. Internet llega a millones de personas que consumen r
 Existen múltiples aplicaciones que proporcionan el mismo servicio, por lo que es crucial tener cierta calidad de servicio 
 \cite{microqos} para mantener una base de usuarios activos.
 
-\intro La calidad de servicio es una de las características más importantes, tanto para quien da un servicio, como para el que lo 
-consume. A nivel de desarrollo se debe de tener en cuenta que una mala calidad de servicio generará problemas y quejas. En el lado del 
-cliente se desea tener todos los recursos disponibles y sin fallos. En un servicio de videollamadas, si se experimenta perdida de 
-calidad de imagen o de voz, será algo tolerable. Por el contrario, si un servicio de vídeo bajo demanda da problemas, como parones o 
-perdida de calidad en la imagen, será un factor decisivo a la hora de seguir usando ese servicio o incluso volver a contar con el 
-en el futuro. Vea Figura \ref{Figura 1}.
+\intro Como se puede ver en la Figura \ref{Figura 1}, la calidad de servicio es fundamental para que el ancho de banda no se vea 
+afectado por diferentes tipos de tráfico. Si se tienen, por ejemplo, tres tipos de tráfico distinto que ocupan el mismo ancho, al 
+llegar al usuario final no se debe de permitir que uno ocupe todo el canal cortando los demás tipos de tráfico. Si se está realizando 
+una videollamada, y esta ocupa todo el ancho de banda se tendrá como resultado que otros servicios no funcionen de forma correcta.
 
-%\intro La calidad de servicio es lo más importante, tanto a nivel de desarrollo, como a nivel de consumidor. Como desarrollador, se tendrá que pensar en esta característica como una de las más importantes, pues un mal servicio hará que se pierdan clientes. Como cliente la calidad de servicio es algo deseable, vea la Figura 1, pues si por ejemplo en un servicio de videollamada se experimenta cierta perdida de calidad, no pasará nada. Por el contrario, si en un servicio de visionado de contenido de pago, se dan caidas del servidor o la imagen no es correcta, el cliente dejará de usarlo y se dará de baja. \cite{redes2010a}
+%\intro La calidad de servicio es una de las características más importantes, tanto para quien da un servicio, como para el que lo consume. A nivel de desarrollo se debe de tener en cuenta que una mala calidad de servicio generará problemas y quejas. En el lado del cliente se desea tener todos los recursos disponibles y sin fallos. En un servicio de videollamadas, si se experimenta perdida de calidad de imagen o de voz, será algo tolerable. Por el contrario, si un servicio de vídeo bajo demanda da problemas, como parones o perdida de calidad en la imagen, será un factor decisivo a la hora de seguir usando ese servicio o incluso volver a contar con el en el futuro. Vea Figura \ref{Figura 1}.
 
 \intro Aparte de la calidad de servicio, también hay que tener en cuenta la seguridad, pues como ya se ha mencionado 
 se tratan datos de tipo muy sensible, como los datos bancarios y sanitarios. Este tipo de datos están protegidos por la Agencia 
 Española de Protección de Datos \cite{aepdindex} y la Ley Orgánica de Protección de Datos \cite{lopdindex}.
 
 \begin{figure}[H]
-  \includegraphics[width=1\textwidth]{imagenes/calidadservicio.png}
+  \includegraphics[width=0.75\textwidth]{imagenes/calidadservicio.png}
   \centering
   \caption{Ejemplo del ancho de banda sin calidad de servicio y con calidad de servicio.}\label{Figura 1}
 \end{figure}
 
-\intro Existe una forma de dar prioridad a diferentes tipos de tráfico, mediante la identificación de este y su posterior 
-clasificación. La identificación de tráfico consiste en analizar el tráfico de una red y mediante alguna de las distintas 
-técnicas existentes organizarlo mediante patrones comunes, como por ejemplo podría ser las IP's y los puertos, el contenido de las 
-cabeceras de los paquetes o mediante técnicas heurísticas. Mediante estas técnicas se podrá dar prioridad a un tipo 
-de tráfico sobre otro, mejorando así la calidad de servicio.
+\intro Se puede dar prioridad a diferentes tipos de tráfico mediante su identificación y posterior clasificación. ``La clasificación 
+del tráfico consiste en atribuir instancias o elementos de tráfico a las aplicaciones que lo generaron" \cite{tesis2016}. Esto puede 
+ser realizado siguiendo tres niveles. A nivel de flujo, a nivel de paquete y a nivel de host. Siendo el más común la clasificación 
+a nivel de flujo.
 
-\intro Una de las técnicas más usadas consiste en analizar cada uno de los paquetes de la red. Esta técnica es conocida como 
-Inspección Profunda de Paquetes, DPI o \textit{Deep Packet Inspection} \cite{dpiaproximacion} por sus siglas en inglés, 
-y consiste en que analiza cada uno de los paquetes en busca de cadenas o patrones que pueda usar para emparejar el tráfico.
+%\intro Existe una forma de dar prioridad a diferentes tipos de tráfico, mediante la identificación de este y su posterior clasificación. La identificación de tráfico consiste en analizar el tráfico de una red y mediante alguna de las distintas técnicas existentes organizarlo mediante patrones comunes, como por ejemplo podría ser las IP's y los puertos, el contenido de las cabeceras de los paquetes o mediante técnicas heurísticas. Mediante estas técnicas se podrá dar prioridad a un tipo de tráfico sobre otro, mejorando así la calidad de servicio.
 
-\intro Esta técnica, aunque efectiva tiene varios inconvenientes.
+\intro Dentro de las técnicas de identificación de tráfico, la más fiable es la Inspección Profunda de Paquetes, DPI o \textit{Deep Packet Inspection} en inglés\cite{dpiaproximacion}. Consiste en analizar los paquetes más allá de la cabecera, buscando cadenas que 
+permitan identificar inequívocamente el protocolo. Por ejemplo buscará para \textit{HTTP} las cadenas \textit{GET} y \textit{POST}.
+
+\intro Esta técnica, a pesar de ser la más efectiva cuenta con varios inconvenientes.
 \begin{itemize}
 \item \textit{Escalabilidad}. Ya que se trata de una técnica que tiene que ir paquete a paquete y entrar dentro de ellos requiere de 
 una gran cantidad de recursos. Si se trata de analizar una red con poco tráfico, se obtendrán buenos resultados en cuanto a 
@@ -48,30 +46,23 @@ se trata de una red local no hay problemas. Pero si se trata de una red pública
 
 \intro Una solución parcial a este problema podría ser la aplicación de la técnica de emparejamiento de flujos \cite{presentacion}, 
 desarrollada por el departamento de Teoría de la Señal, Telemática y Comunicaciones, TSTC, de la Universidad de Granada y probada en 
-entornos de laboratorio \cite{comparacion}. Esta técnica es mucho más eficiente y respeta la privacidad, que la presentada en esta 
-introducción u otras con las que se comparó en el estudio y puede consultar aquí \cite{iana} \cite{payload} \cite{learning}.
+entornos de laboratorio \cite{comparacion}. Esta técnica además de ser eficiente, respeta la privacidad al no inspeccionar de forma 
+profunda los paquetes.
 
-\intro Esta técnica precisa solamente 
-
-
-Esta técnica en comparación con otras con las que se realizaron comparaciones es mucho más eficiente y respeta la privacidad, 
-pues no necesita entrar dentro de los paquetes, solamente necesita la información de las IP's de origen y destino y la de los 
-puertos de origen y destino.
-
-\intro Por lo tanto en el presente trabajo se va a implementar esta técnica y se probará más allá de un entorno de laboratorio, 
+\intro Por lo tanto, en el presente trabajo se va a implementar esta técnica y se probará más allá de un entorno de laboratorio, 
 llevándola a escenarios reales.
 
-\intro Para llevar esta técnica a un escenario real se precisará de un monitor de redes, NMS o \textit{Network Monitoring System}. 
-A pesar que existen muchos y todos son bastante competentes, existe uno llamado Bro \cite{broindex}, el cual permite 
-incorporar funcionalidades extras a las que ya trae por defecto. Esto se puede realizar mediante la creación de módulos que se 
-lanzarán cuando se inicie el programa.
+\intro Para llevar esta técnica a un escenario real se precisará de un monitor de redes, NMS, \textit{Network Monitoring System}. 
+A pesar de que existen muchos y todos son bastante competentes, existe uno llamado Bro \cite{broindex}, el cual permite 
+incorporar funcionalidades extras. Esto se puede realizar mediante la creación de módulos, los cuales se lanzarán cuando se inicie el 
+programa.
 
 \section{Objetivos}
 
 El objetivo de este trabajo es el desarrollo de un módulo para un NMS, en este caso Bro. Con el desarrollo del módulo se tratará 
 de demostrar que la técnica de emparejamiento de flujos se puede realizar fuera de un entorno de laboratorio.
 
-\intro Este objetivo se descompone en distintos subojetivos.
+\intro Este objetivo se descompone en distintos subobjetivos.
 
 \begin{itemize}
 \item Conocimiento de la gestión de los flujos en Bro.
@@ -118,12 +109,11 @@ módulo será subido a GitHub \cite{repo} con licencia de software libre, por lo
 requiere de unos 6 meses, se tendrá que un portátil de gama media-alta de 800\euro generará un gasto de un octavo de la vida útil. Por 
 lo tanto será un coste de unos \textit{100\euro}. Hay que tener en cuenta que Bro solo funciona en Linux o Mac OS X 
 \cite{brodownload}, por lo que se está hablando de un portátil y no de un Mac, lo cual supondría un mayor gasto.
-\item \textit{Programador}. Según se puede comprobar en Internet \cite{tarifa}, el precio por hora de un programador está entre los 
-30\euro y los 40\euro, por lo tanto si en el desarrollo del proyecto se ha necesitado de unas 500 horas y dejando el precio en 30\euro 
-la hora, el gasto será de \textit{15000\euro}. Aquí el gasto podría ser mayor, pues no solo se necesita un programador, sino además un 
-director de proyecto, lo cual subiría más este gasto.
+\item \textit{Programador}. Según se puede comprobar en Internet \cite{tarifa}, el precio por hora de un programador está alrededor de  
+los 30\euro, por lo tanto si en el desarrollo del proyecto se ha necesitado de unas 500 horas y dejando el precio en 30\euro por hora, 
+el gasto será de \textit{15000\euro}.
 \item \textit{Varios}. Además de los gastos ya descritos habrá que sumarle una parte de gastos varios como Internet, luz, agua, y 
-demás. Unos 150\euro al mes, que al ser 6 meses supone un gasto de \textit{900\euro}.
+demás. Un montante de 150\euro al mes, que al ser 6 meses supone un gasto de \textit{900\euro}.
 \end{itemize}
 
 \intro Teniendo en cuenta todos estos cálculos, se tiene que el coste total del proyecto es de unos \textit{16000\euro} por 6 meses de 
