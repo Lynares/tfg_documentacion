@@ -1,51 +1,59 @@
-\chapter{Introducción}
+\chapter{Introducción}\label{introduccion}
 
 \section{Motivación y antecedentes}
 
-A partir de los años 90 Internet tuvo una gran expansión, pasando de solo compartir información entre investigadores, 
-como se hacía al principio, a permitir realizar compras, hacer videollamadas, pedir cita en el médico, gestionar 
-todo lo relacionado con el banco y demás. Internet llega a miles de millones de personas que consumen recursos de forma masiva. 
-Estos recursos suelen disponer de varios servicios que ofrecen lo mismo, por lo que es crucial tener cierta calidad de servicio 
-\cite{microqos} en los recursos que se consumen.
+A partir de los años 90 Internet tuvo una gran expansión, pasando de compartir información entre investigadores, 
+como se hacía al principio, a permitir realizar compras, realizar videollamadas, pedir cita médicas, informes médicos, gestionar 
+las cuentas bancarias, etc. Internet llega a millones de personas que consumen recursos de forma masiva. 
+Existen múltiples aplicaciones que proporcionan el mismo servicio, por lo que es crucial tener cierta calidad de servicio 
+\cite{microqos} para mantener una base de usuarios activos.
 
-\intro La calidad de servicio es lo más importante tanto a nivel de desarrollo como de consumidor. Como desarrollador, 
-se tendrá que pensar en esta característica como una de las más importantes, pues un mal servicio hará que se pierdan 
-clientes. Como cliente la calidad de servicio es algo deseable, vea la Figura 1, pues si por ejemplo en un servicio de videollamada se 
-experimenta cierta perdida de calidad, no pasará nada. Por el contrario si en un servicio de visionado de contenido 
-bajo demanda de algún evento deportivo se experimenta la perdida de calidad en la imagen o se cae el servicio lo más 
-probable es que el usuario que lo experimenta no vuelva a usar esa plataforma. \cite{redes2010a}
+\intro La calidad de servicio es una de las características más importantes, tanto para quien da un servicio, como para el que lo 
+consume. A nivel de desarrollo se debe de tener en cuenta que una mala calidad de servicio generará problemas y quejas. En el lado del 
+cliente se desea tener todos los recursos disponibles y sin fallos. En un servicio de videollamadas, si se experimenta perdida de 
+calidad de imagen o de voz, será algo tolerable. Por el contrario, si un servicio de vídeo bajo demanda da problemas, como parones o 
+perdida de calidad en la imagen, será un factor decisivo a la hora de seguir usando ese servicio o incluso volver a contar con el 
+en el futuro. Vea Figura \ref{Figura 1}.
+
+%\intro La calidad de servicio es lo más importante, tanto a nivel de desarrollo, como a nivel de consumidor. Como desarrollador, se tendrá que pensar en esta característica como una de las más importantes, pues un mal servicio hará que se pierdan clientes. Como cliente la calidad de servicio es algo deseable, vea la Figura 1, pues si por ejemplo en un servicio de videollamada se experimenta cierta perdida de calidad, no pasará nada. Por el contrario, si en un servicio de visionado de contenido de pago, se dan caidas del servidor o la imagen no es correcta, el cliente dejará de usarlo y se dará de baja. \cite{redes2010a}
 
 \intro Aparte de la calidad de servicio, también hay que tener en cuenta la seguridad, pues como ya se ha mencionado 
 se tratan datos de tipo muy sensible, como los datos bancarios y sanitarios. Este tipo de datos están protegidos por la Agencia 
 Española de Protección de Datos \cite{aepdindex} y la Ley Orgánica de Protección de Datos \cite{lopdindex}.
 
 \begin{figure}[H]
-  \includegraphics[width=1\textwidth]{imagenes/calidadservicio.png} 
+  \includegraphics[width=1\textwidth]{imagenes/calidadservicio.png}\label{Figura 1}
   \centering
   \caption{Ejemplo del ancho de banda sin calidad de servicio y con calidad de servicio.}
 \end{figure}
 
 \intro Existe una forma de dar prioridad a diferentes tipos de tráfico, mediante la identificación de este y su posterior 
 clasificación. La identificación de tráfico consiste en analizar el tráfico de una red y mediante alguna de las distintas 
-técnicas existentes organizarlo mediante patrones comunes, como podría ser las IP's y los puertos, el contenido de las 
-cabeceras de los paquetes, mediante técnicas heurísticas, etc. Mediante estas técnicas se podrá dar prioridad a un tipo 
+técnicas existentes organizarlo mediante patrones comunes, como por ejemplo podría ser las IP's y los puertos, el contenido de las 
+cabeceras de los paquetes o mediante técnicas heurísticas. Mediante estas técnicas se podrá dar prioridad a un tipo 
 de tráfico sobre otro, mejorando así la calidad de servicio.
 
 \intro Una de las técnicas más usadas consiste en analizar cada uno de los paquetes de la red. Esta técnica es conocida como 
 Inspección Profunda de Paquetes, DPI o \textit{Deep Packet Inspection} \cite{dpiaproximacion} por sus siglas en inglés, 
-trata de encontrar dentro de los paquetes cadenas o patrones que se repitan para poder decir que pertenecen al mismo tipo. 
+y consiste en que analiza cada uno de los paquetes en busca de cadenas o patrones que pueda usar para emparejar el tráfico.
 
 \intro Esta técnica, aunque efectiva tiene varios inconvenientes.
 \begin{itemize}
 \item \textit{Escalabilidad}. Ya que se trata de una técnica que tiene que ir paquete a paquete y entrar dentro de ellos requiere de 
-una gran cantidad de recursos. Por lo que si se trata de analizar una red pequeña se obtendrán buenos resultados en cuanto a 
-rendimiento, pero de tratarse de una red amplia, se tendrán malos tiempos de análisis.
-\item \textit{Privacidad}. Al entrar dentro de los paquetes se produce cierta violación de las políticas de privacidad de la red. Si 
+una gran cantidad de recursos. Si se trata de analizar una red con poco tráfico, se obtendrán buenos resultados en cuanto a 
+rendimiento, pero de tratarse de una red con mucho tráfico, se tendrán malos tiempos de análisis.
+\item \textit{Privacidad}. Al entrar dentro de los paquetes, se produce cierta violación de las políticas de privacidad de la red. Si 
 se trata de una red local no hay problemas. Pero si se trata de una red pública si que se incurre en violaciones de privacidad.
 \end{itemize}
 
-\intro Una solución parcial a este problema se solucionaría con la técnica de emparejamiento de flujos \cite{presentacion}, 
-desarrollada por el departamento de TSTC de la Universidad de Granada y probada en entornos de laboratorio \cite{comparacion}. 
+\intro Una solución parcial a este problema podría ser la aplicación de la técnica de emparejamiento de flujos \cite{presentacion}, 
+desarrollada por el departamento de Teoría de la Señal, Telemática y Comunicaciones, TSTC, de la Universidad de Granada y probada en 
+entornos de laboratorio \cite{comparacion}. Esta técnica es mucho más eficiente y respeta la privacidad, que la presentada en esta 
+introducción u otras con las que se comparó en el estudio y puede consultar aquí \cite{iana} \cite{payload} \cite{learning}.
+
+\intro Esta técnica precisa solamente 
+
+
 Esta técnica en comparación con otras con las que se realizaron comparaciones es mucho más eficiente y respeta la privacidad, 
 pues no necesita entrar dentro de los paquetes, solamente necesita la información de las IP's de origen y destino y la de los 
 puertos de origen y destino.
@@ -125,12 +133,12 @@ trabajo.
 
 Esta memoria se organizará de la siguiente forma: 
 \begin{itemize}
-\item En el capítulo 2 se hablará de todos los fundamentos teóricos y tecnológicos sobre los que se 
+\item En el capítulo \ref{estadoarte} se hablará de todos los fundamentos teóricos y tecnológicos sobre los que se 
 basa el proyecto.
-\item En el capítulo 3 se contará cómo se pretende resolver el problema expuesto.
-\item En el capítulo 4 se encontrará detallado cómo se han implementado los diferentes módulos.
-\item En el capítulo 5 se realizarán las pruebas, para comprobar que todo funciona como 
+\item En el capítulo \ref{diseno} se contará cómo se pretende resolver el problema expuesto.
+\item En el capítulo \ref{implementacion} se encontrará detallado cómo se han implementado los diferentes módulos.
+\item En el capítulo \ref{evaluacion} se realizarán las pruebas, para comprobar que todo funciona como 
 estaba previsto, tanto a nivel funcional como a nivel de aplicación.
-\item En el último capítulo se hablará de las conclusiones recogidas a lo largo de este proyecto y las posibles 
+\item En el capítulo \ref{conclusiones} se hablará de las conclusiones recogidas a lo largo de este proyecto y las posibles 
 opciones que tiene para seguir trabajando sobre él.
 \end{itemize}
