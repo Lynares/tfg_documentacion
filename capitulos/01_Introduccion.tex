@@ -13,10 +13,12 @@ afectado por diferentes tipos de tráfico. Si se tienen, por ejemplo, tres tipos
 llegar al usuario final no se debe de permitir que uno ocupe todo el canal cortando los demás tipos de tráfico. Si se está realizando 
 una videollamada, y esta ocupa todo el ancho de banda se tendrá como resultado que otros servicios no funcionen de forma correcta.
 
-%\intro La calidad de servicio es una de las características más importantes, tanto para quien da un servicio, como para el que lo consume. A nivel de desarrollo se debe de tener en cuenta que una mala calidad de servicio generará problemas y quejas. En el lado del cliente se desea tener todos los recursos disponibles y sin fallos. En un servicio de videollamadas, si se experimenta perdida de calidad de imagen o de voz, será algo tolerable. Por el contrario, si un servicio de vídeo bajo demanda da problemas, como parones o perdida de calidad en la imagen, será un factor decisivo a la hora de seguir usando ese servicio o incluso volver a contar con el en el futuro. Vea Figura \ref{Figura 1}.
+\intro Hay que tener en cuenta el tipo de aplicación que se está usando, para saber la prioridad que tiene. Por ejemplo, para 
+enviar un correo da igual tener que esperar 1 minuto para que se envíe. Pero si se trata del visionado de una película por 
+\textit{streaming} y hay retardo, no se cumplirá con los requisitos de calidad de servicio.
 
 \intro Aparte de la calidad de servicio, también hay que tener en cuenta la seguridad, pues como ya se ha mencionado 
-se tratan datos de tipo muy sensible, como los datos bancarios y sanitarios. Este tipo de datos están protegidos por la Agencia 
+se tratan datos de tipo muy sensible, como son los datos bancarios y sanitarios. Este tipo de datos están protegidos por la Agencia 
 Española de Protección de Datos \cite{aepdindex} y la Ley Orgánica de Protección de Datos \cite{lopdindex}.
 
 \begin{figure}[H]
@@ -53,29 +55,25 @@ profunda los paquetes.
 llevándola a escenarios reales.
 
 \intro Para llevar esta técnica a un escenario real se precisará de un monitor de redes, NMS, \textit{Network Monitoring System}. 
-A pesar de que existen muchos y todos son bastante competentes, existe uno llamado Bro \cite{broindex}, el cual permite 
-incorporar funcionalidades extras. Esto se puede realizar mediante la creación de módulos, los cuales se lanzarán cuando se inicie el 
-programa.
+El trabajo que realiza es el de monitorizar el tráfico en la red en la que se esté ejecutando.
+Para este proyecto se usará Bro \cite{broindex}, cuya principal ventaja sobre el resto es la posibilidad de incorporar funcionalidades 
+extras. Esto se realiza mediante la creación de módulos.
 
 \section{Objetivos}
 
 El objetivo de este trabajo es el desarrollo de un módulo para un NMS, en este caso Bro. Con el desarrollo del módulo se tratará 
 de demostrar que la técnica de emparejamiento de flujos se puede realizar fuera de un entorno de laboratorio.
 
-\intro Este objetivo se descompone en distintos subobjetivos.
+\intro Este objetivo se descompone de la siguiente forma.
 
 \begin{itemize}
-\item Conocimiento de la gestión de los flujos en Bro.
-\item También hará falta gestionar las entradas y salidas. En un principio se hará uso de un archivo \textit{pcap}, de forma 
+\item Gestión de las entradas y salidas. En un principio se hará uso de un archivo \textit{pcap}, de forma 
 que se pueda comprobar que todo funciona correctamente. Una vez terminado será posible realizar una ejecución a tiempo real en una 
 red.
 \item Implementación de la función de emparejamiento de flujos, así como el control de los distintos eventos para la gestión del 
 tráfico.
-\item Se realizarán pruebas del funcionamiento correcto del módulo.
+\item Realización de pruebas del funcionamiento.
 \end{itemize}
-
-\intro Por último, y fuera de los objetivos más técnicos, el desarrollo de esta memoria también se considera un objetivo, por 
-lo tanto se tendrá en cuenta dentro de la temporización.
 
 \section{Metodología}
 
@@ -91,14 +89,15 @@ Para realizar este trabajo se establecen una serie de tareas:
 \item Diseñar el módulo.
 \item Implementar el módulo.
 \item Evaluación y pruebas del módulo.
+\item Realización de la memoria.
 \end{itemize}
 
-\intro En el siguiente diagrama de Gantt se puede ver una temporización de estas tareas. 
+\intro En la siguiente Figura \ref{fig.tempo}, se puede ver una temporización de las tareas en forma de diagrama de Gantt.
 
 \begin{figure}[H]
   \includegraphics[width=1\textwidth]{imagenes/temporizacion.png} 
   \centering
-  \caption{Temporización en diagrama de Gantt.}
+  \caption{Temporización en diagrama de Gantt.}\label{fig.tempo}
 \end{figure}
 
 El gasto que requiere este proyecto se desglosa de la siguiente manera.
@@ -108,11 +107,11 @@ módulo será subido a GitHub \cite{repo} con licencia de software libre, por lo
 \item \textit{Equipo}. Teniendo en cuenta que la vida útil de un portátil es de unos 4 años y que el desarrollo de este trabajo 
 requiere de unos 6 meses, se tendrá que un portátil de gama media-alta de 800\euro generará un gasto de un octavo de la vida útil. Por 
 lo tanto será un coste de unos \textit{100\euro}. Hay que tener en cuenta que Bro solo funciona en Linux o Mac OS X 
-\cite{brodownload}, por lo que se está hablando de un portátil y no de un Mac, lo cual supondría un mayor gasto.
+\cite{brodownload}.
 \item \textit{Programador}. Según se puede comprobar en Internet \cite{tarifa}, el precio por hora de un programador está alrededor de  
 los 30\euro, por lo tanto si en el desarrollo del proyecto se ha necesitado de unas 500 horas y dejando el precio en 30\euro por hora, 
 el gasto será de \textit{15000\euro}.
-\item \textit{Varios}. Además de los gastos ya descritos habrá que sumarle una parte de gastos varios como Internet, luz, agua, y 
+\item \textit{Varios}. Además de los gastos ya descritos, hay que sumar una parte de gastos varios como Internet, luz, agua, y 
 demás. Un montante de 150\euro al mes, que al ser 6 meses supone un gasto de \textit{900\euro}.
 \end{itemize}
 
