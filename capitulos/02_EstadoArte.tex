@@ -1,42 +1,51 @@
 \chapter{Estado del arte}\label{estadoarte}
 
-En este capítulo se describirán los fundamentos teóricos y tecnológicos del proyecto. Se hablará de la identificación de tráfico y de 
-las distintas técnicas que existen para ello. También se hablará de Bro \cite{broindex}, el 
-analizador de tráfico que se usará para 
-llevar a cabo el desarrollo del módulo. Se introducirá en que consiste, cómo gestiona los eventos y sus 
-funcionalidades básicas, así como la posibilidad de ampliar estas.
+En este capítulo se describirán los fundamentos teóricos y tecnológicos del proyecto. En primer lugar se presentará 
+la identificación de tráfico y las distintas técnicas que existen para ello. También se explicará Bro \cite{broindex}, el 
+sistema de monitorización de tráfico que se usará para 
+llevar a cabo el desarrollo del proyecto. Así, se explicará su funcionamiento y, especialmente, el lenguaje de programación 
+incorporado, analizándose cómo gestiona los eventos y sus funcionalidades básicas, así como la posibilidad de ampliar estas.
 
-\intro Por último se presentará de forma teórica en que consiste el emparejamiento de flujos y de qué forma 
+\intro Por último, se presentará de forma teórica en que consiste el emparejamiento de flujos y de qué forma 
 se podría usar para identificar el tráfico.
 
 \section{Identificación de tráfico}
 
-Hay que tener claro que identificar el tráfico no es clasificarlo. Identificar el tráfico consiste en analizarlo 
-y obtener patrones comunes con los cuales se pueda ordenar el tráfico de forma posterior. Algunos de los patrones 
-que se pueden tener en cuenta a la hora de identificar tráfico son los puertos, las IP's o la clase a la que 
-pertenece.
+Una definición de identificación de tráfico podría ser la siguiente, ``la clasificación del tráfico implica la atribución de objetos 
+de tráfico a las clases de tráfico que los generan. La identificación usa terminología similar a la clasificación de tráfico. El 
+término identificación se suele usar cuando se realiza de forma granular." \cite{jawad2014}.
 
-\intro Por lo tanto la identificación del tráfico de la red es esencial para realizar una clasificación 
-posterior. Dicha clasificación se podrá analizar en busca de amenazas o intrusos, a nivel de seguridad 
-y componentes lentos o defectuosos que afecten al rendimiento del servicio. Para poder identificar el 
-tráfico lo deseable es un método que sea rápido y proteja la privacidad de los distintos usuarios.
+\intro Esta técnica es usada para realizar muchas tareas de gestión y seguridad de la red. Como por ejemplo medidas de seguridad, 
+aseguramiento de calidad de servicio \cite{microqos} e ingeniería de tráfico \cite{jawad2016}.
 
 \subsection{Técnicas de identificación de tráfico}
 
-Existen varias técnicas de identificación de tráfico, como ya se explicó anteriormente. Estas técnicas son 
-el paso previo a la clasificación del tráfico. Podría considerarse que son el paso intermedio a la clasificación, 
-teniendo en cuenta que el tráfico es capturado, identificado y clasificado. El tráfico, hasta ahora, se puede identificar de la siguiente forma.
+La identificación de tráfico se puede realizar en tres niveles distintos, dependiendo de la granularidad que se aplique 
+\cite{jawad2016}.
 
 \begin{itemize}
-\item Por los puertos de la capa de transporte, establecido por \textit{IANA}. \cite{iana}
-\item Por el contenido del paquete o \textit{DPI}. \cite{payload}
-\item Por la aplicación de técnicas de aprendizaje automático sobre estadísticas de tráfico, \textit{machine 
-learning}. \cite{learning}
+\item Paquetes. Se realiza el análisis a los paquetes de forma individual.
+\item Flujos. Se analizan los flujos a partir de ciertos parámetros.
+\item Host. Se identifican las aplicaciones que usan los distintos equipos de la red.
 \end{itemize}
 
-\intro En los siguientes apartados se verán estas técnicas de una forma más detallada.
+\intro La más usada es la identificación basada en flujos, que es la que se usará en este trabajo.
 
 \subsection{Identificación de tráfico basada en flujos}
+
+En esta técnica, los flujos se analizan individualmente, ya sea un análisis global de la conexión o de algunos de los paquetes que lo 
+componen.
+
+\intro Existen tres técnicas básicas de identificación de tráfico basada en flujos.
+
+\begin{itemize}
+\item Por los puertos de la capa de transporte, establecido por \textit{IANA} \cite{iana}.
+\item Por el contenido del paquete o \textit{DPI} \cite{payload}.
+\item Por la aplicación de técnicas de aprendizaje automático sobre estadísticas de tráfico, \textit{machine 
+learning} \cite{learning}.
+\end{itemize}
+
+\subsubsection{Identificación basada en puertos}
 
 Dentro de este ámbito se encuentran dos de las tres técnicas que se han presentado anteriormente.
 \begin{itemize}
@@ -54,6 +63,8 @@ puerto 80, es decir, mediante el protocolo HTTP. Pero esto es solo teoría, pues
 aplicación envíe información por el puerto 80, sin que sea HTTP, lo cual daría como resultado una mala 
 identificación y posterior clasificación.
 
+\subsubsection{Aprendizaje automático}
+
 \item Identificación basada en la aplicación de técnicas de aprendizaje automático sobre estadísticas 
 de tráfico \cite{learning}.
 
@@ -63,7 +74,7 @@ tienen los flujos y los identifican en función de estas. Por lo tanto cuanto m�
 mejores y se tendrán más aciertos a la hora de la identificación.
 \end{itemize}
 
-\subsection{DPI}
+\subsubsection{DPI}
 
 \begin{itemize}
 
