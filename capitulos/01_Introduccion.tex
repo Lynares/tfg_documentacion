@@ -32,9 +32,8 @@ del tráfico consiste en atribuir instancias o elementos de tráfico a las aplic
 ser realizado siguiendo tres niveles. A nivel de flujo, a nivel de paquete y a nivel de equipos. Siendo el más común la clasificación 
 a nivel de flujo.
 
-%\intro Existe una forma de dar prioridad a diferentes tipos de tráfico, mediante la identificación de este y su posterior clasificación. La identificación de tráfico consiste en analizar el tráfico de una red y mediante alguna de las distintas técnicas existentes organizarlo mediante patrones comunes, como por ejemplo podría ser las IP's y los puertos, el contenido de las cabeceras de los paquetes o mediante técnicas heurísticas. Mediante estas técnicas se podrá dar prioridad a un tipo de tráfico sobre otro, mejorando así la calidad de servicio.
-
-\intro Dentro de las técnicas de identificación de tráfico, la más fiable es la Inspección Profunda de Paquetes, DPI o \textit{Deep Packet Inspection} en inglés\cite{dpiaproximacion}. Consiste en analizar los paquetes más allá de la cabecera, buscando cadenas que 
+\intro Dentro de las técnicas de identificación de tráfico, la más fiable es la Inspección Profunda de Paquetes, DPI o \textit{Deep 
+Packet Inspection} en inglés\cite{dpiaproximacion}. Consiste en analizar los paquetes más allá de la cabecera, buscando cadenas que 
 permitan identificar inequívocamente el protocolo. Por ejemplo buscará para \textit{HTTP} las cadenas \textit{GET} y \textit{POST}.
 
 \intro Esta técnica, a pesar de ser la más efectiva cuenta con varios inconvenientes.
@@ -47,9 +46,9 @@ se trata de una red local no hay problemas. Pero si se trata de una red pública
 \end{itemize}
 
 \intro Una solución parcial a este problema podría ser la aplicación de la técnica de emparejamiento de flujos \cite{presentacion}, 
-desarrollada por el departamento de Teoría de la Señal, Telemática y Comunicaciones, TSTC, de la Universidad de Granada y probada en 
-entornos de laboratorio \cite{comparacion}. Esta técnica además de ser eficiente, respeta la privacidad al no inspeccionar de forma 
-profunda los paquetes.
+desarrollada por investigadores del departamento de Teoría de la Señal, Telemática y Comunicaciones de la Universidad de Granada y  
+probada en entornos de laboratorio \cite{comparacion}. Esta técnica además de ser eficiente, respeta la privacidad al no inspeccionar 
+de forma profunda los paquetes.
 
 \intro Por lo tanto, en el presente trabajo se va a implementar esta técnica y se probará más allá de un entorno de laboratorio, 
 llevándola a escenarios reales.

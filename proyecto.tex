@@ -93,6 +93,9 @@ pdfproducer = {pdflatex}
 %Para subsubsection
 \setcounter{tocdepth}{3}% Include \subsubsection in ToC
 \setcounter{secnumdepth}{3}% Number \subsubsection
+%Para las ecuaciones
+\renewcommand{\theequation}{\arabic{equation}}
+\newcounter{neq}
 
 \newcommand{\intro}{\\ \smallskip}
 

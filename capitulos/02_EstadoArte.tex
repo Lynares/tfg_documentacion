@@ -168,30 +168,21 @@ amenazas en la red o si hay algún componente defectuoso. Para ello deberá hace
 obtener un mejor conocimiento de todo el trabajo que se realice sobre la red.
 
 \subsection{Eventos y trazas}
-Eventos
-que son
-trabajan con trazas
-que son
-la programación con eventos
 
 Un evento se da cuando Bro detecta una determinada acción, por ejemplo, cuando detecta un paquete de respuesta \textit{UDP}, se 
-activará el evento \textit{udp_reply}.
+activará el evento \textit{udp\_reply}.
 
-\intro Dentro de cada evento se trabajará con la información que capture ese evento. Si el evento captura información de una conexión 
-\textit{TCP}, se tendrá que trabajar con esa información y las distintas variables globales que se hayan definido previamente.
+\intro Dentro de cada evento se trabajará con la información que lo active. Si captura información de una conexión 
+\textit{TCP}, se tendrá que trabajar con esa información y las distintas variables globales que hayan sido definidas previamente.
 
-\intro Los eventos se activan mediante el tráfico. Una traza es una captura del tráfico de una red. Con casi cualquier programa de 
-diagnóstico se puede realizar capturas de red. En la propia web de Bro se encuentran algunos archivos de trazas de red, en 
-formato \textit{pcap}, de forma que se puedan realizar pruebas sobre ellos sin necesitar realizar una 
-traza propia.
+\intro Entonces, el tráfico irá activando los eventos. Para trabajar será necesario tener trazas de red, es decir, capturas del 
+tráfico, que suelen estar en ficheros de formato \textit{pcap}. Se podrán obtener con un monitor de red, siendo en el caso de Bro 
+necesario descargar un módulo adicional llamado \textit{trace-summary} \cite{brotrace}. Además de realizar capturas de tráfico, 
+también da la posibilidad de separar el tráfico entrante del saliente, lo cual genera distintos registros. También se pueden 
+conseguir distintas trazas de la web de Bro.
 
-\intro En el caso de Bro se podrá generar trazas de red mediante un \textit{script} de \textit{Python}
-\cite{brotrace}, el cual se puede descargar desde el repositorio de \textit{GitHub} de Bro. Con dicho script también 
-se podrá trabajar sobre la traza, separando el tráfico entrante del saliente, desglosando en distintos registros 
-el tipo de tráfico y demás.
-
-\intro Por lo tanto la programación de Bro esta orientada a eventos. Por lo tanto el orden depende de cuando se ejecute un determinado evento en el análisis.
-
+\intro De todo esto se obtiene que la programación de Bro esta orientada a eventos. Por lo que, el orden de ejecución depende de 
+cuando se de un determinado evento en el análisis.
 
 \subsection{Incorporación de funcionalidades}
 
@@ -209,52 +200,49 @@ de la comunidad lo desea pueda hacer uso de él de una forma sencilla.
 
 \section{Emparejamiento de flujos}
 
-La técnica de emparejamiento de flujos, fue planteada por el departamento de Teoría de la Señal, 
-Telemática y Comunicaciones, \textit{TSTC}, de la Universidad de Granada, en el año 2011 \cite{presentacion} \cite{comparacion}. 
-%Luego en el año 2013, el departamento realizó pruebas de la técnica de identificación en un entorno de 
-%laboratorio \cite{comparacion}.
+La técnica de emparejamiento de flujos, fue planteada por investigadores del departamento de Teoría de la Señal, 
+Telemática y Comunicaciones de la Universidad de Granada, en el año 2011 \cite{presentacion} \cite{comparacion}, para abordar 
+los problemas de escalabilidad y privacidad de otras técnicas. Hay que tener en cuenta que el emparejamiento de flujos no es una 
+técnica de identificación propiamente dicha, ya que no determina el tipo de flujo. Lo que hace es agrupar los flujos de la misma 
+clase, mediante asociaciones uno a uno.
 
-\intro En el emparejamiento de flujos, la idea de la que se parte es muy sencilla. Si dos paquetes comparten 
-IP's de origen y destino, y puertos de origen y destino, se podrá decir que esos dos paquetes pertenecen a 
-la misma clase. Una vez que están identificados como pertenecientes a la misma clase, lo que se debe de hacer 
-es comparar los tiempos de esos paquetes, de forma que sean coherentes en el flujo. Si son muy lejanos en el 
-tiempo, se podrá descartar que pertenezcan al mismo flujo. Esta idea se puede ver en \cite{comparacion} de una 
-forma mucho más técnica.
+\intro La idea de la que se parte es que dos flujos próximos en el tiempo, que comparten dirección IP y que usan números de puerto 
+idénticos o próximos, deben de estar relacionados entre sí y corresponden al mismo protocolo. 
+Esto es, dos flujos que acceden al mismo servidor (IP) y puerto deberían de corresponder al mismo protocolo. Pero también dos flujos 
+del mismo cliente con número de puerto consecutivos y muy próximos en el tiempo corresponderán, muy probablemente, al mismo protocolo 
+y formarán parte de una secuencia de flujos de un interacción. \intro De esta forma, se define en \cite{comparacion} una función de 
+similitud entre dos flujos a partir de las direcciones IP, los números de puerto y la proximidad temporal como sigue:
 
-\intro En el mismo artículo \cite{comparacion} se encuentra la fórmula que se sigue para el emparejamiento.
-
-\begin{equation*}
+\begin{equation}
 	F(x,y)=
  	\begin{cases}
-	  G(x,y), & NIP(x,y) \geq 1 \\
+	  G(x,y), & N_{IP}(x,y) \geq 1 \\
 	  -\infty, & \text{en otro caso}
 	 \end{cases}
-\end{equation*}
+	 \addtocounter{neq}{1}
+\end{equation}
 
-\intro Donde tenemos que G(x,y) se corresponde con la siguiente función:
+\intro Donde G(x,y) es una función que evalúa la semejanza entre dos flujos:
 
 \begin{displaymath}
-G(x,y) = |NIP(x,y) – 1| + 1 / (dp1(x,y) + k1) + 1 / (dp2(x,y) + k1) + 1 / (dt(x,y) + k2)
+G(x,y) = |N_{IP}(x,y) – 1| + 1 / (dp1(x,y) + k1) + 1 / (dp2(x,y) + k1) + 1 / (dt(x,y) + k2)
+\addtocounter{neq}{1}
 \end{displaymath}
 
 \intro Las variables de la función son las siguientes: 
 
 \begin{itemize}
-\item \textit{x}: Primer paquete a comparar.
-\item \textit{y}: Segundo paquete a comparar.
-\item \textit{NIP(x,y)}: Es el número de paquetes analizados con las mismas características.
-\item \textit{dp1(x,y)}: Se corresponde con los puertos de origen de los dos paquetes.
-\item \textit{dp2(x,y)}: Serán los puertos de destino de los dos paquetes.
-\item \textit{k1}: Es una variable definida previamente.
-\item \textit{k2}: Es otra variable definida antes del comienzo del análisis. En trabajos anteriores esta variable 
-y la anterior suelen estar definidas entre 1 y 10000.
-\item \textit{dt}: Es la diferencia de tiempo existente entre los tiempos de inicio de los 
-paquetes o \textit{timestamps}.
+\item \textit{x, y}: Primer paquetes o flujos a comparar.
+\item \textit{$N_{IP}(x,y)$}: Número de IP's coincidentes en ambos paquetes o flujos, estando el valor comprendido entre 0 y 2.
+\item \textit{dp1(x,y)}: Se corresponde con la diferencia entre los números de los puertos de origen de los dos paquetes.
+\item \textit{dp2(x,y)}: Será la diferencia entre los números de los puertos de destino de los dos paquetes.
+\item \textit{k1, k2}: Son constantes que deben de ser estimadas experimentalmente. En \cite{comparacion} se proponen valores entre 1 y 10000.
+\item \textit{dt}: Es la diferencia de tiempo existente entre los tiempos de inicio de los flujos (\textit{timestamps}).
 \end{itemize}
 
-\intro Con esta fórmula se obtendrá como resultado un número, el cual será comparado con un umbral que se 
-define previamente. Si el umbral definido es pequeño tendremos más flujos emparejados. Si el umbral es mayor 
-serán menos los flujos que serán emparejados al no cumplir los requisitos.
+\intro El emparejamiento se realiza a partir del valor de similitud obtenido mediante la comparación con un umbral (detector de 
+umbral), que debe ser ajustado experimentalmente. Si se intentan emparejar todos los flujos mediante un umbral bajo, se producirán 
+muchos errores, esto es, habrá una tendencia a que se consideren iguales flujos que no lo son, ya que pasarán el corte del umbral.
 
-\intro El emparejamiento de flujos, por si mismo, sólo identifica el tráfico. Por lo tanto se 
+\intro Como se ha mencionado, el emparejamiento de flujos, por si mismo, no identifica el tráfico. Por lo tanto se 
 necesitará otra técnica para clasificar el tráfico.
