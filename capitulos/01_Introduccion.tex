@@ -14,11 +14,12 @@ llegar al usuario final no se debe de permitir que uno ocupe todo el canal, cort
 una videollamada, y esta ocupa todo el ancho de banda se tendrá como resultado que otros servicios no funcionen de forma correcta.
 
 \intro Hay que tener en cuenta el tipo de aplicación que se está usando, para saber que prioridad otorgarle. Por ejemplo, para 
-enviar un correo no importa tener que esperar 1 minuto para que se envíe. Pero si se trata del visionado de una película por 
-\textit{streaming} y hay retardo, no se cumplirá con los requisitos de calidad de servicio.
+enviar un correo no importa tener que esperar 1 minuto para que se envíe. Pero si se trata del visionado de una película mediante 
+\textit{streaming} y hay retardo, no se cumplirá con los requisitos de calidad de servicio, lo cual ocasionará la perdida de clientes.
 
-\intro Aparte de la calidad de servicio, también hay que tener en cuenta la seguridad, pues se envían y reciben 
-datos de tipo muy sensible, como son los datos bancarios y sanitarios. En España, por ejemplo, la protección de este tipo de datos está regulado por la Agencia Española de Protección de Datos \cite{aepdindex} y la Ley Orgánica de Protección de Datos \cite{lopdindex}.
+\intro Aparte de la calidad de servicio, también hay que tener en cuenta la seguridad, pues se envían y reciben datos de tipo muy 
+sensible, como son los datos bancarios y sanitarios. En España, por ejemplo, la protección de este tipo de datos está regulada por la 
+Agencia Española de Protección de Datos \cite{aepdindex} y la Ley Orgánica de Protección de Datos \cite{lopdindex}.
 
 \begin{figure}[H]
   \includegraphics[width=0.75\textwidth]{imagenes/calidadservicio.png}
@@ -26,10 +27,10 @@ datos de tipo muy sensible, como son los datos bancarios y sanitarios. En Españ
   \caption{Ejemplo del ancho de banda sin calidad de servicio y con calidad de servicio.}\label{Figura 1}
 \end{figure}
 
-\intro Se puede dar prioridad a diferentes tipos de tráfico, mediante su identificación y posterior clasificación. ``La identificación 
-del tráfico consiste en atribuir instancias o elementos de tráfico a las aplicaciones que lo generaron" \cite{khalife2016}. Esto puede 
-ser realizado siguiendo tres niveles. A nivel de flujo, a nivel de paquete y a nivel de equipos. Siendo el más común la clasificación 
-a nivel de flujo.
+\intro Se puede dar prioridad a diferentes tipos de tráfico, mediante su identificación y posterior clasificación. ``La identificación
+de tráfico consiste en asignar instancias de tráfico o elementos a las aplicaciones o tipo de aplicaciones que lo generaron", cita de 
+\cite{khalife2016}. Esto puede ser realizado siguiendo tres niveles. A nivel de flujo, a nivel de paquete y a nivel de equipos. Siendo 
+el más común la clasificación a nivel de flujo.
 
 \intro Dentro de las técnicas de identificación de tráfico, la más fiable es la Inspección Profunda de Paquetes, DPI o \textit{Deep 
 Packet Inspection} en inglés\cite{dpiaproximacion}. Consiste en analizar los paquetes entrando dentro de su contenido, buscando 
@@ -104,8 +105,7 @@ El gasto que requiere este proyecto se desglosa de la siguiente manera.
 módulo será subido a GitHub \cite{repo} con licencia de software libre, por lo que cualquiera podrá usarlo o modificarlo en el futuro.
 \item \textit{Equipo}. Teniendo en cuenta que la vida útil de un portátil es de unos 4 años y que el desarrollo de este trabajo 
 requiere de unos 6 meses, se tendrá que un portátil de gama media-alta de 800\euro generará un gasto de un octavo de la vida útil. Por 
-lo tanto será un coste de unos \textit{100\euro}. Hay que tener en cuenta que Bro solo funciona en Linux o Mac OS X 
-\cite{brodownload}.
+lo tanto será un coste de unos \textit{100\euro}.
 \item \textit{Programador}. Según se puede comprobar en Internet \cite{tarifa}, el precio por hora de un programador está alrededor de  
 los 30\euro, por lo tanto si en el desarrollo del proyecto se ha necesitado de unas 500 horas y dejando el precio en 30\euro por hora, 
 el gasto será de \textit{15000\euro}.
@@ -120,7 +120,8 @@ trabajo.
 
 Esta memoria se organizará de la siguiente forma: 
 \begin{itemize}
-\item En el capítulo \ref{estadoarte} se explicarán los fundamentos teóricos y tecnológicos sobre los que se basa el proyecto.
+\item En el capítulo \ref{estadoarte} se explicarán los fundamentos teóricos y tecnológicos sobre los que se basa el presente 
+proyecto.
 \item En el capítulo \ref{diseno} se contará cómo se pretende resolver el problema expuesto.
 \item En el capítulo \ref{implementacion} se encontrará detallado cómo se ha implementado el módulo.
 \item En el capítulo \ref{evaluacion} se realizarán las pruebas, para comprobar que todo funciona como estaba previsto, tanto a nivel 
