@@ -24,10 +24,21 @@ dos funcionalidades más relevantes del módulo están relacionadas con la evalu
 listas de flujos en diferentes situaciones. Así, se definirá una función que se encargará de evaluar la fórmula del emparejamiento de 
 flujos (Apartado \ref{sec.emparejamiento}). Esta función devolverá un número que será el que se compare con el umbral.
 
+\intro En la Figura \ref{fig.nacimiento}, se puede ver cómo se procederá a analizar un flujo que es detectado por el módulo.
+
 \begin{figure}[H]
-  \includegraphics[width=0.9\textwidth]{imagenes/netcarquitectura.png}
+  \includegraphics[width=0.8\textwidth]{imagenes/nacimiento.png}
   \centering
-  \caption{Arquitectura del módulo.}\label{fig.sistema}
+  \caption{Detección de un nuevo flujo.}\label{fig.nacimiento}
+\end{figure}
+
+\intro En la Figura \ref{fig.muerte}, se puede ver cómo se comportará el sistema cuando vaya a eliminar un flujo de la memoria.
+
+
+\begin{figure}[H]
+  \includegraphics[width=0.8\textwidth]{imagenes/muerte.png}
+  \centering
+  \caption{Muerte de un flujo.}\label{fig.muerte}
 \end{figure}
 
 \intro Dependiendo del trato que se les vaya a dar a los flujos detectados se almacenarán en una lista o en otra. Estos pueden estar 
@@ -39,12 +50,12 @@ en diferentes estados, siendo estos los que se consideran:
 \item Finalizado. El flujo ha cumplido su tiempo de vida y es borrado de la memoria.
 \end{itemize}
 
-\intro Por lo tanto, como se puede ver en la Figura \ref{fig.flujos}, cuando un flujo es detectado tendrá el estado activo. En función 
+\intro Por lo tanto, cuando un flujo es detectado tendrá el estado activo. En función 
 de los distintos flujos que se vayan detectando los flujos activos se irán comparando con los nuevos que se detecten, de modo que los 
 nuevos que pasarán a estar emparejados. Si no se encuentra un flujo activo que coincida con sus parámetros los nuevos flujos serán 
 almacenados como activos. Al último estado, finalizado, se podrá pasar tanto del estado activo, como del emparejado, con la diferencia 
 de que de tratarse del primer caso deberá de ser borrado de la lista y se buscará un sustituto entre los emparejados con ese flujo. En 
-el segundo caso no se borrará de la lista.
+el segundo caso no se borrará de la lista. La transición de estados se puede ver en la Figura \ref{fig.flujos}.
 
 \begin{figure}[H]
   \includegraphics[width=0.7\textwidth]{imagenes/flujos.png}
@@ -52,14 +63,13 @@ el segundo caso no se borrará de la lista.
   \caption{Distintos estados de los flujos.}\label{fig.flujos}
 \end{figure}
 
-\intro Las entradas de tráfico para su análisis serán trazas en formato \textit{pcap}. Las salidas serán registros, en los cuales se mostrarán los flujos que han sido emparejados. Ampliar!!!
+\intro Para el análisis será necesario disponer de tráfico. Este entrará en forma de traza, con formato \textit{pcap}. Las salidas 
+se darán en forma de registros, en los cuales se mostrarán los flujos que han sido emparejados.
 
 \intro La configuración de Bro, se realiza mediante la línea de comandos, cuando se va a lanzar el programa. Por lo tanto, para el 
 módulo que se está describiendo es preciso únicamente activar la opción \textit{-r}, de forma que se le permita leer el archivo que se 
 le pasa como parámetro a continuación. En el caso de que se quiera escanear el tráfico de una interfaz, se deberá de activar la opción 
 \textit{-i} indicando a continuación el nombre de la interfaz a analizar. Se puede ampliar esta información leyendo la ayuda de Bro con \textit{-h}.
-
-\intro Referenciar a la gestión de flujos
 
 \section{Módulo y funciones}
 
@@ -80,10 +90,11 @@ será necesario el uso de algún tipo de contenedor para este cometido.
 
 \intro Lo que se espera es capturar el tráfico de la capa de transporte. Dicho tráfico se corresponde a los 
 protocolos \textit{TCP y UDP}. Por lo tanto será necesario ver que tipo de eventos son los que controlan el tráfico 
-de estos dos protocolos. Esto se verá de forma más amplia en la siguiente sección.
+de estos dos protocolos. A su vez, se tendrá que crear variables globales para el almacenamiento de los flujos que sean emparejables 
+y los que estén activos.
 
 \intro Las entradas y salidas son de fácil gestión. Las entradas de tráfico podrán ser mediante archivos o 
-analizando directamente el tráfico de la red. Las salidas, por su parte, serán mediante terminal. Esto puede 
+analizando directamente el tráfico de la red. Las salidas, por su parte, serán mediante registros. Esto puede 
 suponer cierto inconveniente si se obtienen demasiadas salidas. También se pueden guardar las salidas en un 
 fichero mediante el carácter \textit{mayor que} . Con esto se guardará en un fichero en la ruta que se especifique, siendo el 
 posterior análisis mucho más cómodo desde, por ejemplo, un editor de texto.
@@ -96,25 +107,17 @@ los que son emparejados y los que están activos.
 
 \section{Gestión de flujos}
 
-La gestión de flujos en Bro se realiza completamente con eventos. Por lo cual se tendrán que crear variables 
-globales para el almacenamiento de los flujos que sean emparejables y los que estén activos.
+La gestión de los flujos se realiza completamente mediante los eventos de Bro.
 
-\intro El \textit{nacimiento de un flujo} es controlado por un evento. Por lo tanto cuando se detecta un nuevo 
-flujo se lanza un evento. Este evento se tendrá que controlar de forma que si se tiene ya un flujo activo con las 
-mismas características, se compare y se almacene. Si por el contrario no se tiene ningún flujo con esas 
-características se tendrá que almacenar directamente en el contenedor de flujos activos.
+\intro Existen eventos que gestionan el nacimiento y la muerte de los flujos, siendo estos dos eventos genéricos. Por el contrario, 
+se deberán de usar los distintos eventos especializados en los distintos tipos de tráfico para gestionarlos.
 
-\intro La \textit{muerte de un flujo} también es controlada por un evento. Ahora lo importante es si es interesante 
-a nivel del análisis seguir almacenando los flujos aunque estos hayan muerto. Si no se quiere tener almacenados 
-flujos muertos se tendrá que eliminar de la estructura en la que está almacenado. Si se quiere seguir trabajando 
-con ellos habrá que mantenerlos guardados en la estructura. Obviamente si el flujo que va a morir está emparejado 
-con otro se borrará solo del contenedor de flujos activos. Manteniéndose en el contenedor de flujos emparejados. De 
-lo contrario se perderá información. Todo esto habrá que decidirlo en el evento que gestiona la muerte del flujo.
+\intro De esta forma, se tendrán eventos únicos que detectarán el tráfico \textit{TCP} y otros para \textit{UDP}. Una vez dentro, se 
+realizarán los pasos necesarios para llevar el flujo detectado hasta la función de evaluación.
 
-\intro Estos dos comportamientos de los flujos están controlados por eventos genéricos. Con un único evento se 
-detecta que el flujo ha nacido y con otro evento si ha muerto, independientemente del tipo de protocolo al que 
-pertenezca. No pasará esto con los distintos estados de los flujos que serán detectados. Pues no es lo mismo 
-detectar un ACK de un flujo TCP que una respuesta de un flujo UDP. Serán tratados en eventos distintos y tendrán que ser gestionados con eventos distintos, cada uno destinado a un protocolo distinto. 
+\intro En el evento correspondiente al nacimiento de un flujo, se deberá de analizar si se tiene otro con el que compararlo, o directamente se almacena con los demás flujos activos.
+
+\intro En cuanto al evento relacionado con la muerte de un flujo, se tendrá que evaluar si en la lista de emparejados se tiene otro, al cual le quede más tiempo de vida, para que lo reemplace en la lista de flujos activos.
 
 \intro A continuación se verán las estructuras de datos necesarias para llevar a cabo el desarrollo del módulo.
 
@@ -122,7 +125,7 @@ detectar un ACK de un flujo TCP que una respuesta de un flujo UDP. Serán tratad
 
 Las principales estructuras de datos que se necesitan para el desarrollo de este trabajo serán dos 
 tablas, \textit{table} \cite{brotable}, de vectores para el almacenamiento de los flujos activos y los emparejados. 
-Los vectores son iguales que en cualquier otro lenguaje de programación, mientras que las tablas son parecidas a los \textit{maps} de \textit{C++}. Aunque esto se podrá ver con mejor detalle en el apartado de implementación.
+Los vectores son iguales que en cualquier otro lenguaje de programación, mientras que las tablas son parecidas a los \textit{maps} de \textit{C++}. Aunque esto se podrá ver con mejor detalle en el capítulo \ref{implementacion}.
 
 \intro Dichas estructuras de almacenamiento, deberán de ser capaces de estar ordenadas por las IP's y los puertos. 
 Lo cual se obtiene juntando las tablas con los vectores para así conseguir una especie de matriz bidimensional, 
