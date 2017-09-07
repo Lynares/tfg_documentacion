@@ -1,41 +1,69 @@
 \chapter{Diseño y arquitectura del sistema}\label{diseno}
 
-En este capítulo se hablará cómo se va a estructurar el módulo, las diferentes funcionalidades que debe tener 
-para que sea funcional y por último cómo Bro gestiona los flujos.
+En este capítulo se abordará el diseño del sistema. Para ello, a partir del estudio de los métodos y procedimientos disponibles en 
+Bro para la gestión de flujos (Apartado \ref{sec.emparejamiento}), se determinarán los módulos y funcionalidades necesarias, 
+proponiéndose una arquitectura para el sistema a implementar.
 
-\intro Todo esto se planteará desde la vista del diseño, se verán algunos tipos de datos interesantes para el 
-desarrollo, aunque el código se verá más adelante en el capítulo de implementación. También se hablará de la 
-arquitectura que va a seguir el sistema.
+\intro Así, en primer lugar se presentará la arquitectura propuesta y los diferentes módulos y funcionalidades. También se describirán 
+las estructuras de datos usadas para la gestión de la información (necesaria).
 
 \section{Arquitectura del sistema}
 
-Para describir la arquitectura del sistema hay que tener en cuenta la arquitectura que compone a Bro. Este monitor 
-de red es un software modular, esto quiere decir que esta compuesto de diferentes módulos que al ser ejecutados 
-funcionan como un único sistema.
+Para describir la arquitectura del sistema hay que tener en cuenta la arquitectura de Bro. Este monitor de red es un software modular, 
+esto es, esta compuesto de diferentes módulos que al ser ejecutados funcionan como un único sistema.
 
-\intro Por lo tanto la arquitectura de este problema se debe de acoplar a la arquitectura propia de Bro. Para ello, 
-se construirá un módulo que se acople con el monitor de red. Entre los requisitos del módulo a desarrollar se 
-encuentra que sea ligero y eficiente. Por lo tanto se tendrá que usar los distintos eventos que proporciona Bro 
-para crearlo de la forma deseada.
+\intro Por lo tanto, la arquitectura del sistema a desarrollar se debe de acoplar a la arquitectura propia de Bro, por lo que el 
+sistema debe implementarse como un módulo adicional compatible con Bro. Entre los requisitos del mismo se encuentra que sea ligero y 
+eficiente. Por lo tanto, se deberán usar los distintos eventos y capacidades que proporciona Bro para minimizar el impacto en el 
+sistema global y optimizar su funcionamiento.
 
-\intro Se prescindirá del uso de los \textit{frameworks} descritos en el capítulo anterior, pues su uso no aporta 
-nada que no se pueda realizar exclusivamente con los eventos destinados a gestionar el tráfico de la capa de 
-transporte. Se tendrá que usar los eventos para gestionar absolutamente todo lo que pasa en el módulo, a parte 
-también se tendrá que usar una función propia. Esta función se encargará de aplicar la fórmula del emparejamiento 
-de flujos vista en el último apartado del capítulo anterior, esta función devolverá un número que será el que 
-se compare con el umbral.
+\intro Se prescindirá del uso de los \textit{frameworks} descritos en el capítulo anterior, \ref{sub.framew}, pues su uso no aporta 
+nada relevante que no se pueda realizar exclusivamente con los eventos ya disponibles destinados a gestionar el tráfico de la capa de 
+transporte. Así, se propone usar este tipo de eventos como núcleo y soporte del módulo y de todas las funcionalidades necesarias. Las 
+dos funcionalidades más relevantes del módulo están relacionadas con la evaluación de la similitud entre flujos y la gestión de las 
+listas de flujos en diferentes situaciones. Así, se definirá una función que se encargará de evaluar la fórmula del emparejamiento de 
+flujos (Apartado \ref{sec.emparejamiento}). Esta función devolverá un número que será el que se compare con el umbral.
 
-\intro Por lo tanto, a modo de resumen, la arquitectura final del sistema que se plantea será un módulo 
-compuesto por los distintos eventos destinados a la gestión del tráfico de la capa de transporte y una función 
-auxiliar para el cálculo del umbral de emparejamiento. 
+\begin{figure}[H]
+  \includegraphics[width=0.9\textwidth]{imagenes/netcarquitectura.png}
+  \centering
+  \caption{Arquitectura del módulo.}\label{fig.sistema}
+\end{figure}
+
+\intro Dependiendo del trato que se les vaya a dar a los flujos detectados se almacenarán en una lista o en otra. Estos pueden estar 
+en diferentes estados, siendo estos los que se consideran:
+
+\begin{itemize}
+\item Activo. El flujo está activo y almacenado.
+\item Emparejado. El flujo ha sido emparejado con otro flujo activo.
+\item Finalizado. El flujo ha cumplido su tiempo de vida y es borrado de la memoria.
+\end{itemize}
+
+\intro Por lo tanto, como se puede ver en la Figura \ref{fig.flujos}, cuando un flujo es detectado tendrá el estado activo. En función 
+de los distintos flujos que se vayan detectando los flujos activos se irán comparando con los nuevos que se detecten, de modo que los 
+nuevos que pasarán a estar emparejados. Si no se encuentra un flujo activo que coincida con sus parámetros los nuevos flujos serán 
+almacenados como activos. Al último estado, finalizado, se podrá pasar tanto del estado activo, como del emparejado, con la diferencia 
+de que de tratarse del primer caso deberá de ser borrado de la lista y se buscará un sustituto entre los emparejados con ese flujo. En 
+el segundo caso no se borrará de la lista.
+
+\begin{figure}[H]
+  \includegraphics[width=0.9\textwidth]{imagenes/flujos.png}
+  \centering
+  \caption{Distintos estados de los flujos.}\label{fig.flujos}
+\end{figure}
+
+\intro Las entradas de tráfico para su análisis serán trazas en formato \textit{pcap}. Las salidas serán registros, en los cuales se mostrarán los flujos que han sido emparejados. Ampliar!!!
+
+\intro La configuración de Bro, se realiza mediante la línea de comandos, cuando se va a lanzar el programa. Por lo tanto, para el 
+módulo que se está describiendo es preciso únicamente activar la opción \textit{-r}, de forma que se le permita leer el archivo que se 
+le pasa como parámetro a continuación. En el caso de que se quiera escanear el tráfico de una interfaz, se deberá de activar la opción 
+\textit{-i} indicando a continuación el nombre de la interfaz a analizar. Se puede ampliar esta información leyendo la ayuda de Bro con \textit{-h}.
+
+\intro Referenciar a la gestión de flujos
 
 \section{Módulo y funciones}
 
-Dado que una mala programación del módulo puede dejar al monitor de red colgado con una traza sencilla. Se tratará 
-que el módulo contenga solamente lo justo para llevar a cabo la identificación del tráfico. De esta forma se 
-obtendrá un módulo cuya ejecución será óptima. 
-
-\intro Las funcionalidades que se espera que tenga este módulo en esencia son dos, la detección y almacenado 
+Las funcionalidades que se espera que tenga este módulo en esencia son dos, la detección y almacenado 
 del tráfico y la aplicación de la fórmula para conocer si dos flujos son emparejables, a los distintos flujos que 
 se han detectado. De una forma más amplia las funciones del módulo serán las siguientes. 
 
