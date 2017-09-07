@@ -1,11 +1,11 @@
 \chapter{Diseño y arquitectura del sistema}\label{diseno}
 
 En este capítulo se abordará el diseño del sistema. Para ello, a partir del estudio de los métodos y procedimientos disponibles en 
-Bro para la gestión de flujos (Apartado \ref{sec.emparejamiento}), se determinarán los módulos y funcionalidades necesarias, 
-proponiéndose una arquitectura para el sistema a implementar.
+Bro para la gestión de flujos, se determinarán los módulos y funcionalidades necesarias, proponiéndose una arquitectura para el 
+sistema a implementar.
 
 \intro Así, en primer lugar se presentará la arquitectura propuesta y los diferentes módulos y funcionalidades. También se describirán 
-las estructuras de datos usadas para la gestión de la información (necesaria).
+las estructuras de datos usadas para la gestión de la información.
 
 \section{Arquitectura del sistema}
 
@@ -17,7 +17,7 @@ sistema debe implementarse como un módulo adicional compatible con Bro. Entre l
 eficiente. Por lo tanto, se deberán usar los distintos eventos y capacidades que proporciona Bro para minimizar el impacto en el 
 sistema global y optimizar su funcionamiento.
 
-\intro Se prescindirá del uso de los \textit{frameworks} descritos en el capítulo anterior, \ref{sub.framew}, pues su uso no aporta 
+\intro Se prescindirá del uso de los \textit{frameworks} descritos en el capítulo anterior (\ref{sub.framew}), pues su uso no aporta 
 nada relevante que no se pueda realizar exclusivamente con los eventos ya disponibles destinados a gestionar el tráfico de la capa de 
 transporte. Así, se propone usar este tipo de eventos como núcleo y soporte del módulo y de todas las funcionalidades necesarias. Las 
 dos funcionalidades más relevantes del módulo están relacionadas con la evaluación de la similitud entre flujos y la gestión de las 
@@ -27,7 +27,7 @@ flujos (Apartado \ref{sec.emparejamiento}). Esta función devolverá un número 
 \intro En la Figura \ref{fig.nacimiento}, se puede ver cómo se procederá a analizar un flujo que es detectado por el módulo.
 
 \begin{figure}[H]
-  \includegraphics[width=0.8\textwidth]{imagenes/nacimiento.png}
+  \includegraphics[width=0.9\textwidth]{imagenes/nacimiento.png}
   \centering
   \caption{Detección de un nuevo flujo.}\label{fig.nacimiento}
 \end{figure}
@@ -36,7 +36,7 @@ flujos (Apartado \ref{sec.emparejamiento}). Esta función devolverá un número 
 
 
 \begin{figure}[H]
-  \includegraphics[width=0.8\textwidth]{imagenes/muerte.png}
+  \includegraphics[width=0.9\textwidth]{imagenes/muerte.png}
   \centering
   \caption{Muerte de un flujo.}\label{fig.muerte}
 \end{figure}
@@ -68,13 +68,14 @@ se darán en forma de registros, en los cuales se mostrarán los flujos que han 
 
 \intro La configuración de Bro, se realiza mediante la línea de comandos, cuando se va a lanzar el programa. Por lo tanto, para el 
 módulo que se está describiendo es preciso únicamente activar la opción \textit{-r}, de forma que se le permita leer el archivo que se 
-le pasa como parámetro a continuación. En el caso de que se quiera escanear el tráfico de una interfaz, se deberá de activar la opción 
-\textit{-i} indicando a continuación el nombre de la interfaz a analizar. Se puede ampliar esta información leyendo la ayuda de Bro con \textit{-h}.
+le pasará como parámetro a continuación. En el caso de que se quiera escanear el tráfico de una interfaz, se deberá de activar la 
+opción \textit{-i} indicando a continuación el nombre de la interfaz a analizar. Se puede ampliar esta información leyendo la ayuda de 
+Bro con \textit{-h}.
 
 \section{Módulo y funciones}
 
 Las funcionalidades que se espera que tenga este módulo en esencia son dos, la detección y almacenado 
-del tráfico y la aplicación de la fórmula para conocer si dos flujos son emparejables, a los distintos flujos que 
+del tráfico, y la aplicación de la fórmula para conocer si dos flujos son emparejables, a los distintos flujos que 
 se han detectado. De una forma más amplia las funciones del módulo serán las siguientes. 
 
 \begin{itemize}
@@ -110,7 +111,7 @@ los que son emparejados y los que están activos.
 La gestión de los flujos se realiza completamente mediante los eventos de Bro.
 
 \intro Existen eventos que gestionan el nacimiento y la muerte de los flujos, siendo estos dos eventos genéricos. Por el contrario, 
-se deberán de usar los distintos eventos especializados en los distintos tipos de tráfico para gestionarlos.
+se deberán de usar los distintos eventos especializados para gestionar los distintos tipos de tráfico.
 
 \intro De esta forma, se tendrán eventos únicos que detectarán el tráfico \textit{TCP} y otros para \textit{UDP}. Una vez dentro, se 
 realizarán los pasos necesarios para llevar el flujo detectado hasta la función de evaluación.
@@ -123,48 +124,45 @@ realizarán los pasos necesarios para llevar el flujo detectado hasta la funció
 
 \section{Estructuras de datos}
 
-Las principales estructuras de datos que se necesitan para el desarrollo de este trabajo serán dos 
-tablas, \textit{table} \cite{brotable}, de vectores para el almacenamiento de los flujos activos y los emparejados. 
-Los vectores son iguales que en cualquier otro lenguaje de programación, mientras que las tablas son parecidas a los \textit{maps} de \textit{C++}. Aunque esto se podrá ver con mejor detalle en el capítulo \ref{implementacion}.
+Las principales estructuras de datos que se necesitan para el desarrollo de este trabajo serán dos tablas, \textit{table} 
+\cite{brotable}, de vectores para el almacenamiento de los flujos activos y los emparejados. Los vectores son iguales que en cualquier 
+otro lenguaje de programación, mientras que las tablas son parecidas a los \textit{maps} de \textit{C++}. Aunque esto se explicará más 
+detalladamente en el capítulo \ref{implementacion}.
 
-\intro Dichas estructuras de almacenamiento, deberán de ser capaces de estar ordenadas por las IP's y los puertos. 
-Lo cual se obtiene juntando las tablas con los vectores para así conseguir una especie de matriz bidimensional, 
-la cual está indexada. Por lo tanto se consigue que el acceso a los datos sea mucho más rápido. Incluso se podría 
-prescindir de bucles, los cuales pueden acabar siendo un problema en cuanto a rendimiento si se llega a almacenar 
-muchos flujos.
+\intro Dichas estructuras de almacenamiento, deberán de ser capaces de estar ordenadas por las IP's y los puertos. Esto se obtiene 
+haciendo que las tablas estén compuestas de vectores, por lo cual, se obtendrá una matriz bidimensional indexada. Por lo tanto se 
+consigue que el acceso a los datos sea mucho más rápido. Incluso se podría prescindir de bucles, los cuales pueden acabar 
+siendo un problema en cuanto a rendimiento si se analiza mucho tráfico.
 
-\intro Bro proporciona cierto tipos de datos muy interesantes, los cuales además, incluyen mucha más información. 
-Algunos de estos tipos de datos son. 
+\intro Bro proporciona cierto tipos de datos muy interesantes, los cuales además, incluyen mucha más información. Algunos de estos 
+tipos de datos son. 
 
 \begin{itemize}
 
 \item \textit{connection}. 
 
-\intro Este tipo de dato es el flujo en si. Por lo tanto será de vital importancia comprenderlo para poder trabajar 
-como se desea.
+\intro Este tipo de dato es el flujo en sí. Por lo tanto será de vital importancia comprenderlo para poder trabajar como se desea.
 
-\intro Dentro del tipo de dato \textit{connection} existe un registro llamado \textit{id}, el cual esta 
-compuesto por el tipo de dato \textit{conn\_id} \cite{broconnid}. Este dato sirve para identificar los flujos 
-mediante una tupla formada por 4 datos. Estos datos son los que se precisan para indexar la matriz bidimensional, 
-siendo pues las IP's y los puertos.
+\intro Dentro de \textit{connection} existe un registro llamado \textit{id}, el cual esta compuesto por el tipo de dato \textit{conn\_id} \cite{broconnid}. Este dato sirve para identificar los flujos mediante una tupla formada por 4 datos. Estos datos son los que se 
+precisan para indexar la matriz bidimensional.
 
   \begin{itemize}
 
   \item \textit{addr}. Este tipo de dato representa una IP. Reconoce tanto IPv4 como IPv6. Este tipo de dato puede 
-  ser comparado e incluso ordenado mediante operadores. \cite{broaddr}
+  ser comparado e incluso ordenado mediante operadores \cite{broaddr}.
 
-  \item \textit{port}. Este tipo es el usado para los puertos. Además del número de puerto también indica el 
+  \item \textit{port}. Este tipo es el usado para los puertos. Además del número, también indica el 
   protocolo de la capa de transporte que usa. Soporta la comparación y ordenación, pero no por el número, sino por 
-  el tipo de protocolo. \cite{broport}
+  el tipo de protocolo \cite{broport}.
   \end{itemize}
   
-\intro Para obtener más información sobre el tipo de dato \textit{connection} lea \cite{connectiontype}.
+\intro Se puede consultar más información sobre el tipo de dato \textit{connection} en \cite{connectiontype}.
 
 \item \textit{time}. 
 
-\intro Este tipo de dato también es interesante. Aunque en otros lenguajes se puede obtener, 
-en Bro es un tipo de dato por si mismo. Por lo tanto se podrá operar sobre él desde el principio, siendo una gran 
-ventaja a la hora de calcular el tiempo de inicio de los flujos. Para leer más \cite{timetype}. 
+\intro Aunque en otros lenguajes se pueden crear estructuras que se asemejen a este tipo, Bro da un tipo de dato muy completo. Además, 
+se puede operar sobre él desde el principio, siendo una gran ventaja a la hora de calcular el tiempo de inicio de los flujos. Más 
+información en \cite{timetype}.
 
 \intro Es importante entender que para realizar el cálculo para el emparejamiento de flujos, se necesita el 
 \textit{timestamp} del primer paquete de cada flujo, pues será sobre este tiempo sobre el que se apoye el 
@@ -174,4 +172,4 @@ cálculo del emparejamiento.
 
 \intro Estos dos tipos de datos a parte de ser los más interesantes para el cálculo del emparejamiento, también 
 serán los más utilizados junto a los contenedores para los flujos. Existen más tipos de datos e incluso los hay que 
-extienden la información disponible sobre los flujos. Para leer más sobre esto \cite{conntype}.
+extienden la información disponible sobre los flujos. Más información sobre distintos tipos de datos en \cite{conntype}.

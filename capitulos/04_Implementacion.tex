@@ -1,51 +1,52 @@
 \chapter{Implementación}\label{implementacion}
 
-A continuación se contará cómo se ha implementado el módulo de Bro, resolviendo así el problema planteado.
+A continuación, se expondrá cómo se ha implementado el módulo de Bro, el cual sirve como resolución al problema planteado en 
+\ref{sec.emparejamiento}.
 
-\intro La descripción del módulo será sin entrar en detalles de la programación. Se hará una descripción 
-breve de los distintos eventos y funciones.
+\intro La descripción del módulo se realizará mostrando las cabeceras de las funciones y eventos empleados, comentando después para 
+que sirve cada uno. De forma que se tendrá una descripción de la implementación a modo de \textit{API}.
 
-\intro Lo primero que se va a detallar es la función para calcular el emparejamiento.
+\intro Lo primero que se va a describir, es la función de evaluación del emparejamiento.
 
 \begin{lstlisting}[style=CodigoC]
 function emparejamiento(c1: connection, c2: connection ):double 
 
 \end{lstlisting}
 
-\intro Esta función recibe como entrada dos flujos y devuelve un número de tipo \textit{double}. En esta función 
-lo que se hace es aplicar la fórmula de emparejamiento a los dos flujos que entran.
+\intro Esta función recibe como entrada dos flujos y devuelve un número, de tipo \textit{double}. En esta función 
+lo que se hace es aplicar la ecuación de emparejamiento (\ref{ecug}).
 
 \intro Al querer hacer la comparación lo que se hace es sacar las IP's de origen y destino y los puertos de 
-origen y destino de los flujos. También se obtendrán los \textit{timestamps} de los flujos, de esta forma se 
+origen y destino de los flujos. También, se obtendrán los \textit{timestamps} de los flujos, de esta forma se 
 conseguirá la diferencia de tiempo. 
 
-\intro Para poder operar con los puertos habrá que pasarlos a tipo \textit{count}, de esta forma se elimina la 
-terminación con el tipo de protocolo del puerto. Se comentó anteriormente que se podía operar con esta terminación, 
-pero al tener que operar con otros tipos de datos que no son puertos es mejor quitar la terminación, pues de lo 
-contrario no se obtendrá un buen resultado. 
+\intro Para poder operar con los puertos, habrá que pasarlos al tipo \textit{count}, de esta forma se elimina la 
+terminación con el tipo de protocolo del puerto. Se puede operar con esta terminación, 
+pero al tener que usar después otros tipos de datos que no son puertos es mejor quitar la terminación, pues de lo 
+contrario se obtendrá un resultado erróneo. 
 
 \intro Lo mismo que con los puertos pasa con el tipo \textit{time}. Se puede operar con este tipo de dato 
-pero no es recomendable hacerlo ya que se va a trabajar con más tipos de datos de carácter matemático.
+pero no es recomendable hacerlo ya que se va a trabajar con otros datos de carácter matemático.
 
-\intro El número de veces que se tiene un flujo con los mismos datos, o \textit{Nip} en la fórmula, es de fácil 
-cálculo. Gracias a la indexación basta con buscarlo en la tabla y calcular el tamaño del vector. 
+\intro El número de IP's coincidentes en ambos flujos, o \textit{$N_{IP}$} en la fórmula, es de fácil cálculo, pues bastará con saber si 
+coinciden una IP o las dos.
 
-\intro A continuación se procederá a la explicación de los distintos tipos de eventos usados y para que son usados.
+\intro A continuación, se procederá a la explicación de los distintos tipos de eventos usados y para que son usados.
 
 \begin{lstlisting}[style=CodigoC]
 event new_connection(c: connection)
 
 \end{lstlisting}
 
-\intro Este evento recibe como entrada un flujo nuevo. Este flujo es una nueva conexión, la cual no está identificada 
+\intro Este evento recibe como entrada un flujo nuevo. Esto representa una nueva conexión, la cual no está identificada 
 previamente. Esto quiere decir o que es nueva o que ha sido borrada.
 
-\intro Este evento no devuelve nada, por lo tanto en el momento en el que es detectado el flujo se tendrá que crear 
-un nuevo indice en la tabla de flujos activos o guardarlo para hacer la posterior comparación.
+\intro Este evento no devuelve nada, por lo tanto en el momento en el que es detectado el flujo, se tendrá que crear 
+un nuevo indice en la tabla de flujos activos o guardarlo para hacer la comparación posteriormente.
 
 \intro Este tipo de evento detecta las conexiones de tipo \textit{TCP y UDP}.
 
-\intro Ahora se verá cómo se van a gestionar la muerte de los flujos.
+\intro Ahora, se verá cómo se van a gestionar la muerte de los flujos.
 
 \begin{lstlisting}[style=CodigoC]
 event connection_state_remove(c: connection)
@@ -59,9 +60,10 @@ que ya ha sido procesado por el módulo.
 se borrará el primer flujo almacenado en el vector.
 
 \intro De ser el único flujo almacenado en el vector, se borrará el vector entero. Si hay más flujos almacenados 
-se moverán los demás una posición hacia atrás. De esta forma se seguirá teniendo un rendimiento óptimo.
+se moverán los demás una posición hacia atrás. De esta forma se seguirá teniendo un rendimiento óptimo, al no tener otra tabla que 
+indique que flujos son borrados.
 
-\intro A continuación se verán los distintos eventos que van a detectar el diferente tipo de tráfico.
+\intro A continuación, se verán los distintos eventos que van a detectar el diferente tipo de tráfico.
 
 \begin{lstlisting}[style=CodigoC]
 event connection_established(c: connection)
@@ -74,10 +76,10 @@ event udp_reply(u: connection)
 
 \end{lstlisting}
 
-\intro Los dos primeros eventos son los correspondientes al tráfico \textit{TCP}. Los otros dos, como se puede ver 
+\intro Los dos primeros eventos son los correspondientes al tráfico \textit{TCP}. Los otros dos, como se indica  
 en el nombre están destinados al tráfico \textit{UDP}.
 
-\intro El primer evento relacionado con \textit{TCP} se activa cuando se detecta un paquete \textit{SYN-ACK} que 
+\intro El primer evento relacionado con \textit{TCP}, se activa cuando se detecta un paquete \textit{SYN-ACK} que 
 responde al \textit{handshake} que se realiza en las conexiones de este tipo.
 
 \intro El segundo evento detecta cuando la conexión \textit{TCP} finaliza de forma normal.
@@ -89,21 +91,19 @@ responde al \textit{handshake} que se realiza en las conexiones de este tipo.
 \item \textit{UDP reply}. Este es generado por cada paquete que es enviado por el receptor del flujo.
 \end{itemize}
 
-\intro Estos dos últimos eventos son bastantes costosos, pero son absolutamente necesarios, son los únicos 
+\intro Estos dos últimos eventos son bastantes costosos, pero son absolutamente necesarios, ya que son los únicos 
 eventos que detectan conexiones de tipo \textit{UDP}.
 
 \intro Dentro de todos estos eventos se realiza lo mismo. Primero se comprueba que los dos flujos no son el mismo, 
-si son el mismo se termina el análisis. Si no son lo mismo se pasa a la función de emparejamiento ya descrita y 
-se compara el número que se obtiene con el umbral que se ha definido antes de la ejecución. Si el resultado es 
-mayor que el umbral son emparejables, por lo cual se tendrá que guardar en la tabla de emparejados y se informa 
-mediante un mensaje en pantalla de que lo son. Si es menor que el umbral no son emparejables y mediante un mensaje 
-en pantalla se informa de que no son emparejables.
+si son el mismo se termina el análisis de ese flujo. Si, por el contrario, no son el mismo, se pasa a la función de emparejamiento ya 
+descrita y se compara el número que se obtiene con el umbral que se ha definido antes de la ejecución. Si el resultado es 
+mayor que el umbral, son emparejables, por lo cual, se tendrá que guardar en la tabla de emparejados y se muestran que lo son. Si es 
+menor que el umbral, no son emparejables y se informa de que no son emparejables.
 
-\intro Es necesario recordar que se puede dar que se puede estar usando dos eventos o más a la vez, por lo que los 
-mensajes en pantalla pueden ser confusos. Se tiene que tener en cuenta que hay cierto retardo en los mensajes, por 
-lo que lo interesante es el resultado final de las tablas.
+\intro Es necesario recordar que se puede dar el caso de estar usando dos eventos o más a la vez, por lo que los 
+mensajes en el registro generado pueden ser confusos. Se tiene que tener en cuenta que hay cierto retardo en los mensajes.
 
-\intro Además de estos eventos se tienen los siguientes eventos genéricos.
+\intro Además de estos eventos, se tienen los siguientes eventos genéricos.
 
 \begin{lstlisting}[style=CodigoC]
 event bro_init()
@@ -111,13 +111,13 @@ event bro_init()
 event bro_done()
 \end{lstlisting}
 
-\intro El primero se lanza cuando Bro se inicia y mostrará el tiempo de inicio. El segundo se lanza cuando 
+\intro El primero se lanza cuando Bro se inicia mostrando el tiempo de inicio. El segundo se lanza cuando 
 Bro finaliza, por lo tanto es el último evento que se lanzará y mostrará la hora de finalización. Con estos 
 dos eventos se tendrá control de cuando fue lanzado el análisis y cuando finalizó.
 
-\intro Aparte de estos eventos, también existen dentro del módulo otros dos eventos destinados a detectar 
-paquetes del protocolo \textit{ICMP}. Este tipo de eventos son necesarios pues Bro los detecta igual que los 
-de tipo \textit{TCP y UDP}.
+\intro Aparte de estos eventos, también existen dentro del módulo otros dos eventos, destinados a detectar 
+paquetes del protocolo \textit{ICMP}. Este tipo de eventos son necesarios, pues Bro los detecta igual que los 
+de tipo \textit{TCP y UDP}, aunque no pertenezca a la capa de transporte.
 
 \begin{lstlisting}[style=CodigoC]
 event icmp_echo_request(c: connection, icmp: icmp_conn, id: count, seq: count, payload: string)
@@ -125,18 +125,18 @@ event icmp_echo_request(c: connection, icmp: icmp_conn, id: count, seq: count, p
 event icmp_echo_reply(c: connection, icmp: icmp_conn, id: count, seq: count, payload: string)
 \end{lstlisting}
 
-\intro El protocolo \textit{ICMP} se usa para el control, enviando mensajes de error si un router o un host 
-no son alcanzables.
+\intro El protocolo \textit{ICMP} se usa para el control, enviando mensajes de error en caso de que un router o un host 
+no sean accesibles.
 
 \intro Al igual que con los eventos de \textit{UDP}, el \textit{request} es enviado por el creador del flujo, 
 siendo una petición. El \textit{reply} es enviado por el receptor del \textit{request}, por lo que se considera 
 la respuesta del anterior. El funcionamiento es el mismo que en los anteriores eventos que gestionan el tráfico.
 
-\intro Aunque estos dos eventos tienen más parámetros de entrada que los eventos anteriores, para calcular el 
-emparejamiento solo será usado el primer parámetro, el cual hace referencia al flujo. El trato del flujo dentro 
-de los eventos es el mismo que el que se aplica a los eventos \textit{TCP y UDP} anteriormente descrito.
+\intro Aunque estos dos eventos tienen más parámetros de entrada que los eventos anteriores, para evaluar si son emparejables, solo 
+será usado el primer parámetro, el cual hace referencia al flujo. El trato del flujo dentro 
+de los eventos, es el mismo que el que se aplica a los eventos \textit{TCP y UDP} anteriormente descrito.
 
-\intro A continuación se verá cómo se ha implementado las estructuras de almacenamiento de los flujos.
+\intro A continuación, se verá cómo se ha implementado las estructuras de almacenamiento de los flujos.
 
 \begin{lstlisting}[style=CodigoC]
 global collection: table[addr, addr, port, port] of vector of connection &synchronized;
@@ -145,10 +145,8 @@ global collection_added: table[addr, addr, port, port] of vector of connection;
 \end{lstlisting}
 
 \intro Se trata de dos tablas globales, cuyo indice está constituido por las IP's de origen y destino y los 
-puertos de origen y destino. Además como los indices son únicos, cada índice apunta a un vector, y dentro de 
-dicho vector se almacenan los flujos ordenados dependiendo de cuando son detectados.
+puertos de origen y destino. Además, como los indices son únicos, cada índice apuntará a un vector, y dentro de 
+este se almacenarán los flujos ordenados dependiendo de cuando son detectados.
 
-\intro La primera tabla almacena los flujos que están activos. La segunda almacena los que ya están emparejados.
-
-
-
+\intro La primera tabla será usada para almacenar los flujos que están activos. La segunda se empleará para almacenar los que ya están 
+emparejados.
