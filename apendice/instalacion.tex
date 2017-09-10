@@ -1,0 +1,33 @@
+\chapter{Instalación de Bro}
+
+En este apartado se van a detallar los pasos para instalar Bro en un sistema Linux. 
+
+\section{Descargar Bro}
+
+Los binarios de Bro se pueden descargar desde la propia web de Bro \cite{brodownload}, o desde su repositorio de GitHub.
+
+\intro A continuación, se recomienda seguir los pasos que nos detallan en su web \cite{broinstall}, aunque serán detallados aquí.
+
+\intro Lo primero será decidir de donde descargar los binarios, se recomienda hacerlo desde el repositorio de GitHub, pues así será mucho más sencillo tenerlo actualizado. Para ello, se realizarán los siguientes pasos:
+
+\begin{lstlisting}[style=Consola]
+sudo apt-get install cmake make gcc g++ flex bison libpcap-dev libssl-dev python-dev swig zlib1g-dev
+\end{lstlisting}
+
+\intro De esta forma, se obtendrán los paquetes necesarios para que Bro funcione correctamente. A continuación, clonaremos el repositorio de GitHub de Bro, de la siguiente forma:
+
+\begin{lstlisting}[style=Consola]
+git clone --recursive git://git.bro.org/bro
+\end{lstlisting}
+
+\section{Instalación}
+
+Para el proceso de instalación, será necesario, antes de ejecutar los comandos siguientes, estar en la carpeta \textit{bro} que se ha generado con la descarga. Una vez que se esté en dicha carpeta, se procederá a la instalación con los siguientes comandos:
+
+\begin{lstlisting}[style=Consola]
+./configure
+make
+make install
+\end{lstlisting}
+
+\intro Una vez realizados estos pasos, se tendrá Bro instalado y listo para usarse.

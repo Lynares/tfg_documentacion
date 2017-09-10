@@ -1,0 +1,48 @@
+\chapter{Uso del módulo creado}\label{cap.uso}
+
+En este apartado se encontrará una pequeña guía de los comandos de Bro, así como una pequeña guía del uso del módulo creado.
+
+\section{Comandos de Bro}
+
+A continuación, se encontrará una lista de los comandos más interesantes de Bro.
+
+\begin{lstlisting}[style=Consola]
+    -b|--bare-mode                 | no carga los scripts del directorio base/
+    -d|--debug-policy              | activa el modo debug
+    -f|--filter <filter>           | filtro tcpdump
+    -h|--help|-?                   | ayuda
+    -i|--iface <interface>         | lee de la interfaz dada
+    -r|--readfile <readfile>       | lee el archivo dado
+    -s|--rulefile <rulefile>       | lee las reglas del archivo dado
+    -t|--tracefile <tracefile>     | activa la ejecucion de trazas 
+    -w|--writefile <writefile>     | escribe en el archivo dado
+    -x|--print-state <file.bst>    | muestra el contenido del archivo de estado
+    -C|--no-checksums              | ignaora checksums
+    -F|--force-dns                 | fuerza DNS
+    -N|--print-plugins             | muestra los plugins disponibles y sale
+    -Q|--time                      | muestra el tiempo de ejecucion en stderr
+    -R|--replay <events.bst>       | repite los eventos
+    -X|--broxygen <cfgfile>        | genera la documentacion basada en el archivo de configuracion dado   
+
+\end{lstlisting}
+
+\section{Uso de Bro}
+
+Para usar Bro se tendrá que hacer lo siguiente.
+
+\begin{lstlisting}[style=Consola]
+	bro [opciones] [archivos]
+\end{lstlisting}
+
+\intro Pero antes de la ejecución de Bro, se tendrá que fijar el \textit{PATH} en la carpeta de Bro.
+
+\begin{lstlisting}[style=Consola]
+	export PATH =/usr/local/bro/bin:$PATH
+\end{lstlisting}
+
+\intro Una vez realizado este paso, se podrá ejecutar el módulo creado, de la siguiente forma.
+
+\begin{lstlisting}[style=Consola]
+	bro -b -r pcap/nitroba.pcap scripts/bro-flows/broflows.bro
+\end{lstlisting}
+

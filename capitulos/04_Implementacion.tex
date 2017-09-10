@@ -6,63 +6,38 @@ A continuación, se expondrá cómo se ha implementado el módulo de Bro, el cua
 \intro La descripción del módulo se realizará mostrando las cabeceras de las funciones y eventos empleados, comentando después para 
 que sirve cada uno. De forma que se tendrá una descripción de la implementación a modo de \textit{API}.
 
-\intro Lo primero que se va a describir, es la función de evaluación del emparejamiento.
+\section{Creación del registro}
+
+La creación del registro sobre el que se escribirán los flujos que son emparejables, se realiza mediante un evento.
 
 \begin{lstlisting}[style=CodigoC]
-function emparejamiento(c1: connection, c2: connection ):double 
+event bro_init()
 
 \end{lstlisting}
 
-\intro Esta función recibe como entrada dos flujos y devuelve un número, de tipo \textit{double}. En esta función 
-lo que se hace es aplicar la ecuación de emparejamiento (\ref{ecug}).
+\intro Este evento es lanzado cuando Bro se inicia. Cuando se inicie se creará un registro, en el que se escribirán las IP's de origen 
+y destino, así como los puertos. Además, se el \textit{uid} de cada flujo, para poder realizar búsquedas rápidas. También, entre la 
+información de los flujos habrá un string, cuya función es separarlos para una mejor visibilidad.
 
-\intro Al querer hacer la comparación lo que se hace es sacar las IP's de origen y destino y los puertos de 
-origen y destino de los flujos. También, se obtendrán los \textit{timestamps} de los flujos, de esta forma se 
-conseguirá la diferencia de tiempo. 
+\section{Detección de flujos nuevos}
 
-\intro Para poder operar con los puertos, habrá que pasarlos al tipo \textit{count}, de esta forma se elimina la 
-terminación con el tipo de protocolo del puerto. Se puede operar con esta terminación, 
-pero al tener que usar después otros tipos de datos que no son puertos es mejor quitar la terminación, pues de lo 
-contrario se obtendrá un resultado erróneo. 
-
-\intro Lo mismo que con los puertos pasa con el tipo \textit{time}. Se puede operar con este tipo de dato 
-pero no es recomendable hacerlo ya que se va a trabajar con otros datos de carácter matemático.
-
-\intro El número de IP's coincidentes en ambos flujos, o \textit{$N_{IP}$} en la fórmula, es de fácil cálculo, pues bastará con saber si 
-coinciden una IP o las dos.
-
-\intro A continuación, se procederá a la explicación de los distintos tipos de eventos usados y para que son usados.
+A continuación, se explicará el evento encargado de gestionar los flujos de nuevos.
 
 \begin{lstlisting}[style=CodigoC]
 event new_connection(c: connection)
 
 \end{lstlisting}
 
-\intro Este evento recibe como entrada un flujo nuevo. Esto representa una nueva conexión, la cual no está identificada 
-previamente. Esto quiere decir o que es nueva o que ha sido borrada.
+\intro Este evento recibe como entrada una nueva conexión, la cual no está identificada previamente. Esto quiere decir que es nueva
+o que ha sido borrada de la memoria y ha vuelto a ser detectada.
 
-\intro Este evento no devuelve nada, por lo tanto en el momento en el que es detectado el flujo, se tendrá que crear 
-un nuevo indice en la tabla de flujos activos o guardarlo para hacer la comparación posteriormente.
+\intro Una vez que se detecte el flujo, se deberá de comprobar si existe, de forma que se descartará, o si no existe, por lo que se 
+creará un nuevo índice en la tabla de activos y se almacenará.
 
 \intro Este tipo de evento detecta las conexiones de tipo \textit{TCP y UDP}.
 
-\intro Ahora, se verá cómo se van a gestionar la muerte de los flujos.
 
-\begin{lstlisting}[style=CodigoC]
-event connection_state_remove(c: connection)
-
-\end{lstlisting}
-
-\intro Este evento se activa cuando el flujo que entra como parámetro va a morir, o ser borrado de la memoria. Es un flujo 
-que ya ha sido procesado por el módulo.
-
-\intro Lo que se realiza dentro de este evento es buscar en la tabla el índice el vector. De esta forma 
-se borrará el primer flujo almacenado en el vector.
-
-\intro De ser el único flujo almacenado en el vector, se borrará el vector entero. Si hay más flujos almacenados 
-se moverán los demás una posición hacia atrás. De esta forma se seguirá teniendo un rendimiento óptimo, al no tener otra tabla que 
-indique que flujos son borrados.
-
+\section{Eventos de detección de tráfico}
 \intro A continuación, se verán los distintos eventos que van a detectar el diferente tipo de tráfico.
 
 \begin{lstlisting}[style=CodigoC]
@@ -92,31 +67,14 @@ responde al \textit{handshake} que se realiza en las conexiones de este tipo.
 \end{itemize}
 
 \intro Estos dos últimos eventos son bastantes costosos, pero son absolutamente necesarios, ya que son los únicos 
-eventos que detectan conexiones de tipo \textit{UDP}.
+eventos que detectan este tipo de conexión.
 
-\intro Dentro de todos estos eventos se realiza lo mismo. Primero se comprueba que los dos flujos no son el mismo, 
-si son el mismo se termina el análisis de ese flujo. Si, por el contrario, no son el mismo, se pasa a la función de emparejamiento ya 
-descrita y se compara el número que se obtiene con el umbral que se ha definido antes de la ejecución. Si el resultado es 
-mayor que el umbral, son emparejables, por lo cual, se tendrá que guardar en la tabla de emparejados y se muestran que lo son. Si es 
-menor que el umbral, no son emparejables y se informa de que no son emparejables.
-
-\intro Es necesario recordar que se puede dar el caso de estar usando dos eventos o más a la vez, por lo que los 
-mensajes en el registro generado pueden ser confusos. Se tiene que tener en cuenta que hay cierto retardo en los mensajes.
-
-\intro Además de estos eventos, se tienen los siguientes eventos genéricos.
-
-\begin{lstlisting}[style=CodigoC]
-event bro_init()
-
-event bro_done()
-\end{lstlisting}
-
-\intro El primero se lanza cuando Bro se inicia mostrando el tiempo de inicio. El segundo se lanza cuando 
-Bro finaliza, por lo tanto es el último evento que se lanzará y mostrará la hora de finalización. Con estos 
-dos eventos se tendrá control de cuando fue lanzado el análisis y cuando finalizó.
+\intro Dentro de todos estos eventos se realiza el mismo proceso. Primero se obtienen las IP's y los puertos del flujo y se obtiene 
+el flujo activo correspondiente a ese flujo. Después de esto, se comprueba que IP y que puerto coinciden, llamando así a la función de 
+\textit{calculo} para que realice el filtrado.
 
 \intro Aparte de estos eventos, también existen dentro del módulo otros dos eventos, destinados a detectar 
-paquetes del protocolo \textit{ICMP}. Este tipo de eventos son necesarios, pues Bro los detecta igual que los 
+paquetes del protocolo \textit{ICMP}. Estos eventos son necesarios, pues Bro los detecta igual que los 
 de tipo \textit{TCP y UDP}, aunque no pertenezca a la capa de transporte.
 
 \begin{lstlisting}[style=CodigoC]
@@ -132,21 +90,75 @@ no sean accesibles.
 siendo una petición. El \textit{reply} es enviado por el receptor del \textit{request}, por lo que se considera 
 la respuesta del anterior. El funcionamiento es el mismo que en los anteriores eventos que gestionan el tráfico.
 
-\intro Aunque estos dos eventos tienen más parámetros de entrada que los eventos anteriores, para evaluar si son emparejables, solo 
-será usado el primer parámetro, el cual hace referencia al flujo. El trato del flujo dentro 
-de los eventos, es el mismo que el que se aplica a los eventos \textit{TCP y UDP} anteriormente descrito.
+\section{Procesado de flujos y escritura en el registro}
 
-\intro A continuación, se verá cómo se ha implementado las estructuras de almacenamiento de los flujos.
+Ahora, se va a describir cómo se procesan los flujos antes de ser enviados a comparar. A su vez, se hablará de cómo se escribe en el 
+registro.
 
 \begin{lstlisting}[style=CodigoC]
-global collection: table[addr, addr, port, port] of vector of connection &synchronized;
-
-global collection_added: table[addr, addr, port, port] of vector of connection;
+function calculo(c1: connection, c2: connection )
 \end{lstlisting}
 
-\intro Se trata de dos tablas globales, cuyo indice está constituido por las IP's de origen y destino y los 
-puertos de origen y destino. Además, como los indices son únicos, cada índice apuntará a un vector, y dentro de 
-este se almacenarán los flujos ordenados dependiendo de cuando son detectados.
+\intro Esta función se usa para procesar los flujos antes de llamar a la función de emparejamiento. Aquí, se comprueba primero que no se está analizando el mismo flujo. Una vez que esto ha sido descartado, se llama a la función de emparejamiento, y con el número que devuelve, se comprueba si son emparejables o no. Si se obtiene un resultado mayor que el umbral, serán emparejables, y por lo tanto se almacenarán en la tabla de emparejados. En caso contrario, no se almacenarán en la tabla de emparejados.
 
-\intro La primera tabla será usada para almacenar los flujos que están activos. La segunda se empleará para almacenar los que ya están 
-emparejados.
+\intro Además de lo ya detallado, cuando son emparejables, se escribirá la información de los dos flujos en el registro.
+
+\section{Cálculo de emparejamiento}
+
+A continuación, se explicará cómo se aplica la ecuación \ref{ecug} en el módulo.
+
+\begin{lstlisting}[style=CodigoC]
+function emparejamiento(c1: connection, c2: connection ):double 
+\end{lstlisting}
+
+\intro Esta función recibe como entrada dos flujos y devuelve un número, de tipo \textit{double}. 
+
+\intro Lo primero que se hace es sacar las IP's de origen y destino y los puertos de origen y destino de los flujos. También, se 
+obtendrán los \textit{timestamps} de los flujos, de esta forma se conseguirá la diferencia de tiempo. 
+
+\intro Para poder operar con los puertos, habrá que pasarlos al tipo \textit{count}, de esta forma se elimina la 
+terminación con el tipo de protocolo del puerto. Se puede operar con esta terminación, pero al tener que usar después otros tipos de 
+datos que no son puertos es mejor quitar la terminación, pues de lo contrario se obtendrá un resultado erróneo. 
+
+\intro Lo mismo que con los puertos pasa con el tipo \textit{time}. Se puede operar con este tipo de dato pero no es recomendable 
+hacerlo ya que se va a trabajar con otros datos de carácter matemático.
+
+\intro El número de IP's coincidentes en ambos flujos, o \textit{$N_{IP}$} en la fórmula, es de fácil cálculo, pues bastará con saber 
+si coinciden una IP o las dos.
+
+\section{Borrado de flujos}
+
+Ahora, se describirá el funcionamiento del borrado de flujos.
+
+\begin{lstlisting}[style=CodigoC]
+event connection_state_remove(c: connection)
+
+\end{lstlisting}
+
+\intro Este evento se activa cuando el flujo que entra como parámetro va a morir, o ser borrado de la memoria. Es un flujo 
+que ya ha sido procesado por el módulo.
+
+\intro Lo que se realiza dentro de este evento es buscar en la tabla el índice el vector. De esta forma 
+se borrará el primer flujo almacenado en el vector.
+
+\intro De ser el único flujo almacenado en el vector, se borrará el vector entero. Si hay más flujos almacenados, se moverán una 
+posición hacia atrás. De esta forma, se seguirá teniendo un rendimiento óptimo al no tener otra tabla que indique que flujos son 
+borrados.
+
+\section{Almacenamiento}
+
+\intro Por último, se verá cómo se ha implementado las estructuras de almacenamiento de los flujos.
+
+\begin{lstlisting}[style=CodigoC]
+global activos: table[addr, port] of vector of connection;
+
+global emparejados: table[addr, port] of vector of connection;
+\end{lstlisting}
+
+\intro Se trata de dos tablas globales, cuyo indice está constituido por una IP, ya sea la de origen o la de destino, un puerto. 
+Además, como los indices son únicos, cada índice apuntará a un vector, y dentro de este se almacenarán los flujos ordenados, en 
+función de cuando son detectados.
+
+\intro La primera tabla será usada para almacenar los flujos que están activos, por lo tanto el primer flujo de cada vector será el 
+usado para realizar las comparaciones. La segunda se empleará para almacenar los que ya están emparejados, por lo que contiene flujos 
+que pueden haber sido borrado de memoria.
