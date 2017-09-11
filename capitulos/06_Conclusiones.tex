@@ -1,24 +1,37 @@
 \chapter{Conclusiones y trabajo futuro}\label{conclusiones}
 
-Por último, se expondrán las conclusiones a las que se han llegado, así como el posible trabajo futuro a partir de lo realizado.
+En este capítulo se expondrán las conclusiones alcanzadas después de realizar todo el trabajo, así como el posible trabajo futuro.
 
 \section{Conclusiones}
 
-Tras todo lo expuesto a lo largo de esta memoria, y tras ver los resultados en el capítulo \ref{evaluacion}, se llega a la conclusión de 
-que la técnica propuesta por los investigadores del departamento de Teoría de la Señal, Telemática y Comunicaciones de la Universidad de 
-Granada, es una técnica completamente funcional. Además, se trata de una técnica que respeta la privacidad y completamente escalable.
+Tras todo lo expuesto a lo largo de esta memoria, y tras ver los resultados en el capítulo \ref{evaluacion}, se llega a la conclusión 
+de que la técnica propuesta por los investigadores del departamento de Teoría de la Señal, Telemática y Comunicaciones de la 
+Universidad de Granada, es una técnica completamente funcional. Además, mejora los dos aspectos que fallan en la Inspección Profunda 
+de Paquetes.
 
-\intro Respeta la privacidad, por que no entra dentro del payload de los paquetes. A su vez, es escalable, cómo se ha visto, pues aunque 
-el archivo a analizar sea mucho mayor, los tiempos de análisis son aceptables con respecto al tamaño. Además, no sufre de ningún tipo de 
-retardo.
+\begin{itemize}
+\item \textit{Privacidad}. Este aspecto se respeta, pues los únicos datos analizados y mostrados en el registro generado, son las 
+IP's, los puertos y los \textit{uids}, siendo además usado el tiempo de inicio del primer paquete del flujo. Por lo tanto, no se entra 
+dentro del \textit{payload} de los paquetes, lo cual puede ser ilegal en algunos países.
 
-\intro Los datos mostrados en los registros que se generan, son útiles para realizar una búsqueda rápida en el caso de que sea necesaria 
-y, además, con un clasificador adecuado la tarea de la clasificación será muy llevadera.
+\item \textit{Escalabilidad}. Se ha podido comprobar que un archivo de 1.1 GB, correspondiente al tráfico de un día entero, es 
+analizado en menos de una hora siendo un tiempo aceptable, teniendo presente la cantidad de flujos que existen dentro de ese fichero. 
+Un archivo más pequeño y destinado a hacer pruebas, de 56.2 MB, es analizado en un segundo.
+\end{itemize}
 
+\intro Además, los datos volcados en el registro generado son útiles y sobre ellos se puede realizar una búsqueda rápida, de modo que 
+se detectaría, por ejemplo, un ataque de denegación de servicio rápidamente, pudiendo el administrador del sistema realizar las 
+acciones que crea convenientes.
 
 \section{Trabajo futuro}
 
-En el futuro se podría seguir trabajando en este módulo, añadiendole funcionalidades que de momento no tiene, por ejemplo, se podrían 
-agregar más eventos que detecten tráfico \textit{TCP}, pues Bro proporciona bastantes de este tipo. 
+Se podría continuar trabajando sobre este módulo, de forma que se haga más rápido o detecte más tipo de tráfico. Algunas de las posibles mejoras son:
 
-\intro A su vez, podría identificarse tráfico de la capa de aplicación, simplemente añadiendo los módulos adecuados de Bro. Por lo tanto, hay mucho posible trabajo que hacer.
+\begin{itemize}
+\item Añadir otras funciones, de modo que se analice el tráfico a otros niveles, como podría ser a nivel de capa de aplicación. Esto podría realizarse mediante la incorporación de eventos que detecten actividad \textit{HTTP}, por ejemplo.
+\item Extender las funcionalidades ya expuestas añadiendo, por ejemplo, nuevos eventos que detecten tráfico de tipo \textit{TCP}, ya 
+que este módulo solamente tiene dos funciones que detectan este tipo de tráfico, siendo el inicio y el final del protocolo lo que es 
+detectado.
+\item Optimizar el almacenado de flujos. Se podría optimizar el módulo mejorando la forma en que son guardados los flujos, así 
+como el borrado de los mismos.
+\end{itemize}

@@ -13,7 +13,7 @@ Para describir la arquitectura del sistema hay que tener en cuenta la arquitectu
 esto es, esta compuesto de diferentes módulos que al ser ejecutados funcionan como un único sistema.
 
 \intro Por lo tanto, la arquitectura del sistema a desarrollar se debe de acoplar a la arquitectura propia de Bro, por lo que el 
-sistema debe implementarse como un módulo adicional compatible con Bro. Entre los requisitos del mismo se encuentra que sea ligero y 
+sistema debe implementarse como un módulo adicional compatible. Entre los requisitos del mismo se encuentra que sea ligero y 
 eficiente. Por lo tanto, se deberán usar los distintos eventos y capacidades que proporciona Bro para minimizar el impacto en el 
 sistema global y optimizar su funcionamiento.
 
@@ -33,8 +33,8 @@ complementados por los pasos que se ven en las Figuras \ref{fig.calculo} y \ref{
   \caption{Diagrama del sistema.}\label{fig.digsistema}
 \end{figure}
 
-\intro De esta forma, se creará un registro, en el cual se almacenarán los flujos que son emparejados. De esta forma se evita tener 
-que iterar sobre la tabla de emparejados al finalizar el módulo, haciendo que sea más eficiente.
+\intro De esta forma, se creará un registro en el cual se almacenarán los flujos que son emparejados. De esta forma se evita tener 
+que iterar sobre la tabla de emparejados al finalizar el módulo, haciendo que la ejecución sea más eficiente.
 
 \intro En la Figura \ref{fig.nacimiento}, se puede ver cómo se procederá a analizar un flujo cuando es detectado. En primer lugar se 
 detectará el flujo y se iniciará la búsqueda de otro con sus características, en caso de que se encuentre, se comenzará con el 
@@ -66,7 +66,7 @@ en diferentes estados, siendo estos los que se consideran:
 \end{itemize}
 
 \intro Por lo tanto, cuando un flujo es detectado tendrá el estado activo. En función 
-de los distintos flujos que se vayan detectando los que están en estado \textit{activo} se irán comparando con los nuevos que se detecten, de modo que los nuevos pasarán a estar emparejados. Si no se encuentra un flujo activo que coincida con sus parámetros, los nuevos flujos serán almacenados como activos. Al último estado, finalizado, se podrá pasar tanto del estado activo, como del emparejado, con la diferencia de que, de tratarse del primer caso, deberá de ser borrado de la lista y se buscará un sustituto entre los emparejados con ese flujo. En el segundo caso no se borrará de la lista. La transición de estados se puede ver en la Figura \ref{fig.flujos}.
+de los distintos flujos que se vayan detectando, los que están en estado \textit{activo} se irán comparando con los nuevos que se detecten, de modo que los nuevos pasarán a estar emparejados. Si no se encuentra un flujo activo que coincida con sus parámetros, los nuevos flujos serán almacenados como activos. Al último estado, finalizado, se podrá pasar tanto del estado activo, como del emparejado, con la diferencia de que, de tratarse del primer caso, deberá de ser borrado de la lista y se buscará un sustituto entre los emparejados con ese flujo. En el segundo caso no se borrará de la lista. La transición de estados se puede ver en la Figura \ref{fig.flujos}.
 
 \begin{figure}[H]
   \includegraphics[width=0.7\textwidth]{imagenes/flujos.png}
@@ -107,7 +107,7 @@ anterior.
 \intro En la Figura \ref{fig.calculo}, se puede ver cómo se realizará el preprocesado de un flujo antes de aplicar la ecuación de emparejamiento \ref{ecug}.
 
 \begin{figure}[H]
-  \includegraphics[width=0.75\textwidth]{imagenes/calculo.png}
+  \includegraphics[width=0.6\textwidth]{imagenes/calculo.png}
   \centering
   \caption{Diagrama de la función previa a la aplicación de la ecuación de emparejamiento.}\label{fig.calculo}
 \end{figure}
@@ -115,7 +115,7 @@ anterior.
 \intro En la Figura \ref{fig.emparejamiento}, se ve cómo se tratan a los flujos que han pasado el preprocesado y que son candidatos a ser emparejados.
 
 \begin{figure}[H]
-  \includegraphics[width=0.75\textwidth]{imagenes/emparejamiento.png}
+  \includegraphics[width=0.6\textwidth]{imagenes/emparejamiento.png}
   \centering
   \caption{Diagrama de aplicación de la función de emparejamiento.}\label{fig.emparejamiento}
 \end{figure}

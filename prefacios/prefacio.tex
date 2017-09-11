@@ -20,13 +20,14 @@
 \end{center}
 
 %\vspace{0.7cm}
-\noindent{\textbf{Palabras clave}: inspección profunda de paquetes, bro, flujos, identificación, clasificación, red, tráfico}\\
+\noindent{\textbf{Palabras clave}: identificación de tráfico, Monitor de Red, clasificación de tráfico, calidad de servicio, Bro}\\
 
 \vspace{0.7cm}
 \noindent{\textbf{Resumen}}\\
-
-
-
+La identificación de tráfico consiste en asignar instancias de tráfico al tipo de aplicaciones que generaron dicho tráfico, esto sirve para realizar una clasificación del mismo, permitiendo así encontrar fallos en cuanto a la calidad de servicio, fallos en el sistema o detectar ataques.
+\intro Las técnicas hasta ahora usadas o han quedado obsoletas, cómo por ejemplo la identificación mediante puertos, o no tienen buen rendimiento, cómo las basadas en aprendizaje automático, o no respetan la privacidad, cómo la Inspección Profunda de Paquetes. Por lo tanto, es necesario la utilización de una nueva técnica que permita una identificación precisa, rápida y que respete la privacidad.
+\intro En el presente trabajo se abordará la creación de un módulo para un Monitor de Redes, en el que se implemente la técnica propuesta por los investigadores del departamento de Teoría de la Señal, Telemática y Comunicaciones de la Universidad de Granada. Dicha técnica permite resolver los problemas anteriores, obteniendo además una tasa de identificación correcta más alta que en las otras técnicas.
+\intro Se probará que dicho módulo funciona de forma correcta mediante el uso de trazas de tráfico de prueba, llevándola después a escenarios reales.
 \cleardoublepage
 
 
@@ -34,19 +35,32 @@
 
 
 \begin{center}
-{\large\bfseries Project Title: Project Subtitle}\\
+{\large\bfseries Implementation on real time of traffic network identification systems}\\
 \end{center}
 \begin{center}
-First name, Family name (student)\\
+Álvaro Maximino Linares Herrera\\
 \end{center}
 
 %\vspace{0.7cm}
-\noindent{\textbf{Keywords}: Keyword1, Keyword2, Keyword3, ....}\\
+\noindent{\textbf{Keywords}: traffic identification, Network Monitoring System, traffic classification, quality of service, Bro}\\
 
 \vspace{0.7cm}
 \noindent{\textbf{Abstract}}\\
 
-Write here the abstract in English.
+The identification of traffic consists on assigning instances of traffic to the type of applications that generated that traffic. This 
+is used to create a classification of what has been mentioned above, allowing to find mistakes regarding the quality of service, 
+system failure or attacks detection.
+
+\intro The techniques used until now has been either obsolete, such us the port-based identification, or do not have good performance, 
+as the ones based on automatic learning or do not respect the privacy as Deep Package Inspection. Hence why is compulsory the use of a 
+new technique which will allow a fast, accurate identification that will respect the privacy.
+
+\intro In the following document, the creation of a module will be addressed for a network monitor, in which will be implemented the 
+technique proposed by the researchers of the Theory of Signals, Telematics and Comunications of the University of Granada that would 
+allow us to solve the above problems as well us providing us with a higher right identification rate than the other methods.
+
+\intro The working status of this module will be tested with the use of traffic test traces, carried afterwards to real based 
+scenarios.
 
 \chapter*{}
 \thispagestyle{empty}
@@ -108,6 +122,6 @@ Y para que conste, expiden y firman el presente informe en Granada a 11 de septi
 
        \vspace{1cm}
 
-
-Poner aquí agradecimientos...
-
+En primer lugar, dar las gracias a mi maravillosa familia, tanto a los que están, cómo a los que se han ido a lo largo de los años, por su confianza y cariño.
+\intro También dar las gracias a Jesús, por su dedicación e inspiración, así como su paciencia con un alumno como yo.
+\intro Por último, dar las gracias a mis amigos, por su apoyo incondicional. Y en especial a Carmen y a Javi.
